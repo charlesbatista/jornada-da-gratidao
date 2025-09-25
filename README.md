@@ -1,36 +1,138 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 Jornada da Transformação
 
-## Getting Started
+Uma aplicação de acompanhamento pessoal para jornadas de transformação de 1 a 365 dias.
 
-First, run the development server:
+## ✨ Funcionalidades
 
+- **Configuração Flexível**: Configure jornadas de 1 a 365 dias
+- **Banco de Dados**: Persistência com SQLite e Prisma
+- **Reflexões Diárias**: Registre seus pensamentos e dificuldades
+- **Sistema de Conquistas**: Marcos dinâmicos baseados na duração da jornada
+- **Sons de Celebração**: Feedback auditivo ao completar dias
+- **Tema Personalizado**: Design moderno com glassmorphism
+- **Reset Seguro**: Sistema de triple-confirmação para reiniciar
+- **Deploy Vercel**: Pronto para produção
+
+## 🛠️ Tecnologias
+
+- **Next.js 15** - Framework React
+- **Tailwind CSS** - Estilização
+- **Prisma** - ORM para banco de dados
+- **SQLite** - Banco de dados local
+- **Web Audio API** - Sons de celebração
+
+## 🚀 Instalação e Uso
+
+### 1. Clone o repositório
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <seu-repositorio>
+cd jornada-da-liberdade
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Instale as dependências
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Configure o banco de dados
+```bash
+# Gerar cliente Prisma
+npx prisma generate
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Executar migrações
+npx prisma migrate dev --name init
+```
 
-## Learn More
+### 4. Execute em desenvolvimento
+```bash
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+Acesse http://localhost:3000
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 5. Deploy no Vercel
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Faça push para o GitHub
+2. Importe no Vercel
+3. Configure as variáveis de ambiente:
+   - `DATABASE_URL="file:./prisma/prod.db"`
+4. Deploy automático
 
-## Deploy on Vercel
+## 📁 Estrutura do Projeto
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+├── src/
+│   ├── app/
+│   │   ├── api/           # APIs REST
+│   │   ├── components/    # Componentes React
+│   │   ├── data/         # Dados estáticos
+│   │   └── utils/        # Utilitários
+│   └── lib/              # Configurações
+├── prisma/
+│   ├── schema.prisma     # Schema do banco
+│   └── migrations/       # Migrações
+└── public/               # Arquivos estáticos
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🎯 Como Usar
+
+1. **Configuração Inicial**: Configure data de início e duração (1-365 dias)
+2. **Progresso Diário**: Clique nos dias para abrir reflexões
+3. **Conquistas**: Acompanhe marcos na aba "Trilha das Conquistas"
+4. **Reset**: Use o botão "Reiniciar Jornada" com triple-confirmação
+
+## 🌟 Funcionalidades Detalhadas
+
+### Sistema de Conquistas Dinâmico
+- Marcos automáticos: 7, 14, 21, 30 dias
+- Marcos condicionais: 45, 60, 75, 90+ dias
+- Marco da metade da jornada
+- Marco final personalizado
+
+### Persistência de Dados
+- API REST para CRUD de jornadas
+- Migração automática do localStorage
+- Backup seguro no banco SQLite
+
+### Som e Feedback
+- Sons de clique nos botões
+- Melodia de celebração ao completar dias
+- Confetti visual para conquistas
+
+## 🔧 Scripts Disponíveis
+
+- `npm run dev` - Desenvolvimento
+- `npm run build` - Build para produção
+- `npm run start` - Iniciar produção
+- `npx prisma studio` - Interface visual do banco
+
+## 🎨 Personalização
+
+### Cores e Temas
+Edite `tailwind.config.js` para personalizar cores e gradientes.
+
+### Sons
+Modifique as frequências em `JourneyBoard.jsx` para diferentes melodias.
+
+### Conquistas
+Ajuste marcos em `utils/achievements.js` conforme necessário.
+
+## 📱 Responsividade
+
+- Design mobile-first
+- Funcional em tablets e desktops
+- Interface adaptável
+
+## 🔒 Segurança
+
+- Validação de entrada nos APIs
+- Sanitização de dados
+- Triple-confirmação para reset
+
+## 📄 Licença
+
+MIT License - veja LICENSE para detalhes.
+
+---
+
+**Desenvolvido com ❤️ para transformações pessoais**
