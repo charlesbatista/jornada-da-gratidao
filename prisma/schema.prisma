@@ -28,9 +28,7 @@ model Day {
   isCompleted Boolean   @default(false)
   reflection  String?
   difficulty  String? // moleza, pouco, médio, muito
-  completedAt DateTime?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  completedAt String?
 
   journey Journey @relation(fields: [journeyId], references: [id], onDelete: Cascade)
 

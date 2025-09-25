@@ -80,7 +80,8 @@ export default function JourneyBoard() {
 
   const updateDay = async (dayNumber, dayData) => {
     try {
-      console.log("Atualizando dia:", dayNumber, "com dados:", dayData); // Debug
+      console.log("Atualizando dia:", dayNumber, "com dados:", dayData);
+
       const response = await fetch(`/api/journey/day/${dayNumber}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -88,8 +89,14 @@ export default function JourneyBoard() {
       });
 
       const data = await response.json();
-      console.log("Resposta da atualização:", data); // Debug
+      console.log("Resposta da atualização:", data);
 
+      // Verificar se a resposta foi bem-sucedida
+      if (!response.ok) {
+        throw new Error(data.error || `Erro HTTP: ${response.status}`);
+      }
+
+      // Verificar se retornou o dia atualizado
       if (data.day) {
         // Atualizar o estado local com os dados retornados pela API
         setDays((prevDays) => {
@@ -103,6 +110,7 @@ export default function JourneyBoard() {
                 isCompleted: data.day.isCompleted, // Dados novos
                 reflection: data.day.reflection,
                 difficulty: data.day.difficulty,
+                completedAt: data.day.completedAt,
               };
             }
             return day;
@@ -115,11 +123,14 @@ export default function JourneyBoard() {
           );
           return updatedDays;
         });
+
+        return data; // Retornar os dados para indicar sucesso
       } else {
-        console.error("API não retornou o dia atualizado:", data);
+        throw new Error("API não retornou o dia atualizado");
       }
     } catch (error) {
       console.error("Erro ao atualizar dia:", error);
+      throw error; // Re-throw para que o handleCompleteDay possa tratar
     }
   };
 
@@ -170,7 +181,7 @@ export default function JourneyBoard() {
         ? customStartDate
         : toYmd(customStartDate || new Date());
 
-        console.log("data inicial: ", newStartDateYmd);
+    console.log("data inicial: ", newStartDateYmd);
 
     await createJourney(newStartDateYmd, customTotalDays);
   };
@@ -394,7 +405,7 @@ export default function JourneyBoard() {
 
     // Se startDate é uma string "YYYY-MM-DD", usar parseYmdLocal
     let baseDate;
-    if (typeof startDate === 'string') {
+    if (typeof startDate === "string") {
       baseDate = parseYmdLocal(startDate);
     } else {
       baseDate = new Date(startDate);
@@ -458,41 +469,70 @@ export default function JourneyBoard() {
 
       const dayNumberToUpdate = selectedDay.dayNumber || selectedDay.id;
 
-      // Atualizar estado local imediatamente para feedback visual
+      // 1. Atualizar estado local IMEDIATAMENTE para feedback visual instantâneo
+      const completedAtString = toYmd(new Date()); // Formato YYYY-MM-DD
+
       setDays((prevDays) =>
         prevDays.map((day) =>
           (day.dayNumber || day.id) === dayNumberToUpdate
             ? {
                 ...day,
                 isCompleted: true,
-                isComplete: true,
+                isComplete: true, // Garantir ambos os campos para compatibilidade
                 difficulty: selectedDay.difficulty,
                 reflection: selectedDay.reflection,
+                completedAt: completedAtString,
               }
             : day
         )
       );
 
-      // Atualizar selectedDay também
+      // 2. Atualizar selectedDay também
       const updatedSelectedDay = {
         ...selectedDay,
         isCompleted: true,
         isComplete: true,
         difficulty: selectedDay.difficulty,
         reflection: selectedDay.reflection,
+        completedAt: completedAtString,
       };
       setSelectedDay(updatedSelectedDay);
 
-      // Atualizar no banco de dados
-      await updateDay(dayNumberToUpdate, {
-        isCompleted: true,
-        reflection: selectedDay.reflection,
-        difficulty: selectedDay.difficulty,
-      });
+      // 3. Salvar no banco de dados PRIMEIRO (aguardar para garantir que salvou)
+      try {
+        await updateDay(dayNumberToUpdate, {
+          isCompleted: true,
+          reflection: selectedDay.reflection,
+          difficulty: selectedDay.difficulty,
+        });
 
-      handleCloseModal();
+        console.log("Dia salvo com sucesso no banco!");
+      } catch (error) {
+        console.error("Erro ao salvar no banco:", error);
 
-      // Celebração com delay para melhor experiência
+        // Se der erro, reverter o estado local
+        setDays((prevDays) =>
+          prevDays.map((day) =>
+            (day.dayNumber || day.id) === dayNumberToUpdate
+              ? {
+                  ...day,
+                  isCompleted: false,
+                  isComplete: false,
+                }
+              : day
+          )
+        );
+
+        // Mostrar erro ao usuário
+        alert("❌ Erro ao salvar. Tente novamente.");
+        return; // Não fechar modal nem celebrar se deu erro
+      }
+
+      // 4. DEPOIS de salvar com sucesso, fechar modal
+      setIsModalOpen(false);
+      setSelectedDay(null);
+
+      // 5. Celebração com delay para melhor experiência
       setTimeout(() => {
         triggerConfetti();
         playAchievementSound();
@@ -506,7 +546,7 @@ export default function JourneyBoard() {
 
       // Se startDate é uma string "YYYY-MM-DD", usar parseYmdLocal
       let baseDate;
-      if (typeof startDate === 'string') {
+      if (typeof startDate === "string") {
         baseDate = parseYmdLocal(startDate);
       } else {
         // Se for um Date object (compatibilidade)
