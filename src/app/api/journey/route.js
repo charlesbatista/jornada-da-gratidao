@@ -79,3 +79,5 @@ export async function DELETE() {
     return NextResponse.json({ error: 'Erro interno do servidor' }, { status: 500 })
   }
 }
+
+export const runtime = 'nodejs'; // Garantir que rode no Node.js (não Edge)

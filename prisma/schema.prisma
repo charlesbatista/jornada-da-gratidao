@@ -6,8 +6,11 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  // conexão "pooled" (boa p/ serverless / Prisma Client)
+  url       = env("PRISMA_DATABASE_URL")
+  // conexão direta (sem pool) – Prisma usa p/ migrações
+  directUrl = env("POSTGRES_URL")
 }
 
 model Journey {

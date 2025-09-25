@@ -70,3 +70,5 @@ export async function PUT(request, { params }) {
     }, { status: 500 })
   }
 }
+
+export const runtime = 'nodejs'; // Garantir que rode no Node.js (não Edge)
