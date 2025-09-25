@@ -43,7 +43,6 @@ export default function JourneyBoard() {
 
   const createJourney = async (startDate, totalDays) => {
     try {
-      // ✅ Garante que a data será enviada no formato correto "YYYY-MM-DD"
       const startDateYmd = normalizeToYmd(startDate);
 
       const response = await fetch("/api/journey", {
@@ -61,7 +60,7 @@ export default function JourneyBoard() {
       }
 
       if (data.journey) {
-        setStartDate(data.journey.startDateYmd);
+        setStartDate(data.journey.startDate);
         setTotalDays(data.journey.totalDays);
 
         const compatibleDays = data.journey.days.map((day) => ({
@@ -170,6 +169,9 @@ export default function JourneyBoard() {
       typeof customStartDate === "string"
         ? customStartDate
         : toYmd(customStartDate || new Date());
+
+        console.log("data inicial: ", newStartDateYmd);
+
     await createJourney(newStartDateYmd, customTotalDays);
   };
 

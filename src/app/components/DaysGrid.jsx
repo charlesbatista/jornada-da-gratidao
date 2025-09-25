@@ -1,4 +1,4 @@
-import { formatPtBR, parseYmdLocal, getWeekdayPtBR } from '@/app/utils/date'
+import { formatPtBR, parseYmdLocal, getWeekdayPtBR } from "@/app/utils/date";
 
 export default function DaysGrid({
   days,
@@ -13,17 +13,13 @@ export default function DaysGrid({
 
     if (typeof startDate === "string") {
       baseDate = parseYmdLocal(startDate); // já cria a data local sem UTC
-    }
-
-    else if (startDate instanceof Date) {
+    } else if (startDate instanceof Date) {
       baseDate = new Date(
         startDate.getFullYear(),
         startDate.getMonth(),
         startDate.getDate()
       );
-    }
-
-    else {
+    } else {
       baseDate = new Date();
     }
 
@@ -160,8 +156,6 @@ export default function DaysGrid({
                     </div>
                   </div>
                 )}
-
-
 
                 {/* Efeito hover */}
                 <div className="absolute inset-0 rounded-2xl bg-white/0 group-hover:bg-white/10 transition-all duration-300" />
