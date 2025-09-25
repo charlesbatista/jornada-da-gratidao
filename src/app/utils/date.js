@@ -97,7 +97,6 @@ export function formatPtBR(input) {
 
 /**
  * Obtém o dia da semana em português (0=Domingo, 1=Segunda, ..., 6=Sábado)
- * Sabendo o que o dia da semana é string
  */
 export function getWeekdayPtBR(input) {
   if (!input) return '';
@@ -111,7 +110,7 @@ export function getWeekdayPtBR(input) {
     return '';
   }
 
-  const weekdays = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
+  const weekdays = ['DOM', 'SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SAB'];
 
   return weekdays[date.getDay()];
 }

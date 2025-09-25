@@ -66,7 +66,7 @@ export default function DaysGrid({
       </div>
 
       {/* Grid de dias */}
-      <div className="grid grid-cols-5 sm:grid-cols-7 lg:grid-cols-10 gap-3 md:gap-4">
+      <div className="grid grid-cols-5 sm:grid-cols-7 lg:grid-cols-10 gap-4 md:gap-6 mb-8">
         {days.map((day) => {
           // Usar dayNumber se existir (dados do banco), senão day.id (dados antigos)
           const dayNumber = day.dayNumber || day.id;
@@ -93,7 +93,7 @@ export default function DaysGrid({
               <button
                 onClick={() => !isFutureDay && handleDayClick(day)}
                 disabled={isFutureDay}
-                className={`relative w-full aspect-square flex flex-col items-center justify-center font-bold rounded-2xl transition-all duration-300 transform focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 focus:ring-offset-transparent
+                className={`relative w-full aspect-square flex flex-col items-center justify-center font-bold rounded-2xl transition-all duration-300 transform focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 focus:ring-offset-transparent p-2
                                     ${getGradientClass(
                                       dayNumber,
                                       day.isComplete || day.isCompleted,
@@ -101,7 +101,7 @@ export default function DaysGrid({
                                     )}
                                     ${
                                       isToday
-                                        ? "ring-2 ring-yellow-400 ring-opacity-75"
+                                        ? "ring-2 ring-yellow-400 ring-opacity-90 animate-pulse shadow-lg shadow-yellow-400/50"
                                         : ""
                                     }
                                     ${
@@ -119,10 +119,10 @@ export default function DaysGrid({
               >
                 {/* Número do dia */}
                 <div
-                  className={`text-lg md:text-xl font-black ${
+                  className={`text-xl md:text-2xl font-black mb-1 ${
                     day.isComplete || day.isCompleted
                       ? "golden-text"
-                      : "text-gray-300"
+                      : "text-white"
                   }`}
                 >
                   {dayNumber}
@@ -130,10 +130,10 @@ export default function DaysGrid({
 
                 {/* Data */}
                 <div
-                  className={`text-xs font-medium mt-1 ${
+                  className={`text-xs font-semibold mb-1 ${
                     day.isComplete || day.isCompleted
-                      ? "text-white/90 font-semibold"
-                      : "text-gray-400"
+                      ? "text-white/95"
+                      : "text-gray-300"
                   }`}
                 >
                   {formatPtBR(dayDate)}
@@ -141,10 +141,10 @@ export default function DaysGrid({
 
                 {/* Dia da semana */}
                 <div
-                  className={`text-xs ${
+                  className={`text-xs font-bold uppercase tracking-wide ${
                     day.isComplete || day.isCompleted
-                      ? "text-white/80 font-medium"
-                      : "text-gray-500 font-light"
+                      ? "text-white/90"
+                      : "text-gray-300"
                   }`}
                 >
                   {getWeekdayPtBR(dayDate)}
@@ -161,14 +161,7 @@ export default function DaysGrid({
                   </div>
                 )}
 
-                {/* Indicador de hoje */}
-                {isToday && (
-                  <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 z-10">
-                    <div className="bg-yellow-400 text-yellow-900 text-xs font-bold px-2 py-1 rounded-full shadow-lg whitespace-nowrap">
-                      HOJE
-                    </div>
-                  </div>
-                )}
+
 
                 {/* Efeito hover */}
                 <div className="absolute inset-0 rounded-2xl bg-white/0 group-hover:bg-white/10 transition-all duration-300" />
@@ -189,7 +182,7 @@ export default function DaysGrid({
           <span className="text-gray-300">Pendente</span>
         </div>
         <div className="flex items-center gap-2 bg-white/5 backdrop-blur-sm rounded-lg px-3 py-2 border border-white/10">
-          <div className="w-4 h-4 bg-yellow-400 rounded"></div>
+          <div className="w-4 h-4 bg-white/20 border-2 border-yellow-400 rounded animate-pulse"></div>
           <span className="text-gray-300">Hoje</span>
         </div>
       </div>
