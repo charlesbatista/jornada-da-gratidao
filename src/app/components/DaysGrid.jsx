@@ -32,16 +32,22 @@ export default function DaysGrid({
   };
 
   const getCardClasses = (isCompleted, isFutureDay, isToday) => {
-    const base = "relative w-full aspect-square rounded-3xl overflow-hidden transition-all duration-300 focus:outline-none border-2";
-    
+    const base =
+      "relative w-full aspect-square rounded-3xl overflow-hidden transition-all duration-300 focus:outline-none border-2";
+
     if (isFutureDay) {
       return `${base} bg-gray-800/50 border-gray-600/30 opacity-40 cursor-not-allowed`;
     }
-    
+
+    // Dia atual que já foi concluído - verde com borda dourada pulsante
+    if (isToday && isCompleted) {
+      return `${base} bg-gradient-to-br from-emerald-500 via-emerald-600 to-emerald-700 border-emerald-400/50 shadow-lg shadow-emerald-500/30 ring-4 ring-amber-400/30 ring-offset-2 ring-offset-transparent`;
+    }
+
     if (isToday) {
       return `${base} bg-gradient-to-br from-orange-500 via-orange-600 to-orange-700 border-orange-400/50 shadow-lg shadow-orange-500/30 hover:shadow-orange-500/50`;
     }
-    
+
     if (isCompleted) {
       return `${base} bg-gradient-to-br from-emerald-500 via-emerald-600 to-emerald-700 border-emerald-400/50 shadow-lg shadow-emerald-500/30`;
     }
@@ -54,8 +60,8 @@ export default function DaysGrid({
     if (todayCardRef.current) {
       setTimeout(() => {
         todayCardRef.current.scrollIntoView({
-          behavior: 'smooth',
-          block: 'center'
+          behavior: "smooth",
+          block: "center",
         });
       }, 500);
     }
@@ -99,40 +105,55 @@ export default function DaysGrid({
               <button
                 onClick={() => !isFutureDay && handleDayClick(day)}
                 disabled={isFutureDay}
-                className={`${getCardClasses(isCompleted, isFutureDay, isToday)} ${
+                className={`${getCardClasses(
+                  isCompleted,
+                  isFutureDay,
+                  isToday
+                )} ${
                   !isFutureDay ? "cursor-pointer" : ""
                 } p-4 flex flex-col justify-between`}
               >
                 {/* Header com dia da semana */}
                 <div className="w-full flex justify-start">
-                  <span className={`text-xs font-semibold uppercase tracking-wider ${
-                    isFutureDay ? "text-gray-500" : "text-white/90"
-                  }`}>
+                  <span
+                    className={`text-xs font-semibold uppercase tracking-wider ${
+                      isFutureDay ? "text-gray-500" : "text-white/90"
+                    }`}
+                  >
                     {getWeekdayPtBR(dayDate)}
                   </span>
                 </div>
 
                 {/* Centro com número do dia */}
                 <div className="flex-1 flex items-center justify-center">
-                  <span className={`text-6xl font-black leading-none ${
-                    isFutureDay ? "text-gray-500" : "text-white"
-                  }`}>
+                  <span
+                    className={`text-6xl font-black leading-none ${
+                      isFutureDay ? "text-gray-500" : "text-white"
+                    }`}
+                  >
                     {String(dayNumber).padStart(2, "0")}
                   </span>
                 </div>
 
                 {/* Footer com data e check */}
                 <div className="w-full flex justify-between items-end">
-                  <span className={`text-xs ${
-                    isFutureDay ? "text-gray-500" : "text-white/70"
-                  }`}>
-                    {dayDate.getDate().toString().padStart(2, "0")}/{(dayDate.getMonth() + 1).toString().padStart(2, "0")}
+                  <span
+                    className={`text-xs ${
+                      isFutureDay ? "text-gray-500" : "text-white/70"
+                    }`}
+                  >
+                    {dayDate.getDate().toString().padStart(2, "0")}/
+                    {(dayDate.getMonth() + 1).toString().padStart(2, "0")}
                   </span>
-                  
+
                   {/* Ícone de check para dias concluídos */}
                   {isCompleted && (
                     <div className="w-5 h-5 rounded-full bg-white flex items-center justify-center">
-                      <svg className="w-3 h-3 text-emerald-600" fill="currentColor" viewBox="0 0 24 24">
+                      <svg
+                        className="w-3 h-3 text-emerald-600"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
                         <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
                       </svg>
                     </div>
