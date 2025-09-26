@@ -11,13 +11,22 @@ export default function ProgressTabs({
   const [activeTab, setActiveTab] = useState("daily");
   const [showScrollTop, setShowScrollTop] = useState(false);
 
-  // Detectar scroll para mostrar/esconder botão de voltar ao topo
+  // Detectar scroll para mostrar/esconder botão de voltar ao topo (com throttling para mobile)
   useEffect(() => {
+    let ticking = false;
+
     const handleScroll = () => {
-      setShowScrollTop(window.scrollY > 300);
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          setShowScrollTop(window.scrollY > 300);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    // Usar passive listener para melhor performance
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 

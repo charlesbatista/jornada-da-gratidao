@@ -71,11 +71,36 @@ const customStyles = `
     0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
     50% { transform: scale(1.3) rotate(180deg); opacity: 0.8; }
   }
+  
+  /* Otimizações para performance mobile */
+  .cosmic-bg {
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+  
+  @media (max-width: 768px) {
+    /* Reduzir animações em mobile */
+    .animate-pulse {
+      animation-duration: 4s !important;
+    }
+    .animate-sparkle {
+      animation-duration: 3s !important;
+    }
+    /* Desabilitar algumas animações pesadas em mobile */
+    .blur-3xl {
+      filter: blur(8px) !important;
+    }
+  }
 `;
 
 export default function Header({ completedDays, totalDays = 90, startDate }) {
     const progressPercentage = (completedDays / totalDays) * 100;
     const motivationalMessage = getMotivationalMessage(completedDays, totalDays);
+    
+    // Detectar se é mobile para otimizar animações
+    const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
     
     return (
         <>
@@ -84,7 +109,7 @@ export default function Header({ completedDays, totalDays = 90, startDate }) {
             
             {/* Background INCRÍVEL que ocupa toda a tela - PRIMEIRO para evitar cortes */}
                         {/* Fundo cósmico animado que cobre toda a tela */}
-            <div className="fixed inset-0 w-full h-screen overflow-hidden -z-10" style={{
+            <div className="fixed inset-0 w-full h-screen overflow-hidden -z-10 cosmic-bg" style={{
                 margin: 0,
                 padding: 0,
                 border: 'none',
@@ -94,35 +119,53 @@ export default function Header({ completedDays, totalDays = 90, startDate }) {
                 {/* Base sólida para garantir cobertura total */}
                 <div className="absolute -inset-40 bg-gradient-to-br from-slate-900 via-gray-900 to-black" />
                 
-                {/* Nebulosas cósmicas que ocupam toda a tela */}
-                <div className="absolute -top-32 -left-32 w-96 h-96 bg-gradient-to-br from-blue-400/12 via-cyan-500/8 to-blue-600/6 rounded-full blur-3xl animate-pulse" style={{animationDuration: '6s'}} />
-                <div className="absolute -top-20 -right-40 w-120 h-120 bg-gradient-to-br from-purple-500/12 via-pink-500/8 to-purple-600/6 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s', animationDuration: '8s'}} />
-                <div className="absolute -bottom-40 left-1/4 w-104 h-104 bg-gradient-to-br from-amber-400/12 via-orange-500/8 to-yellow-600/6 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s', animationDuration: '7s'}} />
-                <div className="absolute top-1/2 -right-28 w-80 h-80 bg-gradient-to-br from-emerald-400/12 via-teal-500/8 to-green-600/6 rounded-full blur-3xl animate-pulse" style={{animationDelay: '3s', animationDuration: '5s'}} />
+                {/* Animações condicionais - versão mobile otimizada */}
+                {isMobile ? (
+                    /* Versão Mobile - Apenas 3 nebulosas, sem blur pesado */
+                    <>
+                        <div className="absolute top-10 left-10 w-64 h-64 bg-gradient-to-br from-blue-400/8 via-purple-500/6 to-cyan-600/4 rounded-full blur-2xl opacity-60" />
+                        <div className="absolute bottom-20 right-20 w-48 h-48 bg-gradient-to-br from-purple-500/8 via-pink-500/6 to-purple-600/4 rounded-full blur-2xl opacity-50" />
+                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-56 h-56 bg-gradient-to-br from-amber-400/6 via-orange-500/4 to-yellow-600/3 rounded-full blur-xl opacity-40" />
+                    </>
+                ) : (
+                    /* Versão Desktop - Animações completas */
+                    <>
+                        {/* Nebulosas cósmicas que ocupam toda a tela */}
+                        <div className="absolute -top-32 -left-32 w-96 h-96 bg-gradient-to-br from-blue-400/12 via-cyan-500/8 to-blue-600/6 rounded-full blur-3xl animate-pulse" style={{animationDuration: '6s'}} />
+                        <div className="absolute -top-20 -right-40 w-120 h-120 bg-gradient-to-br from-purple-500/12 via-pink-500/8 to-purple-600/6 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s', animationDuration: '8s'}} />
+                        <div className="absolute -bottom-40 left-1/4 w-104 h-104 bg-gradient-to-br from-amber-400/12 via-orange-500/8 to-yellow-600/6 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s', animationDuration: '7s'}} />
+                        <div className="absolute top-1/2 -right-28 w-80 h-80 bg-gradient-to-br from-emerald-400/12 via-teal-500/8 to-green-600/6 rounded-full blur-3xl animate-pulse" style={{animationDelay: '3s', animationDuration: '5s'}} />
+                        
+                        {/* Galáxias que se estendem muito além das bordas */}
+                        <div className="absolute -top-20 -left-20 w-60 h-60 bg-gradient-to-br from-indigo-400/10 via-blue-500/6 to-cyan-600/4 rounded-full blur-3xl animate-pulse" style={{animationDelay: '4s', animationDuration: '9s'}} />
+                        <div className="absolute -bottom-30 -right-30 w-88 h-88 bg-gradient-to-br from-pink-400/10 via-purple-500/6 to-indigo-600/4 rounded-full blur-3xl animate-pulse" style={{animationDelay: '3.5s', animationDuration: '10s'}} />
+                        <div className="absolute top-1/3 -left-24 w-72 h-72 bg-gradient-to-br from-yellow-400/12 via-orange-500/8 to-red-600/6 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2.2s', animationDuration: '6s'}} />
+                        <div className="absolute bottom-1/3 -right-24 w-76 h-76 bg-gradient-to-br from-emerald-400/10 via-teal-500/6 to-blue-600/4 rounded-full blur-3xl animate-pulse" style={{animationDelay: '0.8s', animationDuration: '8.5s'}} />
+                    </>
+                )}
                 
-                {/* Galáxias que se estendem muito além das bordas */}
-                <div className="absolute -top-20 -left-20 w-60 h-60 bg-gradient-to-br from-indigo-400/10 via-blue-500/6 to-cyan-600/4 rounded-full blur-3xl animate-pulse" style={{animationDelay: '4s', animationDuration: '9s'}} />
-                <div className="absolute -bottom-30 -right-30 w-88 h-88 bg-gradient-to-br from-pink-400/10 via-purple-500/6 to-indigo-600/4 rounded-full blur-3xl animate-pulse" style={{animationDelay: '3.5s', animationDuration: '10s'}} />
-                <div className="absolute top-1/3 -left-24 w-72 h-72 bg-gradient-to-br from-yellow-400/12 via-orange-500/8 to-red-600/6 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2.2s', animationDuration: '6s'}} />
-                <div className="absolute bottom-1/3 -right-24 w-76 h-76 bg-gradient-to-br from-emerald-400/10 via-teal-500/6 to-blue-600/4 rounded-full blur-3xl animate-pulse" style={{animationDelay: '0.8s', animationDuration: '8.5s'}} />
-                
-                {/* Estrelas dispersas que se estendem além das bordas */}
-                <div className="absolute -top-8 -left-12 w-1 h-1 bg-white rounded-full shadow-white shadow-sm animate-pulse" style={{animationDelay: '0.5s'}} />
-                <div className="absolute top-1/4 -left-16 w-0.5 h-0.5 bg-blue-200 rounded-full shadow-blue-200 shadow-sm animate-pulse" style={{animationDelay: '1.2s'}} />
-                <div className="absolute top-1/2 -left-8 w-1 h-1 bg-cyan-200 rounded-full shadow-cyan-200 shadow-sm animate-pulse" style={{animationDelay: '2.1s'}} />
-                <div className="absolute -top-12 -right-20 w-0.5 h-0.5 bg-white rounded-full shadow-white shadow-sm animate-pulse" style={{animationDelay: '0.8s'}} />
-                <div className="absolute top-1/3 -right-24 w-1 h-1 bg-purple-200 rounded-full shadow-purple-200 shadow-sm animate-pulse" style={{animationDelay: '1.8s'}} />
-                <div className="absolute top-2/3 -right-16 w-0.5 h-0.5 bg-pink-200 rounded-full shadow-pink-200 shadow-sm animate-pulse" style={{animationDelay: '2.5s'}} />
-                <div className="absolute -bottom-16 -left-24 w-1 h-1 bg-yellow-200 rounded-full shadow-yellow-200 shadow-sm animate-pulse" style={{animationDelay: '1.1s'}} />
-                <div className="absolute -bottom-8 -left-12 w-0.5 h-0.5 bg-white rounded-full shadow-white shadow-sm animate-pulse" style={{animationDelay: '3.2s'}} />
-                <div className="absolute -bottom-20 -right-28 w-1 h-1 bg-emerald-200 rounded-full shadow-emerald-200 shadow-sm animate-pulse" style={{animationDelay: '0.3s'}} />
-                <div className="absolute -bottom-4 -right-8 w-0.5 h-0.5 bg-indigo-200 rounded-full shadow-indigo-200 shadow-sm animate-pulse" style={{animationDelay: '2.8s'}} />
-                
-                {/* Estrelas adicionais para preencher completamente */}
-                <div className="absolute top-1/5 -left-20 w-0.5 h-0.5 bg-white/80 rounded-full animate-sparkle" style={{animationDelay: '4s'}} />
-                <div className="absolute top-4/5 -right-12 w-1 h-1 bg-cyan-300/70 rounded-full animate-sparkle" style={{animationDelay: '1.5s'}} />
-                <div className="absolute bottom-1/5 -left-28 w-0.5 h-0.5 bg-purple-300/60 rounded-full animate-sparkle" style={{animationDelay: '3.8s'}} />
-                <div className="absolute bottom-2/5 -right-32 w-1 h-1 bg-yellow-300/80 rounded-full animate-sparkle" style={{animationDelay: '0.7s'}} />
+                {/* Estrelas condicionais - otimizadas para mobile */}
+                {!isMobile && (
+                    <>
+                        {/* Estrelas dispersas - apenas no desktop */}
+                        <div className="absolute -top-8 -left-12 w-1 h-1 bg-white rounded-full shadow-white shadow-sm animate-pulse" style={{animationDelay: '0.5s'}} />
+                        <div className="absolute top-1/4 -left-16 w-0.5 h-0.5 bg-blue-200 rounded-full shadow-blue-200 shadow-sm animate-pulse" style={{animationDelay: '1.2s'}} />
+                        <div className="absolute top-1/2 -left-8 w-1 h-1 bg-cyan-200 rounded-full shadow-cyan-200 shadow-sm animate-pulse" style={{animationDelay: '2.1s'}} />
+                        <div className="absolute -top-12 -right-20 w-0.5 h-0.5 bg-white rounded-full shadow-white shadow-sm animate-pulse" style={{animationDelay: '0.8s'}} />
+                        <div className="absolute top-1/3 -right-24 w-1 h-1 bg-purple-200 rounded-full shadow-purple-200 shadow-sm animate-pulse" style={{animationDelay: '1.8s'}} />
+                        <div className="absolute top-2/3 -right-16 w-0.5 h-0.5 bg-pink-200 rounded-full shadow-pink-200 shadow-sm animate-pulse" style={{animationDelay: '2.5s'}} />
+                        <div className="absolute -bottom-16 -left-24 w-1 h-1 bg-yellow-200 rounded-full shadow-yellow-200 shadow-sm animate-pulse" style={{animationDelay: '1.1s'}} />
+                        <div className="absolute -bottom-8 -left-12 w-0.5 h-0.5 bg-white rounded-full shadow-white shadow-sm animate-pulse" style={{animationDelay: '3.2s'}} />
+                        <div className="absolute -bottom-20 -right-28 w-1 h-1 bg-emerald-200 rounded-full shadow-emerald-200 shadow-sm animate-pulse" style={{animationDelay: '0.3s'}} />
+                        <div className="absolute -bottom-4 -right-8 w-0.5 h-0.5 bg-indigo-200 rounded-full shadow-indigo-200 shadow-sm animate-pulse" style={{animationDelay: '2.8s'}} />
+                        
+                        {/* Estrelas adicionais para preencher completamente */}
+                        <div className="absolute top-1/5 -left-20 w-0.5 h-0.5 bg-white/80 rounded-full animate-sparkle" style={{animationDelay: '4s'}} />
+                        <div className="absolute top-4/5 -right-12 w-1 h-1 bg-cyan-300/70 rounded-full animate-sparkle" style={{animationDelay: '1.5s'}} />
+                        <div className="absolute bottom-1/5 -left-28 w-0.5 h-0.5 bg-purple-300/60 rounded-full animate-sparkle" style={{animationDelay: '3.8s'}} />
+                        <div className="absolute bottom-2/5 -right-32 w-1 h-1 bg-yellow-300/80 rounded-full animate-sparkle" style={{animationDelay: '0.7s'}} />
+                    </>
+                )}
                 
                 {/* Partículas extras nos cantos */}
                 <div className="absolute top-1/4 left-1/4 w-36 h-36 bg-gradient-to-br from-violet-400/10 via-purple-500/7 to-pink-600/5 rounded-full blur-2xl animate-pulse" style={{animationDelay: '5s', animationDuration: '12s'}} />

@@ -8,6 +8,9 @@ export default function DaysGrid({
   totalDays = 90,
 }) {
   const todayCardRef = useRef(null);
+  
+  // Detectar mobile para otimizações
+  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
 
   const getDayDate = (dayIndex) => {
     if (!startDate) return null;
@@ -55,17 +58,20 @@ export default function DaysGrid({
     return `${base} bg-gradient-to-br from-gray-700 via-gray-800 to-gray-900 border-gray-600/50 hover:border-gray-500/70 hover:shadow-lg`;
   };
 
-  // Auto scroll para o dia de hoje
+  // Auto scroll para o dia de hoje (otimizado para mobile)
   useEffect(() => {
     if (todayCardRef.current) {
+      const delay = isMobile ? 200 : 500; // Delay menor no mobile
+      const behavior = isMobile ? "auto" : "smooth"; // Scroll instantâneo no mobile
+      
       setTimeout(() => {
         todayCardRef.current.scrollIntoView({
-          behavior: "smooth",
+          behavior,
           block: "center",
         });
-      }, 500);
+      }, delay);
     }
-  }, [days]);
+  }, [days, isMobile]);
 
   return (
     <div className="relative">
