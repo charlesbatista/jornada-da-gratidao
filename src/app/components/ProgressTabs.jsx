@@ -10,7 +10,7 @@ export default function ProgressTabs({ completedDays, days, handleDayClick, star
     ];
 
     return (
-        <div className="mt-8 mb-12">
+        <div className="mb-12">
             {/* Navigation Tabs - Design Premium */}
             <div className="flex justify-center mb-12 w-full">
                 <div className="relative max-w-6xl">

@@ -82,47 +82,98 @@ export default function Header({ completedDays, totalDays = 90, startDate }) {
             {/* Inject custom CSS styles */}
             <style dangerouslySetInnerHTML={{ __html: customStyles }} />
             
-            <header className="relative text-center mt-12">
-            {/* Background INCRÍVEL que se estende além do container */}
-            <div className="absolute -inset-20 overflow-hidden">
-                {/* Nebulosas cósmicas flutuantes */}
-                <div className="absolute top-24 left-8 w-40 h-40 bg-gradient-to-br from-blue-400/20 via-cyan-500/15 to-blue-600/10 rounded-full blur-3xl animate-pulse" style={{animationDuration: '6s'}} />
-                <div className="absolute top-40 right-12 w-56 h-56 bg-gradient-to-br from-purple-500/20 via-pink-500/15 to-purple-600/10 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s', animationDuration: '8s'}} />
-                <div className="absolute bottom-32 left-1/4 w-48 h-48 bg-gradient-to-br from-amber-400/20 via-orange-500/15 to-yellow-600/10 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s', animationDuration: '7s'}} />
-                <div className="absolute top-1/2 right-1/4 w-32 h-32 bg-gradient-to-br from-emerald-400/20 via-teal-500/15 to-green-600/10 rounded-full blur-2xl animate-pulse" style={{animationDelay: '3s', animationDuration: '5s'}} />
+            {/* Background INCRÍVEL que ocupa toda a tela - PRIMEIRO para evitar cortes */}
+                        {/* Fundo cósmico animado que cobre toda a tela */}
+            <div className="fixed inset-0 w-full h-screen overflow-hidden -z-10" style={{
+                margin: 0,
+                padding: 0,
+                border: 'none',
+                outline: 'none',
+                boxShadow: 'none'
+            }}>
+                {/* Base sólida para garantir cobertura total */}
+                <div className="absolute -inset-40 bg-gradient-to-br from-slate-900 via-gray-900 to-black" />
                 
-                {/* Galáxias distantes */}
-                <div className="absolute top-16 -left-12 w-28 h-28 bg-gradient-to-br from-indigo-400/15 via-blue-500/10 to-cyan-600/8 rounded-full blur-2xl animate-pulse" style={{animationDelay: '4s', animationDuration: '9s'}} />
-                <div className="absolute bottom-16 -right-16 w-44 h-44 bg-gradient-to-br from-pink-400/15 via-purple-500/10 to-indigo-600/8 rounded-full blur-3xl animate-pulse" style={{animationDelay: '3.5s', animationDuration: '10s'}} />
-                <div className="absolute top-1/3 -left-16 w-24 h-24 bg-gradient-to-br from-yellow-400/18 via-orange-500/12 to-red-600/8 rounded-full blur-xl animate-pulse" style={{animationDelay: '2.2s', animationDuration: '6s'}} />
-                <div className="absolute bottom-1/3 -right-20 w-36 h-36 bg-gradient-to-br from-emerald-400/15 via-teal-500/10 to-blue-600/8 rounded-full blur-2xl animate-pulse" style={{animationDelay: '0.8s', animationDuration: '8.5s'}} />
+                {/* Nebulosas cósmicas que ocupam toda a tela */}
+                <div className="absolute -top-32 -left-32 w-96 h-96 bg-gradient-to-br from-blue-400/12 via-cyan-500/8 to-blue-600/6 rounded-full blur-3xl animate-pulse" style={{animationDuration: '6s'}} />
+                <div className="absolute -top-20 -right-40 w-120 h-120 bg-gradient-to-br from-purple-500/12 via-pink-500/8 to-purple-600/6 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s', animationDuration: '8s'}} />
+                <div className="absolute -bottom-40 left-1/4 w-104 h-104 bg-gradient-to-br from-amber-400/12 via-orange-500/8 to-yellow-600/6 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s', animationDuration: '7s'}} />
+                <div className="absolute top-1/2 -right-28 w-80 h-80 bg-gradient-to-br from-emerald-400/12 via-teal-500/8 to-green-600/6 rounded-full blur-3xl animate-pulse" style={{animationDelay: '3s', animationDuration: '5s'}} />
                 
-                {/* Constelações de estrelas dinâmicas */}
-                <div className="absolute top-32 left-1/5 w-2 h-2 bg-yellow-300 rounded-full shadow-lg shadow-yellow-300/50 animate-ping" style={{animationDelay: '0.5s', animationDuration: '3s'}} />
-                <div className="absolute top-48 right-1/3 w-1.5 h-1.5 bg-blue-300 rounded-full shadow-lg shadow-blue-300/50 animate-ping" style={{animationDelay: '1.8s', animationDuration: '4s'}} />
-                <div className="absolute top-72 left-2/3 w-2 h-2 bg-purple-300 rounded-full shadow-lg shadow-purple-300/50 animate-ping" style={{animationDelay: '2.5s', animationDuration: '3.5s'}} />
-                <div className="absolute bottom-48 left-1/6 w-1.5 h-1.5 bg-pink-300 rounded-full shadow-lg shadow-pink-300/50 animate-ping" style={{animationDelay: '3.2s', animationDuration: '4.2s'}} />
-                <div className="absolute top-1/4 right-1/6 w-2 h-2 bg-emerald-300 rounded-full shadow-lg shadow-emerald-300/50 animate-ping" style={{animationDelay: '2s', animationDuration: '3.8s'}} />
+                {/* Galáxias que se estendem muito além das bordas */}
+                <div className="absolute -top-20 -left-20 w-60 h-60 bg-gradient-to-br from-indigo-400/10 via-blue-500/6 to-cyan-600/4 rounded-full blur-3xl animate-pulse" style={{animationDelay: '4s', animationDuration: '9s'}} />
+                <div className="absolute -bottom-30 -right-30 w-88 h-88 bg-gradient-to-br from-pink-400/10 via-purple-500/6 to-indigo-600/4 rounded-full blur-3xl animate-pulse" style={{animationDelay: '3.5s', animationDuration: '10s'}} />
+                <div className="absolute top-1/3 -left-24 w-72 h-72 bg-gradient-to-br from-yellow-400/12 via-orange-500/8 to-red-600/6 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2.2s', animationDuration: '6s'}} />
+                <div className="absolute bottom-1/3 -right-24 w-76 h-76 bg-gradient-to-br from-emerald-400/10 via-teal-500/6 to-blue-600/4 rounded-full blur-3xl animate-pulse" style={{animationDelay: '0.8s', animationDuration: '8.5s'}} />
                 
-                {/* Meteoros em movimento */}
-                <div className="absolute top-20 left-10 w-16 h-0.5 bg-gradient-to-r from-white via-blue-300 to-transparent rounded-full opacity-60" style={{
+                {/* Estrelas dispersas que se estendem além das bordas */}
+                <div className="absolute -top-8 -left-12 w-1 h-1 bg-white rounded-full shadow-white shadow-sm animate-pulse" style={{animationDelay: '0.5s'}} />
+                <div className="absolute top-1/4 -left-16 w-0.5 h-0.5 bg-blue-200 rounded-full shadow-blue-200 shadow-sm animate-pulse" style={{animationDelay: '1.2s'}} />
+                <div className="absolute top-1/2 -left-8 w-1 h-1 bg-cyan-200 rounded-full shadow-cyan-200 shadow-sm animate-pulse" style={{animationDelay: '2.1s'}} />
+                <div className="absolute -top-12 -right-20 w-0.5 h-0.5 bg-white rounded-full shadow-white shadow-sm animate-pulse" style={{animationDelay: '0.8s'}} />
+                <div className="absolute top-1/3 -right-24 w-1 h-1 bg-purple-200 rounded-full shadow-purple-200 shadow-sm animate-pulse" style={{animationDelay: '1.8s'}} />
+                <div className="absolute top-2/3 -right-16 w-0.5 h-0.5 bg-pink-200 rounded-full shadow-pink-200 shadow-sm animate-pulse" style={{animationDelay: '2.5s'}} />
+                <div className="absolute -bottom-16 -left-24 w-1 h-1 bg-yellow-200 rounded-full shadow-yellow-200 shadow-sm animate-pulse" style={{animationDelay: '1.1s'}} />
+                <div className="absolute -bottom-8 -left-12 w-0.5 h-0.5 bg-white rounded-full shadow-white shadow-sm animate-pulse" style={{animationDelay: '3.2s'}} />
+                <div className="absolute -bottom-20 -right-28 w-1 h-1 bg-emerald-200 rounded-full shadow-emerald-200 shadow-sm animate-pulse" style={{animationDelay: '0.3s'}} />
+                <div className="absolute -bottom-4 -right-8 w-0.5 h-0.5 bg-indigo-200 rounded-full shadow-indigo-200 shadow-sm animate-pulse" style={{animationDelay: '2.8s'}} />
+                
+                {/* Estrelas adicionais para preencher completamente */}
+                <div className="absolute top-1/5 -left-20 w-0.5 h-0.5 bg-white/80 rounded-full animate-sparkle" style={{animationDelay: '4s'}} />
+                <div className="absolute top-4/5 -right-12 w-1 h-1 bg-cyan-300/70 rounded-full animate-sparkle" style={{animationDelay: '1.5s'}} />
+                <div className="absolute bottom-1/5 -left-28 w-0.5 h-0.5 bg-purple-300/60 rounded-full animate-sparkle" style={{animationDelay: '3.8s'}} />
+                <div className="absolute bottom-2/5 -right-32 w-1 h-1 bg-yellow-300/80 rounded-full animate-sparkle" style={{animationDelay: '0.7s'}} />
+                
+                {/* Partículas extras nos cantos */}
+                <div className="absolute top-1/4 left-1/4 w-36 h-36 bg-gradient-to-br from-violet-400/10 via-purple-500/7 to-pink-600/5 rounded-full blur-2xl animate-pulse" style={{animationDelay: '5s', animationDuration: '12s'}} />
+                <div className="absolute bottom-1/4 right-1/4 w-44 h-44 bg-gradient-to-br from-cyan-400/10 via-blue-500/7 to-indigo-600/5 rounded-full blur-2xl animate-pulse" style={{animationDelay: '6s', animationDuration: '11s'}} />
+                
+                {/* Constelações de estrelas cobrindo toda a tela */}
+                <div className="absolute top-1/6 left-1/5 w-2 h-2 bg-yellow-300 rounded-full shadow-lg shadow-yellow-300/50 animate-ping" style={{animationDelay: '0.5s', animationDuration: '3s'}} />
+                <div className="absolute top-1/3 right-1/5 w-1.5 h-1.5 bg-blue-300 rounded-full shadow-lg shadow-blue-300/50 animate-ping" style={{animationDelay: '1.8s', animationDuration: '4s'}} />
+                <div className="absolute top-1/2 left-2/3 w-2 h-2 bg-purple-300 rounded-full shadow-lg shadow-purple-300/50 animate-ping" style={{animationDelay: '2.5s', animationDuration: '3.5s'}} />
+                <div className="absolute bottom-1/4 left-1/6 w-1.5 h-1.5 bg-pink-300 rounded-full shadow-lg shadow-pink-300/50 animate-ping" style={{animationDelay: '3.2s', animationDuration: '4.2s'}} />
+                <div className="absolute top-1/5 right-1/3 w-2 h-2 bg-emerald-300 rounded-full shadow-lg shadow-emerald-300/50 animate-ping" style={{animationDelay: '2s', animationDuration: '3.8s'}} />
+                <div className="absolute bottom-1/6 right-1/6 w-1.5 h-1.5 bg-cyan-300 rounded-full shadow-lg shadow-cyan-300/50 animate-ping" style={{animationDelay: '4s', animationDuration: '3.2s'}} />
+                <div className="absolute top-2/3 left-1/4 w-2 h-2 bg-amber-300 rounded-full shadow-lg shadow-amber-300/50 animate-ping" style={{animationDelay: '1.5s', animationDuration: '4.5s'}} />
+                <div className="absolute bottom-1/3 right-2/3 w-1.5 h-1.5 bg-rose-300 rounded-full shadow-lg shadow-rose-300/50 animate-ping" style={{animationDelay: '3.8s', animationDuration: '3.7s'}} />
+                
+                {/* Meteoros cruzando além de toda a tela */}
+                <div className="absolute -top-10 -left-32 w-64 h-0.5 bg-gradient-to-r from-white via-blue-300 to-transparent rounded-full opacity-60" style={{
                     animation: 'meteor 4s ease-in-out infinite',
                     animationDelay: '1s'
                 }} />
-                <div className="absolute bottom-24 right-16 w-20 h-0.5 bg-gradient-to-r from-white via-purple-300 to-transparent rounded-full opacity-50 rotate-45" style={{
+                <div className="absolute -bottom-16 -right-40 w-72 h-0.5 bg-gradient-to-r from-white via-purple-300 to-transparent rounded-full opacity-50 rotate-45" style={{
                     animation: 'meteor 5s ease-in-out infinite',
                     animationDelay: '2.5s'
                 }} />
-                <div className="absolute top-1/3 right-8 w-12 h-0.5 bg-gradient-to-r from-white via-yellow-300 to-transparent rounded-full opacity-70 -rotate-12" style={{
+                <div className="absolute -top-8 -right-36 w-56 h-0.5 bg-gradient-to-r from-white via-yellow-300 to-transparent rounded-full opacity-70 -rotate-12" style={{
                     animation: 'meteor 3.5s ease-in-out infinite',
                     animationDelay: '0.3s'
                 }} />
+                <div className="absolute -bottom-12 -left-28 w-48 h-0.5 bg-gradient-to-r from-white via-emerald-300 to-transparent rounded-full opacity-55 rotate-12" style={{
+                    animation: 'meteor 6s ease-in-out infinite',
+                    animationDelay: '4s'
+                }} />
+                <div className="absolute top-2/3 -left-32 w-60 h-0.5 bg-gradient-to-r from-white via-pink-300 to-transparent rounded-full opacity-65 -rotate-45" style={{
+                    animation: 'meteor 4.5s ease-in-out infinite',
+                    animationDelay: '1.8s'
+                }} />
+                {/* Meteoros adicionais para mais movimento */}
+                <div className="absolute top-1/6 -right-44 w-80 h-0.5 bg-gradient-to-r from-white via-cyan-300 to-transparent rounded-full opacity-40 rotate-30" style={{
+                    animation: 'meteor 7s ease-in-out infinite',
+                    animationDelay: '3.2s'
+                }} />
+                <div className="absolute bottom-2/5 -left-36 w-68 h-0.5 bg-gradient-to-r from-white via-indigo-300 to-transparent rounded-full opacity-50 -rotate-30" style={{
+                    animation: 'meteor 5.5s ease-in-out infinite',
+                    animationDelay: '2.1s'
+                }} />
             </div>
             
-            {/* Container com padding para o conteúdo */}
-            <div className="relative z-10 px-4">
             
-            <div className="relative z-10">
+            {/* Header com conteúdo */}
+            <header className="relative text-center my-12 z-10">
+                <div className="relative px-4">
                 {/* ÍCONE CENTRAL INCRÍVEL - Portal da Transformação */}
                 <div className="mb-16 relative flex justify-center">
                     <div className="relative w-40 h-40">
@@ -266,7 +317,7 @@ export default function Header({ completedDays, totalDays = 90, startDate }) {
                 </div>
 
                 {/* Card de progresso dinâmico e interativo */}
-                <div className="max-w-3xl mx-auto mb-8">
+                <div className="max-w-3xl mx-auto">
                     <div className="group relative" style={{animation: 'fadeInUp 2s ease-out 2s both'}}>
                         {/* Múltiplas camadas de brilho */}
                         <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500/30 via-blue-500/20 to-purple-600/30 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500" />
@@ -356,9 +407,8 @@ export default function Header({ completedDays, totalDays = 90, startDate }) {
                         </div>
                     </div>
                 </div>
-            </div>
-            </div>
-        </header>
+                </div>
+            </header>
         </>
     );
 }
