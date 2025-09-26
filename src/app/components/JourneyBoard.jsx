@@ -187,43 +187,21 @@ export default function JourneyBoard() {
   };
 
   const handleResetJourney = async () => {
-    // Primeira confirmação
-    const firstConfirm = window.confirm(
-      "⚠️ ATENÇÃO: Você está prestes a reiniciar sua jornada!\n\n" +
-        "Isso irá apagar TODOS os seus dados:\n" +
-        "• Todos os dias completados\n" +
-        "• Todas as reflexões escritas\n" +
-        "• Todo o progresso atual\n\n" +
-        "Tem certeza que deseja continuar?"
+    const confirmationWord = "CITRINO";
+    const userInput = window.prompt(
+      `⚠️ ATENÇÃO: Esta ação é irreversível e apagará todo o seu progresso.\n\n` +
+        `Para confirmar, digite a palavra secreta abaixo:`
     );
 
-    if (firstConfirm) {
+    if (userInput === confirmationWord) {
+      console.log("Reiniciando jornada...");
       await resetJourney();
-      return;
+      console.log("Jornada resetada com sucesso.");
+    } else if (userInput !== null) {
+      // O usuário digitou algo, mas não a palavra correta
+      alert("Palavra de confirmação incorreta. A jornada não foi reiniciada.");
     }
-
-    // Segunda confirmação
-    const secondConfirm = window.confirm(
-      "🚨 ÚLTIMA CONFIRMAÇÃO!\n\n" +
-        "Esta ação NÃO PODE SER DESFEITA.\n\n" +
-        "Digite 'REINICIAR' no próximo diálogo para confirmar ou clique em Cancelar para abortar."
-    );
-
-    if (secondConfirm) {
-      const userInput = window.prompt(
-        "Para confirmar o reinício, digite exatamente: REINICIAR"
-      );
-
-      if (userInput === "REINICIAR") {
-        console.log("Reiniciando jornada..."); // Debug
-
-        // Resetar jornada no banco de dados
-        await resetJourney();
-        console.log("Jornada resetada no banco de dados"); // Debug
-
-        // Redirecionamento direto sem alerta
-      }
-    }
+    // Se userInput for null, o usuário clicou em "Cancelar", então não fazemos nada.
   };
 
   // Função para tocar som de conquista melhorado

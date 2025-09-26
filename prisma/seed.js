@@ -25,142 +25,142 @@ async function main() {
     {
       dayNumber: 1,
       reflection: "Depressão, tristeza, prejuízos financeiros, não reconhecer a si mesmo.",
-      difficulty: "muito"
+      difficulty: "muito_dificil"
     },
     {
       dayNumber: 2,
       reflection: "Morte. Destruição. Atrasos de sonhos. Continuar construindo patrimônio.",
-      difficulty: "muito"
+      difficulty: "muito_dificil"
     },
     {
       dayNumber: 3,
       reflection: "Confiança em nós mesmos, dinheiro, saúde física, mental.",
-      difficulty: "médio"
+      difficulty: "medio"
     },
     {
       dayNumber: 4,
       reflection: "Ansiedade, medo, tristeza, arrependimento.",
-      difficulty: "médio"
+      difficulty: "medio"
     },
     {
       dayNumber: 5,
       reflection: "Falta de confiança, amor, admiração, parece que a gente se odeia.",
-      difficulty: "médio"
+      difficulty: "medio"
     },
     {
       dayNumber: 6,
       reflection: "Fracasso, falta de palavra, falta de admiração, não ter vontade de viver. Não ter vontade de trabalhar. Sentir-se manipulável.",
-      difficulty: "pouco"
+      difficulty: "facil"
     },
     {
       dayNumber: 7,
       reflection: "Viver com mais tranquilidade, saber que conseguimos, somos capazes, recarregar as energias.",
-      difficulty: "pouco"
+      difficulty: "facil"
     },
     {
       dayNumber: 8,
       reflection: "ouvir e ficar em alerta mesmo que a gente queira ignorar.",
-      difficulty: "pouco"
+      difficulty: "facil"
     },
     {
       dayNumber: 9,
       reflection: "tentar recuperar o dinheiro que perdeu (principal).",
-      difficulty: "pouco"
+      difficulty: "facil"
     },
     {
       dayNumber: 10,
       reflection: "privação de sono, ansiedade, distorção de dopamina, cansaço mental.",
-      difficulty: "pouco"
+      difficulty: "facil"
     },
     {
       dayNumber: 11,
       reflection: "vergonha da minha palavra, de mim mesmo, deixar de ter a percepção real do dinheiro e sentir vergonha ao comparar-se com outras pessoas que suam ao ganhar dinheiro, sentimos vergonha da gente e também vergonha do que fizemos com o nosso dinheiro.",
-      difficulty: "pouco"
+      difficulty: "facil"
     },
     {
       dayNumber: 12,
       reflection: "Academia, fazer essas reuniões, videogames, autoanálise, terapia, amor próprio, gratidão e pensar no que ainda podemos perder.",
-      difficulty: "pouco"
+      difficulty: "facil"
     },
     {
       dayNumber: 13,
       reflection: "não acreditar que somos merecedores, dignos de confiança, depreciação própria.",
-      difficulty: "pouco"
+      difficulty: "facil"
     },
     {
       dayNumber: 14,
       reflection: "trabalho, investimentos, casas, barulhos.",
-      difficulty: "pouco"
+      difficulty: "facil"
     },
     {
       dayNumber: 15,
       reflection: "adrenalina, o dinheiro que eu tinha/deveria ter (recuperar). em suma, recuperar, e sabemos que jamais recuperaremos.",
-      difficulty: "pouco"
+      difficulty: "facil"
     },
     {
       dayNumber: 16,
       reflection: "não há.",
-      difficulty: "pouco"
+      difficulty: "facil"
     },
     {
       dayNumber: 17,
       reflection: "inteligentes, agraciados, prósperos, do bem, abençoados, ricos, alegres, engraçados, cheios de vida e de Deus.",
-      difficulty: "pouco"
+      difficulty: "facil"
     },
     {
       dayNumber: 18,
       reflection: "a raiva de lembrar do que perdemos faz a gente querer recair.",
-      difficulty: "pouco"
+      difficulty: "facil"
     },
     {
       dayNumber: 19,
       reflection: "tristeza, arrependimentos, decisões financeiras.",
-      difficulty: "pouco"
+      difficulty: "facil"
     },
     {
       dayNumber: 20,
       reflection: "se reconhecer vulneráveis nos faz mais fortes porque podemos traçar estratégias.",
-      difficulty: "pouco"
+      difficulty: "facil"
     },
     {
       dayNumber: 21,
       reflection: "não convidar, lembrar das perdas, zerar os dias vencidos, nos convencer de que em todos os cenários, jogar é péssimo.",
-      difficulty: "médio"
+      difficulty: "medio"
     },
     {
       dayNumber: 22,
       reflection: "trabalho, vídeogame, valorizar o que temos, viajar, comer, sair, comprar coisas que a gente gosta.",
-      difficulty: "médio"
+      difficulty: "medio"
     },
     {
       dayNumber: 23,
       reflection: "reuniões diárias, academias, horário pra dormir, trabalho, lazer (incluir mais).",
-      difficulty: "médio"
+      difficulty: "medio"
     },
     {
       dayNumber: 24,
       reflection: "traz clareza a tona aos nossos verdadeiros pensamentos que nós queremos nos livrar dessa maldição.",
-      difficulty: "muito"
+      difficulty: "muito_dificil"
     },
     {
       dayNumber: 25,
       reflection: "projetar o futuro, o que pode acontecer, lembrar do que aconteceu.",
-      difficulty: "muito"
+      difficulty: "muito_dificil"
     },
     {
       dayNumber: 26,
       reflection: "foi importante criar barreiras porque elas nos faz lembrar de onde não queremos estar, do que não podemos fazer, faz pensar 2x ou mais antes de depositar.",
-      difficulty: "muito"
+      difficulty: "muito_dificil"
     },
     {
       dayNumber: 27,
       reflection: "pequenas vitorias como dialogos para acalmar, dinheiro entrando e a gente resistindo e não perdendo mais.",
-      difficulty: "muito"
+      difficulty: "muito_dificil"
     },
     {
       dayNumber: 28,
       reflection: "imaginar todos os cenários possíveis e lembrar de tudo que a gente já passou, lembrar constantemente faz com que a gente tenha consciências dos nossos atos, principalmente antes de depositar.",
-      difficulty: "muito"
+      difficulty: "muito_dificil"
     }
   ]
 
