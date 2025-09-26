@@ -49,47 +49,6 @@ export default function DaysGrid({
     return `${base} bg-gradient-to-br from-gray-700 via-gray-800 to-gray-900 border-gray-600/50 hover:border-gray-500/70 hover:shadow-lg`;
   };
 
-  // Função para obter configuração da tag de dificuldade
-  const getDifficultyTag = (difficulty) => {
-    const tagConfig = {
-      facil: { 
-        label: "FÁCIL", 
-        bg: "bg-green-500", 
-        text: "text-white", 
-        border: "border-green-400",
-        glow: "shadow-green-500/50"
-      },
-      moderado: { 
-        label: "MODERADO", 
-        bg: "bg-blue-500", 
-        text: "text-white", 
-        border: "border-blue-400",
-        glow: "shadow-blue-500/50"
-      },
-      dificil: { 
-        label: "DIFÍCIL", 
-        bg: "bg-orange-500", 
-        text: "text-white", 
-        border: "border-orange-400",
-        glow: "shadow-orange-500/50"
-      },
-      muito_dificil: { 
-        label: "MUITO DIFÍCIL", 
-        bg: "bg-red-500", 
-        text: "text-white", 
-        border: "border-red-400",
-        glow: "shadow-red-500/50"
-      },
-    };
-    return tagConfig[difficulty] || { 
-      label: "COMPLETO", 
-      bg: "bg-emerald-500", 
-      text: "text-white", 
-      border: "border-emerald-400",
-      glow: "shadow-emerald-500/50"
-    };
-  };
-
   // Auto scroll para o dia de hoje
   useEffect(() => {
     if (todayCardRef.current) {

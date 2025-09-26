@@ -316,10 +316,10 @@ export default function ReflectionModal({
                   </div>
 
                   {/* Conteúdo do botão */}
-                  <div className="relative py-4 px-6 text-center">
+                  <div className="relative py-4 px-6 text-center  cursor-pointer">
                     <div className="flex items-center justify-center gap-2">
                       <span
-                        className="font-bold text-base tracking-wide text-yellow-900 cursor-pointer"
+                        className="font-bold text-base tracking-wide text-yellow-900"
                         style={{
                           textShadow: "0 1px 1px rgba(0,0,0,0.2)",
                         }}
