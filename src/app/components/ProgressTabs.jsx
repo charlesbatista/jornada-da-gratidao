@@ -13,7 +13,7 @@ export default function ProgressTabs({ completedDays, days, handleDayClick, star
         <div className="mt-8 mb-12">
             {/* Navigation Tabs - Design Premium */}
             <div className="flex justify-center mb-12 w-full">
-                <div className="relative w-full">
+                <div className="relative max-w-6xl">
                     {/* Background com blur sutil */}
                     <div className="absolute inset-0 bg-black/20 backdrop-blur-sm rounded-2xl"></div>
                     
@@ -192,7 +192,7 @@ function AchievementsPanel({ completedDays, totalDays = 90 }) {
             </div>
 
             {/* Estatísticas de Conquistas */}
-            <div className="grid sm:grid-cols-2 gap-4 mb-12 max-w-2xl mx-auto">
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 mb-12 max-w-2xl mx-auto">
                 <div className="text-center p-6 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl">
                     <div className="text-3xl mb-2">🎖️</div>
                     <div className="text-2xl font-bold text-purple-400">{stats.milestonesAchieved}</div>

@@ -80,7 +80,7 @@ export default function DaysGrid({
       </div>
 
       {/* Grid de dias */}
-      <div className="grid grid-cols-2 min-[480px]:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-3 min-[480px]:gap-4 sm:gap-4 md:gap-5 lg:gap-6 mb-8">
+      <div className="grid grid-cols-1 min-[425px]:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4 md:gap-5 lg:gap-6 mb-8">
         {days.map((day) => {
           // Usar dayNumber se existir (dados do banco), senão day.id (dados antigos)
           const dayNumber = day.dayNumber || day.id;
