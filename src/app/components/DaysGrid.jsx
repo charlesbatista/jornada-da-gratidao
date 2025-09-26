@@ -100,6 +100,7 @@ export default function DaysGrid({
               key={day.id ? `old-${day.id}` : `new-${day.dayNumber}`}
               className="group relative"
               ref={isToday ? todayCardRef : null}
+              data-day-number={dayNumber}
             >
               {/* Card do dia */}
               <button

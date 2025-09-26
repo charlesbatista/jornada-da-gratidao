@@ -23,6 +23,57 @@ export default function ProgressTabs({ completedDays, days, handleDayClick, star
         });
     };
 
+    // Função para navegar para o dia de hoje
+    const scrollToToday = () => {
+        // Primeiro, garantir que estamos na aba diária
+        if (activeTab !== 'daily') {
+            setActiveTab('daily');
+            // Aguardar a aba mudar antes de fazer o scroll
+            setTimeout(() => {
+                executeScrollToToday();
+            }, 300);
+        } else {
+            executeScrollToToday();
+        }
+    };
+
+    const executeScrollToToday = () => {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        
+        // Calcular qual dia é hoje baseado na data de início
+        if (startDate && days.length > 0) {
+            const startDateObj = new Date(startDate);
+            startDateObj.setHours(0, 0, 0, 0);
+            
+            const daysDiff = Math.floor((today - startDateObj) / (1000 * 60 * 60 * 24));
+            const todayDayNumber = daysDiff + 1;
+            
+            // Verificar se o dia de hoje está dentro do período da jornada
+            if (todayDayNumber >= 1 && todayDayNumber <= totalDays) {
+                // Procurar pelo elemento do dia de hoje e fazer scroll
+                const todayElement = document.querySelector(`[data-day-number="${todayDayNumber}"]`);
+                if (todayElement) {
+                    todayElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+                } else {
+                    // Fallback: tentar novamente após um delay
+                    setTimeout(() => {
+                        const retryElement = document.querySelector(`[data-day-number="${todayDayNumber}"]`);
+                        if (retryElement) {
+                            retryElement.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'center'
+                            });
+                        }
+                    }, 500);
+                }
+            }
+        }
+    };
+
     const tabs = [
         { id: 'daily', label: `Seus ${totalDays} Dias`, icon: '📅' },
         { id: 'achievements', label: 'Trilha das Conquistas', icon: '🏆' }
@@ -89,42 +140,82 @@ export default function ProgressTabs({ completedDays, days, handleDayClick, star
                 )}
             </div>
 
-            {/* Botão Flutuante para Voltar ao Topo */}
+            {/* Botões Flutuantes */}
             {showScrollTop && (
-                <button
-                    onClick={scrollToTop}
-                    className={`
-                        fixed bottom-8 right-8 z-50 p-4 rounded-full
-                        bg-gradient-to-br from-purple-600 via-blue-600 to-cyan-500
-                        hover:from-purple-500 hover:via-blue-500 hover:to-cyan-400
-                        text-white font-bold shadow-2xl shadow-purple-500/30
-                        hover:shadow-purple-400/40 hover:shadow-2xl
-                        transform hover:scale-110 transition-all duration-300
-                        border border-white/20 hover:border-white/30
-                        backdrop-blur-xl
-                        animate-bounce hover:animate-none
-                        group
-                    `}
-                    title="Voltar ao topo"
-                >
-                    {/* Ícone de seta para cima */}
-                    <svg 
-                        className="w-6 h-6 transition-transform duration-300 group-hover:-translate-y-1" 
-                        fill="none" 
-                        stroke="currentColor" 
-                        viewBox="0 0 24 24"
+                <div className="fixed bottom-8 right-8 z-50 flex flex-col gap-3">
+                    {/* Botão Ir para Hoje */}
+                    <button
+                        onClick={scrollToToday}
+                        className={`
+                            p-4 rounded-full
+                            bg-gradient-to-br from-emerald-600 via-teal-600 to-cyan-600
+                            hover:from-emerald-500 hover:via-teal-500 hover:to-cyan-500
+                            text-white font-bold shadow-2xl shadow-emerald-500/30
+                            hover:shadow-emerald-400/40 hover:shadow-2xl
+                            transform hover:scale-110 transition-all duration-300
+                            border border-white/20 hover:border-white/30
+                            backdrop-blur-xl
+                            animate-pulse hover:animate-none
+                            group
+                        `}
+                        title="Ir para hoje"
                     >
-                        <path 
-                            strokeLinecap="round" 
-                            strokeLinejoin="round" 
-                            strokeWidth={3} 
-                            d="M5 10l7-7m0 0l7 7m-7-7v18" 
-                        />
-                    </svg>
+                        {/* Ícone de calendário/alvo */}
+                        <svg 
+                            className="w-6 h-6 transition-transform duration-300 group-hover:rotate-12" 
+                            fill="none" 
+                            stroke="currentColor" 
+                            viewBox="0 0 24 24"
+                        >
+                            <path 
+                                strokeLinecap="round" 
+                                strokeLinejoin="round" 
+                                strokeWidth={2.5} 
+                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" 
+                            />
+                            {/* Ponto para indicar "hoje" */}
+                            <circle cx="12" cy="15" r="2" fill="currentColor" />
+                        </svg>
+                        
+                        {/* Brilho de fundo */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-white/5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    </button>
                     
-                    {/* Brilho de fundo */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-white/5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </button>
+                    {/* Botão Voltar ao Topo */}
+                    <button
+                        onClick={scrollToTop}
+                        className={`
+                            p-4 rounded-full
+                            bg-gradient-to-br from-purple-600 via-blue-600 to-cyan-500
+                            hover:from-purple-500 hover:via-blue-500 hover:to-cyan-400
+                            text-white font-bold shadow-2xl shadow-purple-500/30
+                            hover:shadow-purple-400/40 hover:shadow-2xl
+                            transform hover:scale-110 transition-all duration-300
+                            border border-white/20 hover:border-white/30
+                            backdrop-blur-xl
+                            group
+                        `}
+                        title="Voltar ao topo"
+                    >
+                        {/* Ícone de seta para cima */}
+                        <svg 
+                            className="w-6 h-6 transition-transform duration-300 group-hover:-translate-y-1" 
+                            fill="none" 
+                            stroke="currentColor" 
+                            viewBox="0 0 24 24"
+                        >
+                            <path 
+                                strokeLinecap="round" 
+                                strokeLinejoin="round" 
+                                strokeWidth={3} 
+                                d="M5 10l7-7m0 0l7 7m-7-7v18" 
+                            />
+                        </svg>
+                        
+                        {/* Brilho de fundo */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-white/5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    </button>
+                </div>
             )}
         </div>
     );
