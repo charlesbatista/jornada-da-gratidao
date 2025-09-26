@@ -3,6 +3,25 @@ import DaysGrid from './DaysGrid.jsx';
 
 export default function ProgressTabs({ completedDays, days, handleDayClick, startDate, totalDays = 90 }) {
     const [activeTab, setActiveTab] = useState('daily');
+    const [showScrollTop, setShowScrollTop] = useState(false);
+
+    // Detectar scroll para mostrar/esconder botão de voltar ao topo
+    useEffect(() => {
+        const handleScroll = () => {
+            setShowScrollTop(window.scrollY > 300);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    // Função para rolar ao topo suavemente
+    const scrollToTop = () => {
+        window.scrollTo({ 
+            top: 0, 
+            behavior: 'smooth' 
+        });
+    };
 
     const tabs = [
         { id: 'daily', label: `Seus ${totalDays} Dias`, icon: '📅' },
@@ -69,6 +88,44 @@ export default function ProgressTabs({ completedDays, days, handleDayClick, star
                     <AchievementsPanel completedDays={completedDays} totalDays={totalDays} />
                 )}
             </div>
+
+            {/* Botão Flutuante para Voltar ao Topo */}
+            {showScrollTop && (
+                <button
+                    onClick={scrollToTop}
+                    className={`
+                        fixed bottom-8 right-8 z-50 p-4 rounded-full
+                        bg-gradient-to-br from-purple-600 via-blue-600 to-cyan-500
+                        hover:from-purple-500 hover:via-blue-500 hover:to-cyan-400
+                        text-white font-bold shadow-2xl shadow-purple-500/30
+                        hover:shadow-purple-400/40 hover:shadow-2xl
+                        transform hover:scale-110 transition-all duration-300
+                        border border-white/20 hover:border-white/30
+                        backdrop-blur-xl
+                        animate-bounce hover:animate-none
+                        group
+                    `}
+                    title="Voltar ao topo"
+                >
+                    {/* Ícone de seta para cima */}
+                    <svg 
+                        className="w-6 h-6 transition-transform duration-300 group-hover:-translate-y-1" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        viewBox="0 0 24 24"
+                    >
+                        <path 
+                            strokeLinecap="round" 
+                            strokeLinejoin="round" 
+                            strokeWidth={3} 
+                            d="M5 10l7-7m0 0l7 7m-7-7v18" 
+                        />
+                    </svg>
+                    
+                    {/* Brilho de fundo */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-white/5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </button>
+            )}
         </div>
     );
 }
