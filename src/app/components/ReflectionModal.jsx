@@ -198,19 +198,54 @@ export default function ReflectionModal({
                       label: "MUITO DIFÍCIL",
                       color: "red",
                     },
-                  ].map((level) => (
-                    <button
-                      key={level.key}
-                      onClick={() => handleDifficultyChange(level.key)}
-                      className={`p-3 rounded-xl border-2 transition-all duration-300 text-sm font-bold cursor-pointer ${
-                        selectedDay.difficulty === level.key
-                          ? `border-${level.color}-400 bg-${level.color}-500/20 text-${level.color}-300`
-                          : `border-white/10 bg-white/5 text-gray-400 hover:border-${level.color}-400/50 hover:bg-${level.color}-500/10`
-                      }`}
-                    >
-                      {level.label}
-                    </button>
-                  ))}
+                  ].map((level) => {
+                    const isSelected = selectedDay.difficulty === level.key;
+                    
+                    // Classes CSS completas para garantir que o Tailwind as reconheça
+                    const getSelectedClasses = () => {
+                      switch (level.color) {
+                        case 'green':
+                          return 'border-green-400 bg-green-500/20 text-green-300';
+                        case 'blue':
+                          return 'border-blue-400 bg-blue-500/20 text-blue-300';
+                        case 'orange':
+                          return 'border-orange-400 bg-orange-500/20 text-orange-300';
+                        case 'red':
+                          return 'border-red-400 bg-red-500/20 text-red-300';
+                        default:
+                          return 'border-gray-400 bg-gray-500/20 text-gray-300';
+                      }
+                    };
+                    
+                    const getHoverClasses = () => {
+                      switch (level.color) {
+                        case 'green':
+                          return 'hover:border-green-400/50 hover:bg-green-500/10';
+                        case 'blue':
+                          return 'hover:border-blue-400/50 hover:bg-blue-500/10';
+                        case 'orange':
+                          return 'hover:border-orange-400/50 hover:bg-orange-500/10';
+                        case 'red':
+                          return 'hover:border-red-400/50 hover:bg-red-500/10';
+                        default:
+                          return 'hover:border-gray-400/50 hover:bg-gray-500/10';
+                      }
+                    };
+
+                    return (
+                      <button
+                        key={level.key}
+                        onClick={() => handleDifficultyChange(level.key)}
+                        className={`p-3 rounded-xl border-2 transition-all duration-300 text-sm font-bold cursor-pointer ${
+                          isSelected
+                            ? getSelectedClasses()
+                            : `border-white/10 bg-white/5 text-gray-400 ${getHoverClasses()}`
+                        }`}
+                      >
+                        {level.label}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             </div>
