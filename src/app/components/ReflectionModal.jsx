@@ -91,14 +91,15 @@ export default function ReflectionModal({
       </div>
 
       <div
-        className="relative bg-slate-900/95 backdrop-blur-xl border border-white/20 rounded-3xl shadow-2xl w-full max-w-2xl max-h-[90vh] animate-slide-up cursor-default overflow-hidden"
+        className="relative bg-slate-900/95 backdrop-blur-xl border border-white/20 rounded-lg shadow-2xl w-full max-w-2xl max-h-[90vh] animate-slide-up cursor-default"
         onClick={(e) => e.stopPropagation()}
+        style={{ overflow: "hidden" }}
       >
         {/* Header do modal */}
         <div
           className={`relative bg-gradient-to-r ${getGradientClass(
             selectedDay.dayNumber || selectedDay.id
-          )} p-8 rounded-t-3xl`}
+          )} p-8`}
         >
           {/* Botão fechar */}
           <button
@@ -111,15 +112,6 @@ export default function ReflectionModal({
 
           {/* Conteúdo do header */}
           <div className="text-center text-white">
-            {/* Ícone do dia */}
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-full mb-4">
-              <span className="text-2xl">
-                {selectedDay.isComplete || selectedDay.isCompleted
-                  ? "🎉"
-                  : "📝"}
-              </span>
-            </div>
-
             <h2 className="text-3xl font-black mb-2">
               Dia {selectedDay.dayNumber || selectedDay.id}
             </h2>
@@ -143,17 +135,17 @@ export default function ReflectionModal({
         {/* Conteúdo scrollável */}
         <div
           ref={modalContentRef}
-          className="overflow-y-auto max-h-[calc(90vh-200px)] scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent"
+          className="overflow-y-auto max-h-[calc(90vh-216px)] custom-scrollbar"
         >
           <div className="p-8">
             {/* Tema de reflexão */}
             <div className="mb-8">
+              <h3 className="font-bold text-lg mb-3 text-purple-300 flex items-center gap-2">
+                🎯 Tema de Reflexão
+              </h3>
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-2xl blur-lg" />
                 <div className="relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6">
-                  <h3 className="font-bold text-lg mb-3 text-purple-300 flex items-center gap-2">
-                    🎯 Tema de Reflexão
-                  </h3>
                   <p className="text-gray-300 leading-relaxed text-lg">
                     {selectedDay.theme ||
                       reflectionThemes[
@@ -196,65 +188,27 @@ export default function ReflectionModal({
               </h3>
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 to-red-500/10 rounded-2xl blur-lg" />
-                <div className="relative grid grid-cols-2 gap-3">
+                <div className="relative grid grid-cols-2 sm:grid-cols-4 gap-3">
                   {[
+                    { key: "facil", label: "FÁCIL", color: "green" },
+                    { key: "medio", label: "MODERADO", color: "blue" },
+                    { key: "dificil", label: "DIFÍCIL", color: "orange" },
                     {
-                      key: "moleza",
-                      label: "FÁCIL",
-                      bg: "bg-green-500",
-                      border: "border-green-400",
-                      hover: "hover:border-green-400/50 hover:bg-green-500/10",
-                      active: "border-green-400 bg-green-500/20 text-green-300",
-                    },
-                    {
-                      key: "pouco",
-                      label: "MODERADO",
-                      bg: "bg-blue-500",
-                      border: "border-blue-400",
-                      hover: "hover:border-blue-400/50 hover:bg-blue-500/10",
-                      active: "border-blue-400 bg-blue-500/20 text-blue-300",
-                    },
-                    {
-                      key: "médio",
-                      label: "MÉDIO",
-                      bg: "bg-orange-500",
-                      border: "border-orange-400",
-                      hover:
-                        "hover:border-orange-400/50 hover:bg-orange-500/10",
-                      active:
-                        "border-orange-400 bg-orange-500/20 text-orange-300",
-                    },
-                    {
-                      key: "muito",
-                      label: "DIFÍCIL",
-                      bg: "bg-red-500",
-                      border: "border-red-400",
-                      hover: "hover:border-red-400/50 hover:bg-red-500/10",
-                      active: "border-red-400 bg-red-500/20 text-red-300",
+                      key: "muito_dificil",
+                      label: "MUITO DIFÍCIL",
+                      color: "red",
                     },
                   ].map((level) => (
                     <button
                       key={level.key}
                       onClick={() => handleDifficultyChange(level.key)}
-                      className={`p-4 rounded-2xl border-2 transition-all duration-300 cursor-pointer ${
+                      className={`p-3 rounded-xl border-2 transition-all duration-300 text-sm font-bold cursor-pointer ${
                         selectedDay.difficulty === level.key
-                          ? level.active
-                          : `border-white/10 bg-white/5 text-gray-400 ${level.hover}`
+                          ? `border-${level.color}-400 bg-${level.color}-500/20 text-${level.color}-300`
+                          : `border-white/10 bg-white/5 text-gray-400 hover:border-${level.color}-400/50 hover:bg-${level.color}-500/10`
                       }`}
                     >
-                      <div className="text-center">
-                        <div
-                          className={`
-                                                ${level.bg} text-white px-3 py-2 rounded-lg text-sm font-bold uppercase tracking-wider
-                                                ${level.border} shadow-lg mb-3 mx-auto inline-block
-                                            `}
-                        >
-                          {level.label}
-                        </div>
-                        <div className="font-medium capitalize text-sm">
-                          {level.key}
-                        </div>
-                      </div>
+                      {level.label}
                     </button>
                   ))}
                 </div>
@@ -289,75 +243,119 @@ export default function ReflectionModal({
                 )}
               </button>
 
-              {/* Botão completar dia - Dourado com super brilho */}
+              {/* Botão completar dia - Barra de Ouro Premium */}
               {!(selectedDay.isComplete || selectedDay.isCompleted) && (
                 <button
                   onClick={handleCompleteDay}
-                  className="flex-1 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700 text-yellow-900 font-bold py-4 px-6 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-yellow-400/60 cursor-pointer relative overflow-hidden animate-pulse"
+                  className="flex-1 relative overflow-hidden rounded-xl transition-all duration-300 transform hover:scale-[1.02] focus:outline-none group"
                   style={{
-                    animation:
-                      "pulse 2s infinite, glow 2s ease-in-out infinite alternate",
+                    background:
+                      "linear-gradient(135deg, #FFD700 0%, #FFA500 25%, #FFD700 50%, #B8860B 75%, #FFD700 100%)",
                     boxShadow:
-                      "0 0 20px rgba(234, 179, 8, 0.6), 0 0 40px rgba(234, 179, 8, 0.4), 0 0 60px rgba(234, 179, 8, 0.2)",
+                      "0 4px 20px rgba(255, 215, 0, 0.3), 0 0 0 1px rgba(255, 215, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3)",
                   }}
                 >
-                  {/* Efeito brilho dourado animado */}
+                  {/* Textura de ouro sutil */}
                   <div
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent animate-shimmer"
+                    className="absolute inset-0 opacity-20"
                     style={{
-                      animation: "shimmer 1.5s ease-in-out infinite",
                       background:
-                        "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%)",
+                        "repeating-linear-gradient(45deg, transparent, transparent 1px, rgba(255,255,255,0.1) 1px, rgba(255,255,255,0.1) 2px)",
+                    }}
+                  />
+
+                  {/* Brilho animado no hover */}
+                  <div
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                    style={{
+                      background:
+                        "linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%)",
+                      animation: "sweep 1.5s ease-in-out",
                       transform: "translateX(-100%)",
                     }}
                   />
 
-                  {/* Partículas brilhantes */}
-                  <div className="absolute inset-0 opacity-30">
+                  {/* Reflexo superior */}
+                  <div
+                    className="absolute top-0 left-0 right-0 h-1/3 opacity-30"
+                    style={{
+                      background:
+                        "linear-gradient(to bottom, rgba(255,255,255,0.3), transparent)",
+                    }}
+                  />
+
+                  {/* Partículas douradas discretas */}
+                  <div className="absolute inset-0 pointer-events-none opacity-60">
                     <div
-                      className="absolute top-2 left-4 w-1 h-1 bg-white rounded-full animate-ping"
-                      style={{ animationDelay: "0s" }}
+                      className="absolute w-0.5 h-0.5 bg-white rounded-full animate-ping"
+                      style={{
+                        top: "20%",
+                        left: "25%",
+                        animationDelay: "0s",
+                        animationDuration: "2s",
+                      }}
                     />
                     <div
-                      className="absolute top-4 right-6 w-1 h-1 bg-white rounded-full animate-ping"
-                      style={{ animationDelay: "0.5s" }}
+                      className="absolute w-0.5 h-0.5 bg-yellow-200 rounded-full animate-pulse"
+                      style={{
+                        top: "30%",
+                        right: "20%",
+                        animationDelay: "0.7s",
+                        animationDuration: "1.5s",
+                      }}
                     />
                     <div
-                      className="absolute bottom-3 left-8 w-1 h-1 bg-white rounded-full animate-ping"
-                      style={{ animationDelay: "1s" }}
-                    />
-                    <div
-                      className="absolute bottom-2 right-4 w-1 h-1 bg-white rounded-full animate-ping"
-                      style={{ animationDelay: "1.5s" }}
+                      className="absolute w-0.5 h-0.5 bg-white rounded-full animate-ping"
+                      style={{
+                        bottom: "25%",
+                        left: "35%",
+                        animationDelay: "1.4s",
+                        animationDuration: "2.2s",
+                      }}
                     />
                   </div>
 
-                  <span className="relative flex items-center justify-center gap-2 font-black text-lg">
-                    <span className="animate-bounce">👑</span>
-                    <span>CONCLUIR DIA</span>
-                    <span
-                      className="animate-bounce"
-                      style={{ animationDelay: "0.1s" }}
-                    >
-                      🏆
-                    </span>
-                  </span>
+                  {/* Conteúdo do botão */}
+                  <div className="relative py-4 px-6 text-center">
+                    <div className="flex items-center justify-center gap-2">
+                      <span
+                        className="font-bold text-base tracking-wide text-yellow-900 cursor-pointer"
+                        style={{
+                          textShadow: "0 1px 1px rgba(0,0,0,0.2)",
+                        }}
+                      >
+                        CONCLUIR DIA
+                      </span>
+                      <span
+                        className="text-xl animate-bounce"
+                        style={{
+                          animationDuration: "2s",
+                          animationDelay: "0.3s",
+                        }}
+                      >
+                        🏆
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Borda interna sutil */}
+                  <div className="absolute inset-0.5 rounded-lg border border-yellow-300/30 pointer-events-none" />
                 </button>
               )}
             </div>
 
-            {/* Dicas motivacionais */}
-            <div className="mt-6 text-center">
+            {/* Mensagem de status no final - design limpo */}
+            <div className="mt-8 text-center">
               <div
-                className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm transition-all duration-300 ${
+                className={`inline-flex items-center gap-3 px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 ${
                   selectedDay.isComplete || selectedDay.isCompleted
-                    ? "bg-green-400/10 text-green-300"
+                    ? "bg-emerald-500/15 text-emerald-200 border border-emerald-400/25"
                     : selectedDay.difficulty
-                    ? "bg-blue-400/10 text-blue-300"
-                    : "bg-orange-400/10 text-orange-300 animate-pulse"
+                    ? "bg-blue-500/15 text-blue-200 border border-blue-400/25"
+                    : "bg-amber-500/15 text-amber-200 border border-amber-400/25 animate-pulse"
                 }`}
               >
-                <span>
+                <span className="text-base">
                   {selectedDay.isComplete || selectedDay.isCompleted
                     ? "🎉"
                     : selectedDay.difficulty
@@ -369,7 +367,7 @@ export default function ReflectionModal({
                     ? "Parabéns! Você concluiu mais um dia da sua jornada!"
                     : selectedDay.difficulty
                     ? "Tudo pronto! Clique em 'Concluir Dia' para finalizar"
-                    : "⚠️ Selecione o nível de dificuldade para poder concluir o dia"}
+                    : "Selecione o nível de dificuldade para poder concluir o dia"}
                 </span>
               </div>
             </div>
