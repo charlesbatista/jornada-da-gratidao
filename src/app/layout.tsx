@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Jornada da Transformação",
-  description: "Sua jornada de transformação pessoal e crescimento. Configure de 1 a 365 dias!",
+  description: "Sua jornada de transformação pessoal e crescimento.",
 };
 
 export default function RootLayout({
