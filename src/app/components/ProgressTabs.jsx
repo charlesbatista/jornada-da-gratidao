@@ -12,14 +12,14 @@ export default function ProgressTabs({ completedDays, days, handleDayClick, star
     return (
         <div className="mt-8 mb-12">
             {/* Navigation Tabs - Design Premium */}
-            <div className="flex justify-center mb-12">
-                <div className="relative">
+            <div className="flex justify-center mb-12 w-full">
+                <div className="relative w-full">
                     {/* Background com blur sutil */}
                     <div className="absolute inset-0 bg-black/20 backdrop-blur-sm rounded-2xl"></div>
                     
                     {/* Container das abas */}
-                    <div className="relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-1">
-                        <div className="flex">
+                    <div className="w-full relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-1 mx-auto">
+                        <div className="flex max-sm:flex-col justify-center">
                             {tabs.map((tab) => (
                                 <button
                                     key={tab.id}
@@ -43,11 +43,6 @@ export default function ProgressTabs({ completedDays, days, handleDayClick, star
                                             activeTab === tab.id ? 'text-gray-900' : 'text-white'
                                         }`}>
                                             {tab.label}
-                                        </span>
-                                        <span className={`text-xs mt-0.5 leading-none font-normal ${
-                                            activeTab === tab.id ? 'text-gray-500' : 'text-gray-400'
-                                        }`}>
-                                            {tab.id === 'daily' ? 'Calendário & Progresso' : 'Marcos & Medalhas'}
                                         </span>
                                     </div>
                                     
@@ -197,7 +192,7 @@ function AchievementsPanel({ completedDays, totalDays = 90 }) {
             </div>
 
             {/* Estatísticas de Conquistas */}
-            <div className="grid grid-cols-3 gap-4 mb-12 max-w-2xl mx-auto">
+            <div className="grid sm:grid-cols-2 gap-4 mb-12 max-w-2xl mx-auto">
                 <div className="text-center p-6 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl">
                     <div className="text-3xl mb-2">🎖️</div>
                     <div className="text-2xl font-bold text-purple-400">{stats.milestonesAchieved}</div>
