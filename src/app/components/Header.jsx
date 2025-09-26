@@ -343,7 +343,7 @@ export default function Header({ completedDays, totalDays = 90, startDate }) {
                                 <p className="text-xl md:text-2xl text-gray-300 font-light leading-relaxed mb-4" style={{
                                     animation: 'fadeInUp 2s ease-out 1.3s both'
                                 }}>
-                                    de autodescoberta e crescimento pessoal
+                                    na libertação do vício em apostas online!
                                 </p>
                                 
                                 {/* Frase motivacional */}
