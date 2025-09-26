@@ -687,9 +687,30 @@ function InitialConfigScreen({ onConfigComplete }) {
     new Date().toISOString().split("T")[0]
   );
   const [totalDays, setTotalDays] = useState(90);
+  const [isLoading, setIsLoading] = useState(false);
+  const [loadingStage, setLoadingStage] = useState(0);
 
-  const handleStartJourney = () => {
-    onConfigComplete(startDate, totalDays); // passe a string direto
+  const loadingMessages = [
+    { icon: "🚀", text: "Preparando foguetes..." },
+    { icon: "⛽", text: "Abastecendo combustível..." },
+    { icon: "🧭", text: "Calibrando navegação..." },
+    { icon: "✨", text: "Sincronizando estrelas..." },
+    { icon: "🌌", text: "Abrindo portal dimensional..." },
+    { icon: "🎯", text: "Definindo coordenadas..." },
+    { icon: "🔥", text: "Iniciando sua jornada!" }
+  ];
+
+  const handleStartJourney = async () => {
+    setIsLoading(true);
+    
+    // Simular processo de carregamento com etapas
+    for (let stage = 0; stage < loadingMessages.length; stage++) {
+      setLoadingStage(stage);
+      await new Promise(resolve => setTimeout(resolve, 800));
+    }
+    
+    // Executar a função real de criação da jornada
+    await onConfigComplete(startDate, totalDays);
   };
 
   return (
@@ -777,15 +798,67 @@ function InitialConfigScreen({ onConfigComplete }) {
               </div>
             </div>
 
-            {/* Botão iniciar */}
+            {/* Botão iniciar com animações de loading */}
             <div className="mt-8 text-center">
-              <button
-                onClick={handleStartJourney}
-                className="inline-flex items-center gap-3 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold py-4 px-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 cursor-pointer"
-              >
-                <span className="text-2xl">🎯</span>
-                <span>Iniciar Minha Jornada</span>
-              </button>
+              {!isLoading ? (
+                <button
+                  onClick={handleStartJourney}
+                  className="inline-flex items-center gap-3 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold py-4 px-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 cursor-pointer group"
+                >
+                  <span className="text-2xl group-hover:animate-bounce">🎯</span>
+                  <span>Iniciar Minha Jornada</span>
+                </button>
+              ) : (
+                <div className="inline-block">
+                  {/* Container de animação de carregamento */}
+                  <div className="bg-gradient-to-r from-purple-600 via-blue-600 to-cyan-500 text-white font-bold py-6 px-10 rounded-3xl shadow-2xl border border-white/20 backdrop-blur-xl animate-pulse">
+                    <div className="flex flex-col items-center gap-4">
+                      {/* Ícone animado da etapa atual */}
+                      <div className={`text-6xl ${loadingStage < 2 ? 'animate-bounce' : 'animate-spin'} transition-all duration-500`}>
+                        {loadingMessages[loadingStage]?.icon}
+                      </div>
+                      
+                      {/* Texto da etapa */}
+                      <div className="text-xl font-bold animate-pulse">
+                        {loadingMessages[loadingStage]?.text}
+                      </div>
+                      
+                      {/* Barra de progresso cósmica */}
+                      <div className="w-80 h-3 bg-white/20 rounded-full overflow-hidden">
+                        <div 
+                          className="h-full bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 rounded-full transition-all duration-800 ease-in-out shadow-lg shadow-orange-400/50"
+                          style={{ 
+                            width: `${((loadingStage + 1) / loadingMessages.length) * 100}%`,
+                            boxShadow: '0 0 20px rgba(251, 146, 60, 0.8)'
+                          }}
+                        />
+                      </div>
+                      
+                      {/* Indicadores de progresso */}
+                      <div className="flex gap-2 mt-2">
+                        {loadingMessages.map((_, index) => (
+                          <div
+                            key={index}
+                            className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                              index <= loadingStage
+                                ? 'bg-emerald-400 shadow-lg shadow-emerald-400/60 animate-pulse'
+                                : 'bg-white/20'
+                            }`}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Efeitos de partículas durante o carregamento */}
+                  <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                    <div className="absolute -top-2 -left-2 w-2 h-2 bg-yellow-400 rounded-full animate-ping" style={{animationDelay: '0s'}} />
+                    <div className="absolute -top-3 -right-4 w-1 h-1 bg-cyan-400 rounded-full animate-ping" style={{animationDelay: '0.5s'}} />
+                    <div className="absolute -bottom-2 -left-3 w-1.5 h-1.5 bg-pink-400 rounded-full animate-ping" style={{animationDelay: '1s'}} />
+                    <div className="absolute -bottom-1 -right-2 w-2 h-2 bg-purple-400 rounded-full animate-ping" style={{animationDelay: '1.5s'}} />
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Info adicional */}
