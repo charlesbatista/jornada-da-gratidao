@@ -10,6 +10,9 @@
   --color-foreground: var(--foreground);
   --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  
+  /* Custom breakpoints */
+  --breakpoint-xs: 475px;
 }
 
 @media (prefers-color-scheme: dark) {

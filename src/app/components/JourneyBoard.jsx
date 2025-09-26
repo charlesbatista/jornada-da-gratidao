@@ -426,9 +426,9 @@ export default function JourneyBoard() {
     setIsModalOpen(true);
   };
 
-  const handleCloseModal = async () => {
-    // Salva as mudanças antes de fechar
-    if (selectedDay && (selectedDay.reflection || selectedDay.difficulty)) {
+  const handleCloseModal = async (shouldSave = false) => {
+    // Salva as mudanças apenas se shouldSave for true
+    if (shouldSave && selectedDay && (selectedDay.reflection || selectedDay.difficulty)) {
       const dayNumberToUpdate = selectedDay.dayNumber || selectedDay.id;
       await updateDay(dayNumberToUpdate, {
         isCompleted: selectedDay.isCompleted || selectedDay.isComplete,
