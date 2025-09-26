@@ -1,6 +1,4 @@
 // Cálculos para marcos de conquistas e dinheiro poupado
-export const WEEKLY_LOSS = 30000; // R$ 30,000 por semana em recaídas
-
 export const generateAchievements = (totalDays) => {
   const achievements = [
     { days: 7, title: "Uma Semana", icon: "🌱", description: "Primeira semana completa!" },
@@ -50,12 +48,6 @@ export const generateAchievements = (totalDays) => {
 
 // Manter compatibilidade com código existente
 export const achievements = generateAchievements(90);
-
-export function calculateMoneySaved(completedDays) {
-  const weeksCompleted = completedDays / 7;
-  const moneySaved = Math.floor(weeksCompleted * WEEKLY_LOSS);
-  return moneySaved;
-}
 
 export function formatMoney(amount) {
   return new Intl.NumberFormat('pt-BR', {
@@ -109,7 +101,6 @@ export function getAllAchievedMilestones(completedDays, totalDays = 90) {
 }
 
 export function getMotivationalMessage(completedDays, totalDays = 90) {
-  const moneySaved = calculateMoneySaved(completedDays);
   const currentMilestone = getCurrentMilestone(completedDays, totalDays);
   
   if (completedDays === 0) {
@@ -121,10 +112,10 @@ export function getMotivationalMessage(completedDays, totalDays = 90) {
   }
   
   if (currentMilestone) {
-    return `${currentMilestone.icon} ${currentMilestone.title} conquistado! Você já poupou ${formatMoney(moneySaved)}!`;
+    return `${currentMilestone.icon} ${currentMilestone.title} conquistado!`;
   }
   
-  return `${completedDays} dias de transformação! Você está poupando ${formatMoney(moneySaved)}!`;
+  return `${completedDays} dias de transformação!`;
 }
 
 export function getDailySavings() {
