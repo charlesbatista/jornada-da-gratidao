@@ -53,42 +53,78 @@ export default function Header({ completedDays, totalDays = 90, startDate }) {
             {/* Inject custom CSS styles */}
             <style dangerouslySetInnerHTML={{ __html: customStyles }} />
             
-            <header className="relative text-center mb-20 overflow-hidden">
-            {/* Background dinâmico com múltiplas camadas */}
-            <div className="absolute inset-0 -mx-8 overflow-hidden">
-                {/* Partículas flutuantes */}
-                <div className="absolute top-16 left-12 w-32 h-32 bg-gradient-to-br from-blue-400/15 to-cyan-500/10 rounded-full blur-2xl animate-pulse" />
-                <div className="absolute top-32 right-16 w-48 h-48 bg-gradient-to-br from-purple-500/15 to-pink-500/10 rounded-full blur-2xl animate-pulse" style={{animationDelay: '1.5s'}} />
+            <header className="relative text-center mb-20">
+            {/* Background dinâmico que se estende além do container */}
+            <div className="absolute -inset-16 overflow-hidden">
+                {/* Partículas flutuantes - posicionadas para não serem cortadas */}
+                <div className="absolute top-16 left-4 w-32 h-32 bg-gradient-to-br from-blue-400/15 to-cyan-500/10 rounded-full blur-2xl animate-pulse" />
+                <div className="absolute top-32 right-4 w-48 h-48 bg-gradient-to-br from-purple-500/15 to-pink-500/10 rounded-full blur-2xl animate-pulse" style={{animationDelay: '1.5s'}} />
                 <div className="absolute bottom-20 left-1/4 w-40 h-40 bg-gradient-to-br from-amber-400/15 to-orange-500/10 rounded-full blur-2xl animate-pulse" style={{animationDelay: '0.8s'}} />
                 <div className="absolute top-1/2 right-1/4 w-24 h-24 bg-gradient-to-br from-emerald-400/15 to-teal-500/10 rounded-full blur-xl animate-pulse" style={{animationDelay: '2.2s'}} />
+                
+                {/* Partículas adicionais nas bordas para efeito mais natural */}
+                <div className="absolute top-10 -left-8 w-24 h-24 bg-gradient-to-br from-cyan-400/10 to-blue-500/8 rounded-full blur-xl animate-pulse" style={{animationDelay: '3s'}} />
+                <div className="absolute bottom-10 -right-8 w-36 h-36 bg-gradient-to-br from-pink-400/10 to-purple-500/8 rounded-full blur-2xl animate-pulse" style={{animationDelay: '2.5s'}} />
+                <div className="absolute top-1/3 -left-12 w-20 h-20 bg-gradient-to-br from-yellow-400/12 to-orange-500/8 rounded-full blur-xl animate-pulse" style={{animationDelay: '1.8s'}} />
+                <div className="absolute bottom-1/3 -right-12 w-28 h-28 bg-gradient-to-br from-emerald-400/10 to-teal-500/8 rounded-full blur-xl animate-pulse" style={{animationDelay: '0.3s'}} />
                 
                 {/* Estrelas cintilantes */}
                 <div className="absolute top-20 left-1/4 w-1 h-1 bg-yellow-400 rounded-full animate-ping" style={{animationDelay: '0.5s'}} />
                 <div className="absolute top-40 right-1/3 w-1 h-1 bg-blue-400 rounded-full animate-ping" style={{animationDelay: '1.2s'}} />
                 <div className="absolute top-60 left-2/3 w-1 h-1 bg-purple-400 rounded-full animate-ping" style={{animationDelay: '2s'}} />
+                <div className="absolute bottom-40 left-1/5 w-1 h-1 bg-pink-400 rounded-full animate-ping" style={{animationDelay: '2.8s'}} />
+                <div className="absolute top-1/4 right-1/5 w-1 h-1 bg-emerald-400 rounded-full animate-ping" style={{animationDelay: '1.7s'}} />
             </div>
             
+            {/* Container com padding para o conteúdo */}
+            <div className="relative z-10 px-4">
+            
             <div className="relative z-10">
-                {/* Ícone principal com efeitos dinâmicos */}
-                <div className="mb-12 relative">
-                    {/* Rings orbitais */}
-                    <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-32 h-32 border border-gradient-to-r from-yellow-400/30 to-orange-500/30 rounded-full animate-spin" style={{animationDuration: '20s'}} />
-                        <div className="absolute w-40 h-40 border border-gradient-to-r from-purple-400/20 to-pink-500/20 rounded-full animate-spin" style={{animationDuration: '25s', animationDirection: 'reverse'}} />
-                    </div>
-                    
-                    {/* Ícone central com múltiplos efeitos */}
-                    <div className="relative inline-flex items-center justify-center w-24 h-24 rounded-full bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 shadow-2xl shadow-yellow-500/40 mb-4 group">
-                        {/* Brilho pulsante */}
-                        <div className="absolute inset-0 rounded-full bg-gradient-to-r from-yellow-400 to-orange-500 opacity-75 animate-ping" />
+                {/* Desenho da Jornada - Conceito Moderno */}
+                <div className="mb-12 relative flex justify-center">
+                    <div className="relative w-32 h-32">
+                        {/* Círculos concêntricos com gradientes */}
+                        <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-500/20 via-purple-500/30 to-pink-500/20 animate-pulse" style={{animationDuration: '4s'}} />
+                        <div className="absolute inset-2 rounded-full bg-gradient-to-br from-purple-500/30 via-pink-500/40 to-orange-500/30 animate-pulse" style={{animationDuration: '3s', animationDelay: '0.5s'}} />
+                        <div className="absolute inset-4 rounded-full bg-gradient-to-br from-orange-500/40 via-yellow-400/50 to-amber-400/40 animate-pulse" style={{animationDuration: '2s', animationDelay: '1s'}} />
                         
-                        {/* Reflexo superior */}
-                        <div className="absolute top-2 left-2 right-2 h-6 bg-gradient-to-b from-white/40 to-transparent rounded-full" />
+                        {/* Centro com ícone principal */}
+                        <div className="absolute inset-6 rounded-full bg-gradient-to-br from-white via-yellow-100 to-amber-100 shadow-2xl flex items-center justify-center group cursor-pointer hover:scale-110 transition-all duration-500">
+                            {/* Brilho interno */}
+                            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-yellow-400/20 to-orange-500/20 animate-ping" />
+                            
+                            {/* Reflexo superior realista */}
+                            <div className="absolute top-1 left-1 right-4 bottom-4 rounded-full bg-gradient-to-br from-white/60 via-white/20 to-transparent" />
+                            
+                            {/* Ícone da jornada */}
+                            <div className="relative z-10 flex flex-col items-center">
+                                <span className="text-2xl mb-1 transform group-hover:rotate-12 transition-all duration-300" style={{
+                                    animation: 'float 3s ease-in-out infinite'
+                                }}>🌟</span>
+                                <div className="w-4 h-0.5 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full" />
+                                <span className="text-xl mt-1 transform group-hover:-rotate-6 transition-all duration-300" style={{
+                                    animation: 'float 3s ease-in-out infinite',
+                                    animationDelay: '0.5s'
+                                }}>🚀</span>
+                            </div>
+                        </div>
                         
-                        {/* Ícone animado */}
-                        <span className="relative text-4xl z-10 transform group-hover:scale-125 transition-all duration-500" style={{
-                            animation: 'float 3s ease-in-out infinite'
-                        }}>🚀</span>
+                        {/* Partículas orbitais */}
+                        <div className="absolute inset-0 animate-spin" style={{animationDuration: '20s'}}>
+                            <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-3 h-3 bg-yellow-400 rounded-full shadow-lg shadow-yellow-400/50" />
+                            <div className="absolute top-1/2 -right-2 transform -translate-y-1/2 w-2 h-2 bg-blue-400 rounded-full shadow-lg shadow-blue-400/50" />
+                        </div>
+                        
+                        <div className="absolute inset-0 animate-spin" style={{animationDuration: '15s', animationDirection: 'reverse'}}>
+                            <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-purple-400 rounded-full shadow-lg shadow-purple-400/50" />
+                            <div className="absolute top-1/2 -left-2 transform -translate-y-1/2 w-3 h-3 bg-pink-400 rounded-full shadow-lg shadow-pink-400/50" />
+                        </div>
+                        
+                        {/* Trail de movimento */}
+                        <div className="absolute inset-0 overflow-hidden rounded-full">
+                            <div className="absolute top-8 left-8 w-16 h-16 border-2 border-dashed border-white/20 rounded-full animate-spin" style={{animationDuration: '8s'}} />
+                            <div className="absolute top-6 left-6 w-20 h-20 border border-dotted border-white/10 rounded-full animate-spin" style={{animationDuration: '12s', animationDirection: 'reverse'}} />
+                        </div>
                     </div>
                 </div>
 
@@ -121,23 +157,44 @@ export default function Header({ completedDays, totalDays = 90, startDate }) {
                     </h1>
                 </div>
                 
-                {/* Subtítulo com animação de digitação */}
+                {/* Subtítulo integrado e elegante */}
                 <div className="mb-12 relative">
-                    <p className="text-xl md:text-2xl text-gray-300 font-light max-w-2xl mx-auto leading-relaxed">
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500 font-bold text-2xl md:text-3xl">
-                            {totalDays} dias
-                        </span>
-                        <span className="block mt-2 text-lg md:text-xl" style={{
-                            animation: 'fadeInUp 2s ease-out 1s both'
-                        }}>
-                            de autodescoberta e crescimento pessoal
-                        </span>
-                        <span className="block mt-3 text-base md:text-lg text-gray-400 italic" style={{
-                            animation: 'fadeInUp 2s ease-out 1.5s both'
-                        }}>
-                            ✨ Um dia de cada vez, um passo de cada vez ✨
-                        </span>
-                    </p>
+                    <div className="max-w-3xl mx-auto">
+                        {/* Card do subtítulo */}
+                        <div className="relative bg-gradient-to-br from-slate-900/40 via-slate-800/30 to-slate-900/40 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
+                            {/* Brilho sutil */}
+                            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-purple-500/10 to-pink-500/5 rounded-2xl" />
+                            
+                            <div className="relative text-center">
+                                {/* Título principal do card */}
+                                <div className="inline-flex items-center gap-3 mb-4" style={{
+                                    animation: 'fadeInUp 2s ease-out 1s both'
+                                }}>
+                                    <div className="w-8 h-0.5 bg-gradient-to-r from-transparent via-yellow-400 to-transparent" />
+                                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500 font-black text-3xl md:text-4xl">
+                                        {totalDays} DIAS
+                                    </span>
+                                    <div className="w-8 h-0.5 bg-gradient-to-r from-transparent via-yellow-400 to-transparent" />
+                                </div>
+                                
+                                {/* Descrição principal */}
+                                <p className="text-xl md:text-2xl text-gray-300 font-light leading-relaxed mb-4" style={{
+                                    animation: 'fadeInUp 2s ease-out 1.3s both'
+                                }}>
+                                    de autodescoberta e crescimento pessoal
+                                </p>
+                                
+                                {/* Frase motivacional */}
+                                <div className="flex items-center justify-center gap-2 text-base md:text-lg text-gray-400 italic" style={{
+                                    animation: 'fadeInUp 2s ease-out 1.6s both'
+                                }}>
+                                    <span className="text-yellow-400">✨</span>
+                                    <span>Um dia de cada vez, um passo de cada vez</span>
+                                    <span className="text-yellow-400">✨</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 {/* Card de progresso dinâmico e interativo */}
@@ -231,6 +288,7 @@ export default function Header({ completedDays, totalDays = 90, startDate }) {
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
         </header>
         </>
