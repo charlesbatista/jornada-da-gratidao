@@ -42,6 +42,35 @@ const customStyles = `
     0%, 100% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); }
     50% { text-shadow: 0 0 20px rgba(255, 255, 255, 0.6), 0 0 30px rgba(147, 51, 234, 0.3); }
   }
+  
+  @keyframes meteor {
+    0% { opacity: 0; transform: translateX(-20px) translateY(-20px); }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { opacity: 0; transform: translateX(40px) translateY(40px); }
+  }
+  
+  @keyframes orbitSlow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  
+  @keyframes orbitFast {
+    from { transform: rotate(360deg); }
+    to { transform: rotate(0deg); }
+  }
+  
+  @keyframes floatUp {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    25% { transform: translateY(-8px) rotate(2deg); }
+    50% { transform: translateY(-15px) rotate(0deg); }
+    75% { transform: translateY(-8px) rotate(-2deg); }
+  }
+  
+  @keyframes sparkle {
+    0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    50% { transform: scale(1.3) rotate(180deg); opacity: 0.8; }
+  }
 `;
 
 export default function Header({ completedDays, totalDays = 90, startDate }) {
@@ -53,78 +82,117 @@ export default function Header({ completedDays, totalDays = 90, startDate }) {
             {/* Inject custom CSS styles */}
             <style dangerouslySetInnerHTML={{ __html: customStyles }} />
             
-            <header className="relative text-center mb-20">
-            {/* Background dinâmico que se estende além do container */}
-            <div className="absolute -inset-16 overflow-hidden">
-                {/* Partículas flutuantes - posicionadas para não serem cortadas */}
-                <div className="absolute top-16 left-4 w-32 h-32 bg-gradient-to-br from-blue-400/15 to-cyan-500/10 rounded-full blur-2xl animate-pulse" />
-                <div className="absolute top-32 right-4 w-48 h-48 bg-gradient-to-br from-purple-500/15 to-pink-500/10 rounded-full blur-2xl animate-pulse" style={{animationDelay: '1.5s'}} />
-                <div className="absolute bottom-20 left-1/4 w-40 h-40 bg-gradient-to-br from-amber-400/15 to-orange-500/10 rounded-full blur-2xl animate-pulse" style={{animationDelay: '0.8s'}} />
-                <div className="absolute top-1/2 right-1/4 w-24 h-24 bg-gradient-to-br from-emerald-400/15 to-teal-500/10 rounded-full blur-xl animate-pulse" style={{animationDelay: '2.2s'}} />
+            <header className="relative text-center mt-12">
+            {/* Background INCRÍVEL que se estende além do container */}
+            <div className="absolute -inset-20 overflow-hidden">
+                {/* Nebulosas cósmicas flutuantes */}
+                <div className="absolute top-24 left-8 w-40 h-40 bg-gradient-to-br from-blue-400/20 via-cyan-500/15 to-blue-600/10 rounded-full blur-3xl animate-pulse" style={{animationDuration: '6s'}} />
+                <div className="absolute top-40 right-12 w-56 h-56 bg-gradient-to-br from-purple-500/20 via-pink-500/15 to-purple-600/10 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s', animationDuration: '8s'}} />
+                <div className="absolute bottom-32 left-1/4 w-48 h-48 bg-gradient-to-br from-amber-400/20 via-orange-500/15 to-yellow-600/10 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s', animationDuration: '7s'}} />
+                <div className="absolute top-1/2 right-1/4 w-32 h-32 bg-gradient-to-br from-emerald-400/20 via-teal-500/15 to-green-600/10 rounded-full blur-2xl animate-pulse" style={{animationDelay: '3s', animationDuration: '5s'}} />
                 
-                {/* Partículas adicionais nas bordas para efeito mais natural */}
-                <div className="absolute top-10 -left-8 w-24 h-24 bg-gradient-to-br from-cyan-400/10 to-blue-500/8 rounded-full blur-xl animate-pulse" style={{animationDelay: '3s'}} />
-                <div className="absolute bottom-10 -right-8 w-36 h-36 bg-gradient-to-br from-pink-400/10 to-purple-500/8 rounded-full blur-2xl animate-pulse" style={{animationDelay: '2.5s'}} />
-                <div className="absolute top-1/3 -left-12 w-20 h-20 bg-gradient-to-br from-yellow-400/12 to-orange-500/8 rounded-full blur-xl animate-pulse" style={{animationDelay: '1.8s'}} />
-                <div className="absolute bottom-1/3 -right-12 w-28 h-28 bg-gradient-to-br from-emerald-400/10 to-teal-500/8 rounded-full blur-xl animate-pulse" style={{animationDelay: '0.3s'}} />
+                {/* Galáxias distantes */}
+                <div className="absolute top-16 -left-12 w-28 h-28 bg-gradient-to-br from-indigo-400/15 via-blue-500/10 to-cyan-600/8 rounded-full blur-2xl animate-pulse" style={{animationDelay: '4s', animationDuration: '9s'}} />
+                <div className="absolute bottom-16 -right-16 w-44 h-44 bg-gradient-to-br from-pink-400/15 via-purple-500/10 to-indigo-600/8 rounded-full blur-3xl animate-pulse" style={{animationDelay: '3.5s', animationDuration: '10s'}} />
+                <div className="absolute top-1/3 -left-16 w-24 h-24 bg-gradient-to-br from-yellow-400/18 via-orange-500/12 to-red-600/8 rounded-full blur-xl animate-pulse" style={{animationDelay: '2.2s', animationDuration: '6s'}} />
+                <div className="absolute bottom-1/3 -right-20 w-36 h-36 bg-gradient-to-br from-emerald-400/15 via-teal-500/10 to-blue-600/8 rounded-full blur-2xl animate-pulse" style={{animationDelay: '0.8s', animationDuration: '8.5s'}} />
                 
-                {/* Estrelas cintilantes */}
-                <div className="absolute top-20 left-1/4 w-1 h-1 bg-yellow-400 rounded-full animate-ping" style={{animationDelay: '0.5s'}} />
-                <div className="absolute top-40 right-1/3 w-1 h-1 bg-blue-400 rounded-full animate-ping" style={{animationDelay: '1.2s'}} />
-                <div className="absolute top-60 left-2/3 w-1 h-1 bg-purple-400 rounded-full animate-ping" style={{animationDelay: '2s'}} />
-                <div className="absolute bottom-40 left-1/5 w-1 h-1 bg-pink-400 rounded-full animate-ping" style={{animationDelay: '2.8s'}} />
-                <div className="absolute top-1/4 right-1/5 w-1 h-1 bg-emerald-400 rounded-full animate-ping" style={{animationDelay: '1.7s'}} />
+                {/* Constelações de estrelas dinâmicas */}
+                <div className="absolute top-32 left-1/5 w-2 h-2 bg-yellow-300 rounded-full shadow-lg shadow-yellow-300/50 animate-ping" style={{animationDelay: '0.5s', animationDuration: '3s'}} />
+                <div className="absolute top-48 right-1/3 w-1.5 h-1.5 bg-blue-300 rounded-full shadow-lg shadow-blue-300/50 animate-ping" style={{animationDelay: '1.8s', animationDuration: '4s'}} />
+                <div className="absolute top-72 left-2/3 w-2 h-2 bg-purple-300 rounded-full shadow-lg shadow-purple-300/50 animate-ping" style={{animationDelay: '2.5s', animationDuration: '3.5s'}} />
+                <div className="absolute bottom-48 left-1/6 w-1.5 h-1.5 bg-pink-300 rounded-full shadow-lg shadow-pink-300/50 animate-ping" style={{animationDelay: '3.2s', animationDuration: '4.2s'}} />
+                <div className="absolute top-1/4 right-1/6 w-2 h-2 bg-emerald-300 rounded-full shadow-lg shadow-emerald-300/50 animate-ping" style={{animationDelay: '2s', animationDuration: '3.8s'}} />
+                
+                {/* Meteoros em movimento */}
+                <div className="absolute top-20 left-10 w-16 h-0.5 bg-gradient-to-r from-white via-blue-300 to-transparent rounded-full opacity-60" style={{
+                    animation: 'meteor 4s ease-in-out infinite',
+                    animationDelay: '1s'
+                }} />
+                <div className="absolute bottom-24 right-16 w-20 h-0.5 bg-gradient-to-r from-white via-purple-300 to-transparent rounded-full opacity-50 rotate-45" style={{
+                    animation: 'meteor 5s ease-in-out infinite',
+                    animationDelay: '2.5s'
+                }} />
+                <div className="absolute top-1/3 right-8 w-12 h-0.5 bg-gradient-to-r from-white via-yellow-300 to-transparent rounded-full opacity-70 -rotate-12" style={{
+                    animation: 'meteor 3.5s ease-in-out infinite',
+                    animationDelay: '0.3s'
+                }} />
             </div>
             
             {/* Container com padding para o conteúdo */}
             <div className="relative z-10 px-4">
             
             <div className="relative z-10">
-                {/* Desenho da Jornada - Conceito Moderno */}
-                <div className="mb-12 relative flex justify-center">
-                    <div className="relative w-32 h-32">
-                        {/* Círculos concêntricos com gradientes */}
-                        <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-500/20 via-purple-500/30 to-pink-500/20 animate-pulse" style={{animationDuration: '4s'}} />
-                        <div className="absolute inset-2 rounded-full bg-gradient-to-br from-purple-500/30 via-pink-500/40 to-orange-500/30 animate-pulse" style={{animationDuration: '3s', animationDelay: '0.5s'}} />
-                        <div className="absolute inset-4 rounded-full bg-gradient-to-br from-orange-500/40 via-yellow-400/50 to-amber-400/40 animate-pulse" style={{animationDuration: '2s', animationDelay: '1s'}} />
+                {/* ÍCONE CENTRAL INCRÍVEL - Portal da Transformação */}
+                <div className="mb-16 relative flex justify-center">
+                    <div className="relative w-40 h-40">
+                        {/* Anéis de energia cósmica */}
+                        <div className="absolute inset-0 rounded-full border-2 border-gradient-to-r from-blue-400/40 via-purple-500/60 to-pink-500/40 animate-spin" style={{animationDuration: '15s', animation: 'orbitSlow 15s linear infinite'}} />
+                        <div className="absolute inset-2 rounded-full border border-gradient-to-r from-purple-500/50 via-pink-500/70 to-orange-500/50" style={{animation: 'orbitFast 12s linear infinite'}} />
+                        <div className="absolute inset-4 rounded-full border border-dashed border-gradient-to-r from-orange-500/60 via-yellow-400/80 to-amber-500/60" style={{animation: 'orbitSlow 18s linear infinite'}} />
                         
-                        {/* Centro com ícone principal */}
-                        <div className="absolute inset-6 rounded-full bg-gradient-to-br from-white via-yellow-100 to-amber-100 shadow-2xl flex items-center justify-center group cursor-pointer hover:scale-110 transition-all duration-500">
-                            {/* Brilho interno */}
-                            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-yellow-400/20 to-orange-500/20 animate-ping" />
+                        {/* Portal central com efeito de profundidade */}
+                        <div className="absolute inset-8 rounded-full bg-gradient-to-br from-slate-900 via-purple-900/50 to-slate-900 shadow-2xl border-2 border-white/20 flex items-center justify-center group cursor-pointer hover:scale-110 transition-all duration-700 overflow-hidden">
+                            {/* Energia interna pulsante */}
+                            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-500/30 via-purple-500/40 to-pink-500/30 animate-pulse" style={{animationDuration: '3s'}} />
+                            <div className="absolute inset-1 rounded-full bg-gradient-to-br from-purple-500/20 via-pink-500/30 to-orange-500/20 animate-pulse" style={{animationDuration: '2s', animationDelay: '0.5s'}} />
                             
-                            {/* Reflexo superior realista */}
-                            <div className="absolute top-1 left-1 right-4 bottom-4 rounded-full bg-gradient-to-br from-white/60 via-white/20 to-transparent" />
+                            {/* Reflexos realistas */}
+                            <div className="absolute top-2 left-2 right-6 bottom-6 rounded-full bg-gradient-to-br from-white/30 via-white/10 to-transparent" />
+                            <div className="absolute bottom-2 right-2 top-6 left-6 rounded-full bg-gradient-to-br from-transparent via-black/10 to-black/30" />
                             
-                            {/* Ícone da jornada */}
+                            {/* Constelação de ícones da transformação */}
                             <div className="relative z-10 flex flex-col items-center">
-                                <span className="text-2xl mb-1 transform group-hover:rotate-12 transition-all duration-300" style={{
-                                    animation: 'float 3s ease-in-out infinite'
-                                }}>🌟</span>
-                                <div className="w-4 h-0.5 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full" />
-                                <span className="text-xl mt-1 transform group-hover:-rotate-6 transition-all duration-300" style={{
-                                    animation: 'float 3s ease-in-out infinite',
-                                    animationDelay: '0.5s'
+                                {/* Estrela principal */}
+                                <span className="text-3xl mb-2 transform group-hover:rotate-45 transition-all duration-500" style={{
+                                    animation: 'sparkle 4s ease-in-out infinite'
+                                }}>⭐</span>
+                                
+                                {/* Linha de conexão energética */}
+                                <div className="w-6 h-1 bg-gradient-to-r from-yellow-400 via-white to-orange-500 rounded-full mb-2 shadow-lg shadow-yellow-400/50" style={{
+                                    animation: 'sparkle 2s ease-in-out infinite',
+                                    animationDelay: '1s'
+                                }} />
+                                
+                                {/* Foguete da jornada */}
+                                <span className="text-2xl transform group-hover:-rotate-12 transition-all duration-500" style={{
+                                    animation: 'floatUp 3.5s ease-in-out infinite',
+                                    animationDelay: '0.8s'
                                 }}>🚀</span>
+                            </div>
+                            
+                            {/* Partículas de luz orbitais */}
+                            <div className="absolute inset-0 rounded-full overflow-hidden">
+                                <div className="absolute w-1.5 h-1.5 bg-white rounded-full top-2 left-1/2 transform -translate-x-1/2 animate-ping" style={{animationDelay: '0s'}} />
+                                <div className="absolute w-1 h-1 bg-blue-300 rounded-full top-1/2 right-2 transform -translate-y-1/2 animate-ping" style={{animationDelay: '0.7s'}} />
+                                <div className="absolute w-1.5 h-1.5 bg-purple-300 rounded-full bottom-2 left-1/2 transform -translate-x-1/2 animate-ping" style={{animationDelay: '1.4s'}} />
+                                <div className="absolute w-1 h-1 bg-pink-300 rounded-full top-1/2 left-2 transform -translate-y-1/2 animate-ping" style={{animationDelay: '2.1s'}} />
                             </div>
                         </div>
                         
-                        {/* Partículas orbitais */}
-                        <div className="absolute inset-0 animate-spin" style={{animationDuration: '20s'}}>
-                            <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-3 h-3 bg-yellow-400 rounded-full shadow-lg shadow-yellow-400/50" />
-                            <div className="absolute top-1/2 -right-2 transform -translate-y-1/2 w-2 h-2 bg-blue-400 rounded-full shadow-lg shadow-blue-400/50" />
+                        {/* Satélites orbitais - Planetas da transformação */}
+                        <div className="absolute inset-0" style={{animation: 'orbitSlow 25s linear infinite'}}>
+                            <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full shadow-lg shadow-yellow-400/60 border border-white/30">
+                                <div className="absolute inset-0.5 rounded-full bg-gradient-to-br from-white/40 to-transparent" />
+                                <span className="absolute inset-0 flex items-center justify-center text-xs">💫</span>
+                            </div>
+                            <div className="absolute top-1/2 -right-3 transform -translate-y-1/2 w-5 h-5 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-full shadow-lg shadow-blue-400/60 border border-white/30">
+                                <span className="absolute inset-0 flex items-center justify-center text-xs">✨</span>
+                            </div>
                         </div>
                         
-                        <div className="absolute inset-0 animate-spin" style={{animationDuration: '15s', animationDirection: 'reverse'}}>
-                            <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-purple-400 rounded-full shadow-lg shadow-purple-400/50" />
-                            <div className="absolute top-1/2 -left-2 transform -translate-y-1/2 w-3 h-3 bg-pink-400 rounded-full shadow-lg shadow-pink-400/50" />
+                        <div className="absolute inset-0" style={{animation: 'orbitFast 20s linear infinite'}}>
+                            <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full shadow-lg shadow-purple-400/60 border border-white/30">
+                                <span className="absolute inset-0 flex items-center justify-center text-xs">💎</span>
+                            </div>
+                            <div className="absolute top-1/2 -left-3 transform -translate-y-1/2 w-5 h-5 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-full shadow-lg shadow-emerald-400/60 border border-white/30">
+                                <span className="absolute inset-0 flex items-center justify-center text-xs">🌟</span>
+                            </div>
                         </div>
                         
-                        {/* Trail de movimento */}
-                        <div className="absolute inset-0 overflow-hidden rounded-full">
-                            <div className="absolute top-8 left-8 w-16 h-16 border-2 border-dashed border-white/20 rounded-full animate-spin" style={{animationDuration: '8s'}} />
-                            <div className="absolute top-6 left-6 w-20 h-20 border border-dotted border-white/10 rounded-full animate-spin" style={{animationDuration: '12s', animationDirection: 'reverse'}} />
-                        </div>
+                        {/* Campo de força invisível */}
+                        <div className="absolute -inset-4 rounded-full border border-white/5" style={{animation: 'orbitSlow 30s linear infinite'}} />
+                        <div className="absolute -inset-6 rounded-full border border-dashed border-white/3" style={{animation: 'orbitFast 35s linear infinite'}} />
                     </div>
                 </div>
 
