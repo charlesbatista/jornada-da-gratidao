@@ -8,6 +8,11 @@ on:
   # Permite execução manual
   workflow_dispatch:
 
+# Permissões necessárias para salvar no repositório
+permissions:
+  contents: write
+  actions: read
+
 jobs:
   backup:
     name: 📦 Backup Completo
@@ -132,3 +137,55 @@ jobs:
             } else {
               console.log('✅ Nenhum artifact antigo para remover');
             }
+
+  # Job para salvar backup no repositório
+  save-to-repo:
+    name: 💾 Salvar Backup no Repositório
+    runs-on: ubuntu-latest
+    needs: backup
+    if: success()
+    
+    steps:
+      - name: 📥 Checkout código
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          
+      - name: 📚 Instalar dependências
+        run: npm ci
+        
+      - name: 🔧 Setup Prisma
+        run: npx prisma generate
+        env:
+          PRISMA_DATABASE_URL: ${{ secrets.PRISMA_DATABASE_URL }}
+          POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
+          
+      - name: 🗄️ Criar Backup
+        run: npm run backup
+        env:
+          PRISMA_DATABASE_URL: ${{ secrets.PRISMA_DATABASE_URL }}
+          POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
+          
+      - name: 📝 Commit Backup no Repositório
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Backup"
+          
+          # Adicionar apenas arquivos de backup
+          git add prisma/backups/backup_latest.js
+          git add prisma/backups/backup_*.js 2>/dev/null || true
+          
+          # Verificar se há mudanças para commit
+          if git diff --staged --quiet; then
+            echo "📋 Nenhuma mudança no backup para commit"
+          else
+            git commit -m "🤖 Backup automático - $(date '+%Y-%m-%d %H:%M') - Run ${{ github.run_number }}"
+            git push
+            echo "✅ Backup commitado com sucesso!"
+          fi
