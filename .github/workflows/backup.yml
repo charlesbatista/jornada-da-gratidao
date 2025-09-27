@@ -1,4 +1,4 @@
-name: 🗄️ Backup Automático
+name: 🗄️ Backup Automático (Simples)
 
 on:
   schedule:
@@ -10,7 +10,7 @@ on:
 
 jobs:
   backup:
-    name: 📦 Criar Backup Automático
+    name: 📦 Backup Completo
     runs-on: ubuntu-latest
     
     steps:
@@ -39,65 +39,74 @@ jobs:
           POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
           BACKUP_WEBHOOK_URL: ${{ secrets.BACKUP_WEBHOOK_URL }}
           
-      - name: 📤 Upload Backup como Artifact
+      - name: 📤 Upload Backups como Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: backup-${{ github.run_number }}-${{ github.run_attempt }}
+          name: backup-${{ github.run_number }}
           path: |
             prisma/backups/backup_latest.js
             prisma/backups/backup_*.js
           retention-days: 90
+          compression-level: 6
           
-      - name: 📊 Relatório do Backup
+      - name: 📊 Relatório Final
         run: |
-          echo "## 📊 Relatório do Backup" >> $GITHUB_STEP_SUMMARY
-          echo "**Data:** $(date)" >> $GITHUB_STEP_SUMMARY
-          echo "**Status:** ✅ Concluído com sucesso" >> $GITHUB_STEP_SUMMARY
-          echo "**Arquivos criados:**" >> $GITHUB_STEP_SUMMARY
-          ls -la prisma/backups/ | grep backup_ | tail -5 >> $GITHUB_STEP_SUMMARY
+          echo "## 📊 Backup Automático Concluído" >> $GITHUB_STEP_SUMMARY
+          echo "**🕐 Data/Hora:** $(date)" >> $GITHUB_STEP_SUMMARY
+          echo "**✅ Status:** Sucesso" >> $GITHUB_STEP_SUMMARY
+          echo "**📁 Arquivos de Backup:**" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          ls -la prisma/backups/ | grep backup_ >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          echo "**💾 Artifacts:** Salvos por 90 dias" >> $GITHUB_STEP_SUMMARY
           
-  # Commit do backup no repositório (opcional)
-  commit-backup:
-    name: 💾 Salvar Backup no Repositório
+      - name: 📋 Estatísticas do Backup
+        run: |
+          BACKUP_COUNT=$(ls -1 prisma/backups/backup_*.js 2>/dev/null | wc -l)
+          LATEST_SIZE=$(ls -lh prisma/backups/backup_latest.js | awk '{print $5}')
+          echo "📊 Total de backups: $BACKUP_COUNT"
+          echo "📄 Tamanho do backup: $LATEST_SIZE"
+          
+  # Limpeza automática de artifacts antigos
+  cleanup:
+    name: 🧹 Limpeza de Artifacts
     runs-on: ubuntu-latest
     needs: backup
-    if: success()
+    if: success() && github.event_name == 'schedule'
     
     steps:
-      - name: 📥 Checkout código
-        uses: actions/checkout@v4
+      - name: 🗑️ Limpar artifacts antigos (manter 15 mais recentes)
+        uses: actions/github-script@v7
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          
-      - name: 📦 Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-          
-      - name: 📚 Instalar dependências
-        run: npm ci
-        
-      - name: 🔧 Setup Prisma
-        run: npx prisma generate
-        env:
-          PRISMA_DATABASE_URL: ${{ secrets.PRISMA_DATABASE_URL }}
-          POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
-          
-      - name: 🗄️ Criar Backup
-        run: npm run backup
-        env:
-          PRISMA_DATABASE_URL: ${{ secrets.PRISMA_DATABASE_URL }}
-          POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
-          
-      - name: 📝 Commit Backup
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action Backup"
-          git add prisma/backups/backup_latest.js
-          if git diff --staged --quiet; then
-            echo "Nenhuma mudança no backup"
-          else
-            git commit -m "🤖 Backup automático - $(date '+%Y-%m-%d %H:%M')"
-            git push
-          fi
+          script: |
+            console.log('🔍 Procurando artifacts de backup antigos...');
+            
+            const artifacts = await github.rest.actions.listArtifactsForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            });
+            
+            const backupArtifacts = artifacts.data.artifacts
+              .filter(artifact => artifact.name.startsWith('backup-'))
+              .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+            
+            console.log(`📊 Encontrados ${backupArtifacts.length} artifacts de backup`);
+            
+            const toDelete = backupArtifacts.slice(15); // Manter apenas os 15 mais recentes
+            
+            if (toDelete.length > 0) {
+              console.log(`🗑️ Removendo ${toDelete.length} artifacts antigos...`);
+              
+              for (const artifact of toDelete) {
+                console.log(`❌ Removendo: ${artifact.name} (${artifact.created_at})`);
+                await github.rest.actions.deleteArtifact({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  artifact_id: artifact.id,
+                });
+              }
+              
+              console.log('✅ Limpeza concluída!');
+            } else {
+              console.log('✅ Nenhum artifact antigo para remover');
+            }
