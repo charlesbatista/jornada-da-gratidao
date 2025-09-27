@@ -1,0 +1,92 @@
+# 🤖 Exemplo de GitHub Action para Backup Automático
+#
+# Salve este arquivo como: .github/workflows/backup.yml
+# 
+# Este workflow executa backup automático diariamente e 
+# armazena os backups como artifacts do GitHub
+
+name: 🗄️ Backup Automático
+
+on:
+  schedule:
+    # Executa a cada 2 dias às 3:00 AM UTC (0:00 BRT)
+    - cron: '0 3 */2 * *'
+  
+  # Permite execução manual
+  workflow_dispatch:
+
+jobs:
+  backup:
+    name: 📦 Criar Backup
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout código
+        uses: actions/checkout@v4
+        
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          
+      - name: 📚 Instalar dependências
+        run: npm ci
+        
+      - name: 🔧 Setup Prisma
+        run: npx prisma generate
+        env:
+          PRISMA_DATABASE_URL: ${{ secrets.PRISMA_DATABASE_URL }}
+          POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
+          
+      - name: 🗄️ Criar Backup
+        run: npm run backup:auto
+        env:
+          PRISMA_DATABASE_URL: ${{ secrets.PRISMA_DATABASE_URL }}
+          POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
+          BACKUP_WEBHOOK_URL: ${{ secrets.BACKUP_WEBHOOK_URL }}
+          
+      - name: 📤 Upload Backup
+        uses: actions/upload-artifact@v4
+        with:
+          name: backup-${{ github.run_number }}
+          path: prisma/backups/backup_latest.js
+          retention-days: 90
+          
+      - name: 📋 Listar Backups
+        run: |
+          echo "📊 Backups criados:"
+          ls -la prisma/backups/
+          
+  # Job adicional para limpar artifacts antigos (opcional)
+  cleanup:
+    name: 🧹 Limpar Artifacts Antigos
+    runs-on: ubuntu-latest
+    needs: backup
+    if: github.event_name == 'schedule'
+    
+    steps:
+      - name: 🗑️ Limpar artifacts antigos
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const artifacts = await github.rest.actions.listArtifactsForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            });
+            
+            // Manter apenas os 30 mais recentes
+            const backupArtifacts = artifacts.data.artifacts
+              .filter(artifact => artifact.name.startsWith('backup-'))
+              .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+            
+            const toDelete = backupArtifacts.slice(30);
+            
+            for (const artifact of toDelete) {
+              console.log(`Removendo artifact: ${artifact.name}`);
+              await github.rest.actions.deleteArtifact({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                artifact_id: artifact.id,
+              });
+            }

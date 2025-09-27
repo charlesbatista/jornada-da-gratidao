@@ -1,0 +1,103 @@
+name: 🗄️ Backup Automático
+
+on:
+  schedule:
+    # Executa a cada 2 dias às 3:00 AM UTC (0:00 BRT)
+    - cron: '0 3 */2 * *'
+  
+  # Permite execução manual
+  workflow_dispatch:
+
+jobs:
+  backup:
+    name: 📦 Criar Backup Automático
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout código
+        uses: actions/checkout@v4
+        
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          
+      - name: 📚 Instalar dependências
+        run: npm ci
+        
+      - name: 🔧 Setup Prisma
+        run: npx prisma generate
+        env:
+          PRISMA_DATABASE_URL: ${{ secrets.PRISMA_DATABASE_URL }}
+          POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
+          
+      - name: 🗄️ Executar Backup Automático
+        run: npm run backup:auto
+        env:
+          PRISMA_DATABASE_URL: ${{ secrets.PRISMA_DATABASE_URL }}
+          POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
+          BACKUP_WEBHOOK_URL: ${{ secrets.BACKUP_WEBHOOK_URL }}
+          
+      - name: 📤 Upload Backup como Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: backup-${{ github.run_number }}-${{ github.run_attempt }}
+          path: |
+            prisma/backups/backup_latest.js
+            prisma/backups/backup_*.js
+          retention-days: 90
+          
+      - name: 📊 Relatório do Backup
+        run: |
+          echo "## 📊 Relatório do Backup" >> $GITHUB_STEP_SUMMARY
+          echo "**Data:** $(date)" >> $GITHUB_STEP_SUMMARY
+          echo "**Status:** ✅ Concluído com sucesso" >> $GITHUB_STEP_SUMMARY
+          echo "**Arquivos criados:**" >> $GITHUB_STEP_SUMMARY
+          ls -la prisma/backups/ | grep backup_ | tail -5 >> $GITHUB_STEP_SUMMARY
+          
+  # Commit do backup no repositório (opcional)
+  commit-backup:
+    name: 💾 Salvar Backup no Repositório
+    runs-on: ubuntu-latest
+    needs: backup
+    if: success()
+    
+    steps:
+      - name: 📥 Checkout código
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          
+      - name: 📚 Instalar dependências
+        run: npm ci
+        
+      - name: 🔧 Setup Prisma
+        run: npx prisma generate
+        env:
+          PRISMA_DATABASE_URL: ${{ secrets.PRISMA_DATABASE_URL }}
+          POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
+          
+      - name: 🗄️ Criar Backup
+        run: npm run backup
+        env:
+          PRISMA_DATABASE_URL: ${{ secrets.PRISMA_DATABASE_URL }}
+          POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
+          
+      - name: 📝 Commit Backup
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action Backup"
+          git add prisma/backups/backup_latest.js
+          if git diff --staged --quiet; then
+            echo "Nenhuma mudança no backup"
+          else
+            git commit -m "🤖 Backup automático - $(date '+%Y-%m-%d %H:%M')"
+            git push
+          fi

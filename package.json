@@ -2,13 +2,20 @@
   "name": "jornada-90-dias",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "prisma migrate deploy && next build",
     "start": "next start",
     "lint": "next lint",
     "postinstall": "prisma generate",
-    "seed": "node prisma/seed.js"
+    "seed": "node prisma/seed.js",
+    "backup": "node prisma/backup.js",
+    "restore": "node prisma/restore.js",
+    "restore:list": "node prisma/restore.js list",
+    "backup:auto": "node prisma/auto-backup.js",
+    "backup:scheduler": "node backup-scheduler.js",
+    "backup:install-cron": "npm install node-cron"
   },
   "prisma": {
     "seed": "node prisma/seed.js"

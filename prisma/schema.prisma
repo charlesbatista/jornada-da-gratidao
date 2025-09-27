@@ -1,15 +1,10 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
   provider  = "postgresql"
-  // conexão "pooled" (boa p/ serverless / Prisma Client)
   url       = env("PRISMA_DATABASE_URL")
-  // conexão direta (sem pool) – Prisma usa p/ migrações
   directUrl = env("POSTGRES_URL")
 }
 
@@ -25,15 +20,14 @@ model Journey {
 }
 
 model Day {
-  id          String    @id @default(cuid())
+  id          String  @id @default(cuid())
   journeyId   String
   dayNumber   Int
-  isCompleted Boolean   @default(false)
+  isCompleted Boolean @default(false)
   reflection  String?
-  difficulty  String? // moleza, pouco, médio, muito
+  difficulty  String?
   completedAt String?
-
-  journey Journey @relation(fields: [journeyId], references: [id], onDelete: Cascade)
+  journey     Journey @relation(fields: [journeyId], references: [id], onDelete: Cascade)
 
   @@unique([journeyId, dayNumber])
   @@map("days")
