@@ -32,8 +32,17 @@ jobs:
           PRISMA_DATABASE_URL: ${{ secrets.PRISMA_DATABASE_URL }}
           POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
           
-      - name: 🗄️ Executar Backup Automático
-        run: npm run backup:auto
+      - name: 🗄️ Executar Backup Automático (Debug)
+        run: |
+          echo "📁 Verificando estrutura de diretórios:"
+          pwd
+          ls -la
+          echo ""
+          echo "📂 Verificando pasta prisma:"
+          ls -la prisma/ || echo "❌ Pasta prisma não encontrada"
+          echo ""
+          echo "🗄️ Executando backup automático:"
+          npm run backup:auto
         env:
           PRISMA_DATABASE_URL: ${{ secrets.PRISMA_DATABASE_URL }}
           POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
@@ -48,6 +57,19 @@ jobs:
             prisma/backups/backup_*.js
           retention-days: 90
           compression-level: 6
+          
+      - name: 💾 Verificar Arquivos de Backup Criados
+        run: |
+          echo "📋 Arquivos de backup criados:"
+          ls -la prisma/backups/ || echo "❌ Pasta backups não encontrada"
+          echo ""
+          echo "📊 Conteúdo do backup_latest.js:"
+          if [ -f "prisma/backups/backup_latest.js" ]; then
+            echo "✅ Backup latest existe ($(ls -lh prisma/backups/backup_latest.js | awk '{print $5}'))"
+            head -20 prisma/backups/backup_latest.js
+          else
+            echo "❌ backup_latest.js não foi criado"
+          fi
           
       - name: 📊 Relatório Final
         run: |
