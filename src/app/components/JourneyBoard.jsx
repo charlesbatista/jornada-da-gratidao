@@ -554,12 +554,69 @@ export default function JourneyBoard() {
   }, [days]);
 
   if (!isClient || isLoading) {
-    // Renderiza um placeholder ou loading state para evitar mismatch de hidratação
+    // Renderiza uma bela tela de carregamento
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-slate-950 flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-emerald-400 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-white text-lg">Carregando sua jornada...</p>
+      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-slate-950 flex items-center justify-center relative overflow-hidden">
+        {/* Background com efeitos animados */}
+        <div className="absolute inset-0">
+          {/* Partículas flutuantes */}
+          <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-emerald-400/60 rounded-full animate-ping" style={{animationDelay: '0s'}} />
+          <div className="absolute top-3/4 right-1/4 w-1 h-1 bg-purple-400/60 rounded-full animate-ping" style={{animationDelay: '0.5s'}} />
+          <div className="absolute top-1/2 left-1/3 w-1.5 h-1.5 bg-cyan-400/60 rounded-full animate-ping" style={{animationDelay: '1s'}} />
+          <div className="absolute bottom-1/3 right-1/3 w-2 h-2 bg-pink-400/60 rounded-full animate-ping" style={{animationDelay: '1.5s'}} />
+          <div className="absolute top-1/5 right-2/3 w-1 h-1 bg-yellow-400/60 rounded-full animate-ping" style={{animationDelay: '2s'}} />
+          
+          {/* Luzes de fundo suaves */}
+          <div className="absolute top-20 left-20 w-32 h-32 bg-emerald-500/20 rounded-full blur-xl animate-pulse" />
+          <div className="absolute bottom-20 right-20 w-40 h-40 bg-purple-500/20 rounded-full blur-xl animate-pulse" style={{animationDelay: '0.7s'}} />
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-cyan-500/15 rounded-full blur-2xl animate-pulse" style={{animationDelay: '1.4s'}} />
+        </div>
+
+        {/* Container principal */}
+        <div className="relative z-10 text-center max-w-md mx-auto p-8">
+          {/* Ícone principal animado */}
+          <div className="relative mb-8">
+            {/* Círculo externo rotativo */}
+            <div className="w-24 h-24 mx-auto relative">
+              <div className="absolute inset-0 border-4 border-emerald-400/30 rounded-full"></div>
+              <div className="absolute inset-0 border-4 border-t-emerald-400 border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin"></div>
+              <div className="absolute inset-2 border-2 border-purple-400/30 rounded-full"></div>
+              <div className="absolute inset-2 border-2 border-b-purple-400 border-l-transparent border-t-transparent border-r-transparent rounded-full animate-spin" style={{animationDirection: 'reverse', animationDuration: '1.5s'}}></div>
+              
+              {/* Ícone central */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="text-3xl animate-bounce">
+                  ⭐
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Texto principal */}
+          <div className="mb-6">
+            <h3 className="text-2xl font-bold text-white mb-2 animate-pulse">
+              Carregando sua jornada...
+            </h3>
+            <p className="text-gray-300 text-sm animate-fade-in">
+              Preparando sua experiência de transformação
+            </p>
+          </div>
+
+          {/* Barra de progresso animada */}
+          <div className="w-full max-w-xs mx-auto mb-4">
+            <div className="w-full h-2 bg-gray-700/50 rounded-full overflow-hidden">
+              <div className="h-full bg-gradient-to-r from-emerald-400 via-cyan-400 to-purple-400 rounded-full animate-pulse relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer"></div>
+              </div>
+            </div>
+          </div>
+
+          {/* Pontos de progresso */}
+          <div className="flex justify-center gap-2">
+            <div className="w-2 h-2 bg-emerald-400 rounded-full animate-ping"></div>
+            <div className="w-2 h-2 bg-emerald-400/60 rounded-full animate-ping" style={{animationDelay: '0.3s'}}></div>
+            <div className="w-2 h-2 bg-emerald-400/40 rounded-full animate-ping" style={{animationDelay: '0.6s'}}></div>
+          </div>
         </div>
       </div>
     );

@@ -466,3 +466,51 @@ body {
     opacity: 0;
   }
 }
+
+/* Animações melhoradas para loading */
+@keyframes gentlePulse {
+  0%, 100% { 
+    opacity: 1; 
+    transform: scale(1);
+  }
+  50% { 
+    opacity: 0.7; 
+    transform: scale(1.05);
+  }
+}
+
+@keyframes floatSoft {
+  0%, 100% { 
+    transform: translateY(0px); 
+  }
+  50% { 
+    transform: translateY(-5px); 
+  }
+}
+
+@keyframes sparkleRotate {
+  0% { 
+    transform: rotate(0deg) scale(1); 
+    opacity: 0.8;
+  }
+  50% { 
+    transform: rotate(180deg) scale(1.1); 
+    opacity: 1;
+  }
+  100% { 
+    transform: rotate(360deg) scale(1); 
+    opacity: 0.8;
+  }
+}
+
+.animate-gentle-pulse {
+  animation: gentlePulse 2s ease-in-out infinite;
+}
+
+.animate-float-soft {
+  animation: floatSoft 3s ease-in-out infinite;
+}
+
+.animate-sparkle-rotate {
+  animation: sparkleRotate 4s ease-in-out infinite;
+}

@@ -15,6 +15,7 @@ export default function ReflectionModal({
 }) {
   const [isSaving, setIsSaving] = useState(false);
   const [showSaveSuccess, setShowSaveSuccess] = useState(false);
+  const [isCompleting, setIsCompleting] = useState(false);
   const modalContentRef = useRef(null);
 
   // Effect para capturar scroll e redirecionar para o modal
@@ -64,6 +65,25 @@ export default function ReflectionModal({
       setIsSaving(false);
       // Em caso de erro, mostrar feedback
       alert("Erro ao salvar reflexão. Tente novamente.");
+    }
+  };
+
+  // Função para completar o dia com feedback visual
+  const handleCompleteDayWithLoading = async () => {
+    if (!selectedDay.difficulty) {
+      alert("⚠️ Por favor, selecione o nível de dificuldade antes de concluir o dia!");
+      return;
+    }
+
+    setIsCompleting(true);
+
+    try {
+      await handleCompleteDay();
+    } catch (error) {
+      console.error("Erro ao completar dia:", error);
+      alert("Erro ao completar o dia. Tente novamente.");
+    } finally {
+      setIsCompleting(false);
     }
   };
 
@@ -281,13 +301,18 @@ export default function ReflectionModal({
               {/* Botão completar dia - Barra de Ouro Premium */}
               {!(selectedDay.isComplete || selectedDay.isCompleted) && (
                 <button
-                  onClick={handleCompleteDay}
-                  className="flex-1 relative overflow-hidden rounded-xl transition-all duration-300 transform hover:scale-[1.02] focus:outline-none group"
+                  onClick={handleCompleteDayWithLoading}
+                  disabled={isCompleting}
+                  className={`flex-1 relative overflow-hidden rounded-xl transition-all duration-300 transform focus:outline-none group ${
+                    isCompleting ? 'scale-95 cursor-not-allowed' : 'hover:scale-[1.02] cursor-pointer'
+                  }`}
                   style={{
-                    background:
-                      "linear-gradient(135deg, #FFD700 0%, #FFA500 25%, #FFD700 50%, #B8860B 75%, #FFD700 100%)",
-                    boxShadow:
-                      "0 4px 20px rgba(255, 215, 0, 0.3), 0 0 0 1px rgba(255, 215, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3)",
+                    background: isCompleting
+                      ? "linear-gradient(135deg, #B8860B 0%, #8B7D6B 25%, #B8860B 50%, #6B6B47 75%, #B8860B 100%)"
+                      : "linear-gradient(135deg, #FFD700 0%, #FFA500 25%, #FFD700 50%, #B8860B 75%, #FFD700 100%)",
+                    boxShadow: isCompleting
+                      ? "0 2px 10px rgba(184, 134, 11, 0.3), 0 0 0 1px rgba(184, 134, 11, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)"
+                      : "0 4px 20px rgba(255, 215, 0, 0.3), 0 0 0 1px rgba(255, 215, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3)",
                   }}
                 >
                   {/* Textura de ouro sutil */}
@@ -351,26 +376,44 @@ export default function ReflectionModal({
                   </div>
 
                   {/* Conteúdo do botão */}
-                  <div className="relative py-4 px-6 text-center  cursor-pointer">
-                    <div className="flex items-center justify-center gap-2">
-                      <span
-                        className="font-bold text-base tracking-wide text-yellow-900"
-                        style={{
-                          textShadow: "0 1px 1px rgba(0,0,0,0.2)",
-                        }}
-                      >
-                        CONCLUIR DIA
-                      </span>
-                      <span
-                        className="text-xl animate-bounce"
-                        style={{
-                          animationDuration: "2s",
-                          animationDelay: "0.3s",
-                        }}
-                      >
-                        🏆
-                      </span>
-                    </div>
+                  <div className="relative py-4 px-6 text-center">
+                    {isCompleting ? (
+                      <div className="flex items-center justify-center gap-3">
+                        {/* Spinner dourado */}
+                        <div className="relative">
+                          <div className="w-5 h-5 border-2 border-yellow-800/30 rounded-full"></div>
+                          <div className="absolute inset-0 border-2 border-t-yellow-800 border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin"></div>
+                        </div>
+                        <span
+                          className="font-bold text-base tracking-wide text-yellow-900 animate-pulse"
+                          style={{
+                            textShadow: "0 1px 1px rgba(0,0,0,0.2)",
+                          }}
+                        >
+                          FINALIZANDO...
+                        </span>
+                      </div>
+                    ) : (
+                      <div className="flex items-center justify-center gap-2">
+                        <span
+                          className="font-bold text-base tracking-wide text-yellow-900"
+                          style={{
+                            textShadow: "0 1px 1px rgba(0,0,0,0.2)",
+                          }}
+                        >
+                          CONCLUIR DIA
+                        </span>
+                        <span
+                          className="text-xl animate-bounce"
+                          style={{
+                            animationDuration: "2s",
+                            animationDelay: "0.3s",
+                          }}
+                        >
+                          🏆
+                        </span>
+                      </div>
+                    )}
                   </div>
 
                   {/* Borda interna sutil */}
