@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 
 export default function AuthModal() {
@@ -9,6 +9,15 @@ export default function AuthModal() {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { login, enterViewMode, isAuthenticated } = useAuth();
+
+  // Limpar senha por segurança quando o modal é exibido
+  useEffect(() => {
+    if (!isAuthenticated) {
+      setPassword('');
+      setShowPassword(false);
+      setError('');
+    }
+  }, [isAuthenticated]);
 
   if (isAuthenticated) return null;
 
