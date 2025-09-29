@@ -5,8 +5,10 @@ import Header from "./Header.jsx";
 import ReflectionModal from "./ReflectionModal.jsx";
 import ProgressTabs from "./ProgressTabs.jsx";
 import { parseYmdLocal, toYmd, normalizeToYmd } from "../utils/date.js";
+import { useAuth } from "../contexts/AuthContext.js";
 
 export default function JourneyBoard() {
+  const { isEditMode } = useAuth();
   const [days, setDays] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedDay, setSelectedDay] = useState(null);
@@ -733,6 +735,7 @@ export default function JourneyBoard() {
         handleReflectionChange={handleReflectionChange}
         handleDifficultyChange={handleDifficultyChange}
         handleCompleteDay={handleCompleteDay}
+        isViewMode={!isEditMode}
       />
     </>
   );

@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { AuthProvider } from "./contexts/AuthContext";
+import AuthModal from "./components/AuthModal";
+import AuthIndicator from "./components/AuthIndicator";
 
 export const metadata: Metadata = {
   title: "Jornada da Transformação",
@@ -16,7 +19,11 @@ export default function RootLayout({
       <body
         className="antialiased font-system"
       >
-        {children}
+        <AuthProvider>
+          <AuthModal />
+          <AuthIndicator />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

@@ -12,6 +12,7 @@ export default function ReflectionModal({
   handleReflectionChange,
   handleDifficultyChange,
   handleCompleteDay,
+  isViewMode = false,
 }) {
   const [isSaving, setIsSaving] = useState(false);
   const [showSaveSuccess, setShowSaveSuccess] = useState(false);
@@ -23,6 +24,17 @@ export default function ReflectionModal({
     if (!isOpen) return;
 
     const handleWheel = (e) => {
+      // Permitir scroll natural em textareas e outros elementos com scroll
+      const target = e.target;
+      const isScrollable = target.tagName === 'TEXTAREA' || 
+                          target.classList.contains('overflow-y-auto') ||
+                          target.closest('textarea') ||
+                          target.closest('.overflow-y-auto');
+      
+      if (isScrollable) {
+        return; // Não interceptar o scroll em elementos que têm scroll próprio
+      }
+      
       e.preventDefault();
       if (modalContentRef.current) {
         modalContentRef.current.scrollTop += e.deltaY;
@@ -139,16 +151,26 @@ export default function ReflectionModal({
               {getDayDate(selectedDay.dayNumber || selectedDay.id)}
             </p>
 
-            {(selectedDay.isComplete || selectedDay.isCompleted) && (
-              <div className="mt-4 flex flex-col items-center gap-2">
+            {/* Indicadores de status */}
+            <div className="mt-4 flex flex-col items-center gap-2">
+              {(selectedDay.isComplete || selectedDay.isCompleted) && (
                 <div className="inline-flex items-center gap-2 bg-emerald-500/20 rounded-full px-4 py-2">
                   <span className="text-sm">✅</span>
                   <span className="text-sm font-medium text-emerald-300">
                     Dia Concluído
                   </span>
                 </div>
-              </div>
-            )}
+              )}
+              
+              {isViewMode && (
+                <div className="inline-flex items-center gap-2 bg-blue-500/20 rounded-full px-4 py-2">
+                  <span className="text-sm">👁️</span>
+                  <span className="text-sm font-medium text-blue-300">
+                    Modo Visualização
+                  </span>
+                </div>
+              )}
+            </div>
           </div>
         </div>
 
@@ -187,10 +209,18 @@ export default function ReflectionModal({
                 <div className="relative">
                   <textarea
                     value={selectedDay.reflection || ""}
-                    onChange={handleReflectionChange}
+                    onChange={isViewMode ? undefined : handleReflectionChange}
                     rows="6"
-                    placeholder="Como foi seu dia? Quais foram seus desafios? O que você aprendeu? Escreva aqui seus pensamentos e sentimentos..."
-                    className="w-full p-4 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl text-gray-300 placeholder-gray-500 focus:ring-2 focus:ring-blue-400/50 focus:border-blue-400/50 transition-all duration-300 resize-none"
+                    placeholder={isViewMode 
+                      ? "Nenhuma reflexão registrada ainda..." 
+                      : "Como foi seu dia? Quais foram seus desafios? O que você aprendeu? Escreva aqui seus pensamentos e sentimentos..."
+                    }
+                    readOnly={isViewMode}
+                    className={`w-full p-4 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl text-gray-300 placeholder-gray-500 transition-all duration-300 resize-none ${
+                      isViewMode 
+                        ? 'cursor-default' 
+                        : 'focus:ring-2 focus:ring-blue-400/50 focus:border-blue-400/50'
+                    }`}
                   />
 
                   {/* Contador de caracteres */}
@@ -255,11 +285,14 @@ export default function ReflectionModal({
                     return (
                       <button
                         key={level.key}
-                        onClick={() => handleDifficultyChange(level.key)}
-                        className={`p-3 rounded-xl border-2 transition-all duration-300 text-sm font-bold cursor-pointer ${
+                        onClick={isViewMode ? undefined : () => handleDifficultyChange(level.key)}
+                        disabled={isViewMode}
+                        className={`p-3 rounded-xl border-2 transition-all duration-300 text-sm font-bold ${
+                          isViewMode ? 'cursor-default' : 'cursor-pointer'
+                        } ${
                           isSelected
                             ? getSelectedClasses()
-                            : `border-white/10 bg-white/5 text-gray-400 ${getHoverClasses()}`
+                            : `border-white/10 bg-white/5 text-gray-400 ${isViewMode ? '' : getHoverClasses()}`
                         }`}
                       >
                         {level.label}
@@ -270,10 +303,11 @@ export default function ReflectionModal({
               </div>
             </div>
 
-            {/* Botões de ação */}
-            <div className="flex max-sm:flex-col  gap-4">
-              {/* Botão salvar (sempre disponível) */}
-              <button
+            {/* Botões de ação - apenas no modo edição */}
+            {!isViewMode && (
+              <div className="flex max-sm:flex-col  gap-4">
+                {/* Botão salvar (sempre disponível) */}
+                <button
                 onClick={handleSaveReflection}
                 disabled={isSaving}
                 className={`flex-1 py-4 px-6 rounded-2xl border transition-all duration-300 font-medium relative overflow-hidden ${
@@ -420,7 +454,8 @@ export default function ReflectionModal({
                   <div className="absolute inset-0.5 rounded-lg border border-yellow-300/30 pointer-events-none" />
                 </button>
               )}
-            </div>
+              </div>
+            )}
 
             {/* Mensagem de status no final - design limpo */}
             <div className="mt-8 text-center">

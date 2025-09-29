@@ -1,5 +1,6 @@
 import { formatPtBR, parseYmdLocal, getWeekdayPtBR } from "@/app/utils/date";
 import { useEffect, useRef } from "react";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function DaysGrid({
   days,
@@ -8,6 +9,7 @@ export default function DaysGrid({
   totalDays = 90,
 }) {
   const todayCardRef = useRef(null);
+  const { isEditMode } = useAuth();
   
   // Detectar mobile para otimizações
   const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
@@ -42,20 +44,25 @@ export default function DaysGrid({
       return `${base} bg-gray-800/50 border-gray-600/30 opacity-40 cursor-not-allowed`;
     }
 
+    // Modo de visualização - mesmo visual mas sem cursor pointer
+    const cursorClass = isEditMode ? "cursor-pointer" : "cursor-default";
+
     // Dia atual que já foi concluído - verde com borda dourada pulsante
     if (isToday && isCompleted) {
       return `${base} bg-gradient-to-br from-emerald-500 via-emerald-600 to-emerald-700 border-emerald-400/50 shadow-lg shadow-emerald-500/30 ring-4 ring-amber-400/30 ring-offset-2 ring-offset-transparent`;
     }
 
     if (isToday) {
-      return `${base} bg-gradient-to-br from-orange-500 via-orange-600 to-orange-700 border-orange-400/50 shadow-lg shadow-orange-500/30 hover:shadow-orange-500/50`;
+      const hoverClass = isEditMode ? "hover:shadow-orange-500/50" : "";
+      return `${base} bg-gradient-to-br from-orange-500 via-orange-600 to-orange-700 border-orange-400/50 shadow-lg shadow-orange-500/30 ${hoverClass} ${cursorClass}`;
     }
 
     if (isCompleted) {
-      return `${base} bg-gradient-to-br from-emerald-500 via-emerald-600 to-emerald-700 border-emerald-400/50 shadow-lg shadow-emerald-500/30`;
+      return `${base} bg-gradient-to-br from-emerald-500 via-emerald-600 to-emerald-700 border-emerald-400/50 shadow-lg shadow-emerald-500/30 ${cursorClass}`;
     }
 
-    return `${base} bg-gradient-to-br from-gray-700 via-gray-800 to-gray-900 border-gray-600/50 hover:border-gray-500/70 hover:shadow-lg`;
+    const hoverClass = isEditMode ? "hover:border-gray-500/70 hover:shadow-lg" : "";
+    return `${base} bg-gradient-to-br from-gray-700 via-gray-800 to-gray-900 border-gray-600/50 ${hoverClass} ${cursorClass}`;
   };
 
   // Auto scroll para o dia de hoje (otimizado para mobile)
@@ -116,10 +123,21 @@ export default function DaysGrid({
                   isCompleted,
                   isFutureDay,
                   isToday
-                )} ${
-                  !isFutureDay ? "cursor-pointer" : ""
-                } p-4 flex flex-col justify-between`}
+                )} p-4 flex flex-col justify-between ${
+                  !isEditMode && !isFutureDay ? "relative" : ""
+                } ${!isFutureDay ? "cursor-pointer" : "cursor-default"}`}
               >
+                {/* Overlay para modo visualização */}
+                {!isEditMode && !isFutureDay && (
+                  <div className="absolute inset-0 bg-transparent rounded-3xl flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+                    <div className="bg-black/60 backdrop-blur-sm px-3 py-1 rounded-lg border border-white/20">
+                      <span className="text-white text-xs font-medium flex items-center gap-1">
+                        <span>👁️</span>
+                        <span>Modo Visualização</span>
+                      </span>
+                    </div>
+                  </div>
+                )}
                 {/* Header com dia da semana */}
                 <div className="w-full flex justify-start">
                   <span
@@ -173,18 +191,39 @@ export default function DaysGrid({
       </div>
 
       {/* Legenda */}
-      <div className="mt-8 flex flex-wrap justify-center gap-6 text-sm">
-        <div className="flex items-center gap-3">
-          <div className="w-6 h-6 bg-gradient-to-br from-emerald-500 via-emerald-600 to-emerald-700 rounded-lg border-2 border-emerald-400/50"></div>
-          <span className="text-gray-300 font-medium">Completo</span>
+      <div className="mt-8 space-y-4">
+        <div className="flex flex-wrap justify-center gap-6 text-sm">
+          <div className="flex items-center gap-3">
+            <div className="w-6 h-6 bg-gradient-to-br from-emerald-500 via-emerald-600 to-emerald-700 rounded-lg border-2 border-emerald-400/50"></div>
+            <span className="text-gray-300 font-medium">Completo</span>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="w-6 h-6 bg-gradient-to-br from-gray-700 via-gray-800 to-gray-900 rounded-lg border-2 border-gray-600/50"></div>
+            <span className="text-gray-300 font-medium">Pendente</span>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="w-6 h-6 bg-gradient-to-br from-orange-500 via-orange-600 to-orange-700 rounded-lg border-2 border-orange-400/50"></div>
+            <span className="text-gray-300 font-medium">Hoje</span>
+          </div>
         </div>
-        <div className="flex items-center gap-3">
-          <div className="w-6 h-6 bg-gradient-to-br from-gray-700 via-gray-800 to-gray-900 rounded-lg border-2 border-gray-600/50"></div>
-          <span className="text-gray-300 font-medium">Pendente</span>
-        </div>
-        <div className="flex items-center gap-3">
-          <div className="w-6 h-6 bg-gradient-to-br from-orange-500 via-orange-600 to-orange-700 rounded-lg border-2 border-orange-400/50"></div>
-          <span className="text-gray-300 font-medium">Hoje</span>
+        
+        {/* Info do modo atual */}
+        <div className="text-center">
+          <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium ${
+            isEditMode 
+              ? 'bg-emerald-500/10 border border-emerald-500/20 text-emerald-400'
+              : 'bg-blue-500/10 border border-blue-500/20 text-blue-400'
+          }`}>
+            <span className="text-lg">
+              {isEditMode ? '✏️' : '👁️'}
+            </span>
+            <span>
+              {isEditMode 
+                ? 'Clique nos dias para marcar como concluídos' 
+                : 'Visualização apenas - sem edição de progresso'
+              }
+            </span>
+          </div>
         </div>
       </div>
     </div>
