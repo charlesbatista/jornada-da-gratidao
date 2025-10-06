@@ -40,7 +40,7 @@ export const reflectionThemes = [
     "Como posso transformar minha relação com o dinheiro?",
     "Quais são meus valores mais importantes na vida?",
     "Como posso desenvolver hobbies saudáveis?",
-    "O que significa ser honesto comigo mesmo?",
+    "Como a reflexão diária fortalece minha jornada de recuperação?",
     "Como lidar com o tédio sem recorrer ao jogo?",
     "Qual é a importância do perdão na recuperação?",
     "Como posso estabelecer metas realistas?",
