@@ -210,7 +210,7 @@ export default function ReflectionModal({
                   <textarea
                     value={selectedDay.reflection || ""}
                     onChange={isViewMode ? undefined : handleReflectionChange}
-                    rows="6"
+                    rows="20"
                     placeholder={isViewMode 
                       ? "Nenhuma reflexão registrada ainda..." 
                       : "Como foi seu dia? Quais foram seus desafios? O que você aprendeu? Escreva aqui seus pensamentos e sentimentos..."
