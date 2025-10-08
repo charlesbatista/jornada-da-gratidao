@@ -40,7 +40,7 @@ export const reflectionThemes = {
     38: "O que significa ser honesto comigo mesmo?",
     39: "Como lidar com o tédio sem recorrer ao jogo?",
     40: "Qual é a importância do perdão na recuperação?",
-    41: "Como posso estabelecer metas realistas?",
+    41: "O que me motiva nos momentos de fraqueza?",
     42: "O que significa ter disciplina financeira?",
     43: "Como posso melhorar minha comunicação nos relacionamentos?",
     44: "Qual é o papel da espiritualidade na minha jornada?",

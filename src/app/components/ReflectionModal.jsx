@@ -26,15 +26,16 @@ export default function ReflectionModal({
     const handleWheel = (e) => {
       // Permitir scroll natural em textareas e outros elementos com scroll
       const target = e.target;
-      const isScrollable = target.tagName === 'TEXTAREA' || 
-                          target.classList.contains('overflow-y-auto') ||
-                          target.closest('textarea') ||
-                          target.closest('.overflow-y-auto');
-      
+      const isScrollable =
+        target.tagName === "TEXTAREA" ||
+        target.classList.contains("overflow-y-auto") ||
+        target.closest("textarea") ||
+        target.closest(".overflow-y-auto");
+
       if (isScrollable) {
         return; // Não interceptar o scroll em elementos que têm scroll próprio
       }
-      
+
       e.preventDefault();
       if (modalContentRef.current) {
         modalContentRef.current.scrollTop += e.deltaY;
@@ -83,7 +84,9 @@ export default function ReflectionModal({
   // Função para completar o dia com feedback visual
   const handleCompleteDayWithLoading = async () => {
     if (!selectedDay.difficulty) {
-      alert("⚠️ Por favor, selecione o nível de dificuldade antes de concluir o dia!");
+      alert(
+        "⚠️ Por favor, selecione o nível de dificuldade antes de concluir o dia!"
+      );
       return;
     }
 
@@ -161,7 +164,7 @@ export default function ReflectionModal({
                   </span>
                 </div>
               )}
-              
+
               {isViewMode && (
                 <div className="inline-flex items-center gap-2 bg-blue-500/20 rounded-full px-4 py-2">
                   <span className="text-sm">👁️</span>
@@ -190,10 +193,7 @@ export default function ReflectionModal({
                 <div className="relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6">
                   <p className="text-gray-300 leading-relaxed text-lg">
                     {selectedDay.theme ||
-                      reflectionThemes[
-                        ((selectedDay.dayNumber || selectedDay.id) - 1) %
-                          reflectionThemes.length
-                      ]}
+                      reflectionThemes[selectedDay.dayNumber || selectedDay.id]}
                   </p>
                 </div>
               </div>
@@ -211,15 +211,16 @@ export default function ReflectionModal({
                     value={selectedDay.reflection || ""}
                     onChange={isViewMode ? undefined : handleReflectionChange}
                     rows="20"
-                    placeholder={isViewMode 
-                      ? "Nenhuma reflexão registrada ainda..." 
-                      : "Como foi seu dia? Quais foram seus desafios? O que você aprendeu? Escreva aqui seus pensamentos e sentimentos..."
+                    placeholder={
+                      isViewMode
+                        ? "Nenhuma reflexão registrada ainda..."
+                        : "Como foi seu dia? Quais foram seus desafios? O que você aprendeu? Escreva aqui seus pensamentos e sentimentos..."
                     }
                     readOnly={isViewMode}
                     className={`w-full p-4 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl text-gray-300 placeholder-gray-500 transition-all duration-300 resize-none ${
-                      isViewMode 
-                        ? 'cursor-default' 
-                        : 'focus:ring-2 focus:ring-blue-400/50 focus:border-blue-400/50'
+                      isViewMode
+                        ? "cursor-default"
+                        : "focus:ring-2 focus:ring-blue-400/50 focus:border-blue-400/50"
                     }`}
                   />
 
@@ -250,49 +251,55 @@ export default function ReflectionModal({
                     },
                   ].map((level) => {
                     const isSelected = selectedDay.difficulty === level.key;
-                    
+
                     // Classes CSS completas para garantir que o Tailwind as reconheça
                     const getSelectedClasses = () => {
                       switch (level.color) {
-                        case 'green':
-                          return 'border-green-400 bg-green-500/20 text-green-300';
-                        case 'blue':
-                          return 'border-blue-400 bg-blue-500/20 text-blue-300';
-                        case 'orange':
-                          return 'border-orange-400 bg-orange-500/20 text-orange-300';
-                        case 'red':
-                          return 'border-red-400 bg-red-500/20 text-red-300';
+                        case "green":
+                          return "border-green-400 bg-green-500/20 text-green-300";
+                        case "blue":
+                          return "border-blue-400 bg-blue-500/20 text-blue-300";
+                        case "orange":
+                          return "border-orange-400 bg-orange-500/20 text-orange-300";
+                        case "red":
+                          return "border-red-400 bg-red-500/20 text-red-300";
                         default:
-                          return 'border-gray-400 bg-gray-500/20 text-gray-300';
+                          return "border-gray-400 bg-gray-500/20 text-gray-300";
                       }
                     };
-                    
+
                     const getHoverClasses = () => {
                       switch (level.color) {
-                        case 'green':
-                          return 'hover:border-green-400/50 hover:bg-green-500/10';
-                        case 'blue':
-                          return 'hover:border-blue-400/50 hover:bg-blue-500/10';
-                        case 'orange':
-                          return 'hover:border-orange-400/50 hover:bg-orange-500/10';
-                        case 'red':
-                          return 'hover:border-red-400/50 hover:bg-red-500/10';
+                        case "green":
+                          return "hover:border-green-400/50 hover:bg-green-500/10";
+                        case "blue":
+                          return "hover:border-blue-400/50 hover:bg-blue-500/10";
+                        case "orange":
+                          return "hover:border-orange-400/50 hover:bg-orange-500/10";
+                        case "red":
+                          return "hover:border-red-400/50 hover:bg-red-500/10";
                         default:
-                          return 'hover:border-gray-400/50 hover:bg-gray-500/10';
+                          return "hover:border-gray-400/50 hover:bg-gray-500/10";
                       }
                     };
 
                     return (
                       <button
                         key={level.key}
-                        onClick={isViewMode ? undefined : () => handleDifficultyChange(level.key)}
+                        onClick={
+                          isViewMode
+                            ? undefined
+                            : () => handleDifficultyChange(level.key)
+                        }
                         disabled={isViewMode}
                         className={`p-3 rounded-xl border-2 transition-all duration-300 text-sm font-bold ${
-                          isViewMode ? 'cursor-default' : 'cursor-pointer'
+                          isViewMode ? "cursor-default" : "cursor-pointer"
                         } ${
                           isSelected
                             ? getSelectedClasses()
-                            : `border-white/10 bg-white/5 text-gray-400 ${isViewMode ? '' : getHoverClasses()}`
+                            : `border-white/10 bg-white/5 text-gray-400 ${
+                                isViewMode ? "" : getHoverClasses()
+                              }`
                         }`}
                       >
                         {level.label}
@@ -308,152 +315,154 @@ export default function ReflectionModal({
               <div className="flex max-sm:flex-col  gap-4">
                 {/* Botão salvar (sempre disponível) */}
                 <button
-                onClick={handleSaveReflection}
-                disabled={isSaving}
-                className={`flex-1 py-4 px-6 rounded-2xl border transition-all duration-300 font-medium relative overflow-hidden ${
-                  isSaving
-                    ? "bg-blue-500/20 border-blue-400/50 text-blue-300 cursor-wait"
-                    : showSaveSuccess
-                    ? "bg-green-500/20 border-green-400/50 text-green-300"
-                    : "bg-white/10 hover:bg-white/20 text-white border-white/20 hover:scale-105 cursor-pointer"
-                }`}
-              >
-                {isSaving ? (
-                  <span className="flex items-center justify-center gap-2">
-                    <div className="w-4 h-4 border-2 border-blue-300 border-t-transparent rounded-full animate-spin"></div>
-                    Salvando...
-                  </span>
-                ) : showSaveSuccess ? (
-                  <span className="flex items-center justify-center gap-2">
-                    ✅ Salvo com Sucesso!
-                  </span>
-                ) : (
-                  "💾 Salvar Reflexão"
-                )}
-              </button>
-
-              {/* Botão completar dia - Barra de Ouro Premium */}
-              {!(selectedDay.isComplete || selectedDay.isCompleted) && (
-                <button
-                  onClick={handleCompleteDayWithLoading}
-                  disabled={isCompleting}
-                  className={`flex-1 relative overflow-hidden rounded-xl transition-all duration-300 transform focus:outline-none group ${
-                    isCompleting ? 'scale-95 cursor-not-allowed' : 'hover:scale-[1.02] cursor-pointer'
+                  onClick={handleSaveReflection}
+                  disabled={isSaving}
+                  className={`flex-1 py-4 px-6 rounded-2xl border transition-all duration-300 font-medium relative overflow-hidden ${
+                    isSaving
+                      ? "bg-blue-500/20 border-blue-400/50 text-blue-300 cursor-wait"
+                      : showSaveSuccess
+                      ? "bg-green-500/20 border-green-400/50 text-green-300"
+                      : "bg-white/10 hover:bg-white/20 text-white border-white/20 hover:scale-105 cursor-pointer"
                   }`}
-                  style={{
-                    background: isCompleting
-                      ? "linear-gradient(135deg, #B8860B 0%, #8B7D6B 25%, #B8860B 50%, #6B6B47 75%, #B8860B 100%)"
-                      : "linear-gradient(135deg, #FFD700 0%, #FFA500 25%, #FFD700 50%, #B8860B 75%, #FFD700 100%)",
-                    boxShadow: isCompleting
-                      ? "0 2px 10px rgba(184, 134, 11, 0.3), 0 0 0 1px rgba(184, 134, 11, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)"
-                      : "0 4px 20px rgba(255, 215, 0, 0.3), 0 0 0 1px rgba(255, 215, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3)",
-                  }}
                 >
-                  {/* Textura de ouro sutil */}
-                  <div
-                    className="absolute inset-0 opacity-20"
-                    style={{
-                      background:
-                        "repeating-linear-gradient(45deg, transparent, transparent 1px, rgba(255,255,255,0.1) 1px, rgba(255,255,255,0.1) 2px)",
-                    }}
-                  />
-
-                  {/* Brilho animado no hover */}
-                  <div
-                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                    style={{
-                      background:
-                        "linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%)",
-                      animation: "sweep 1.5s ease-in-out",
-                      transform: "translateX(-100%)",
-                    }}
-                  />
-
-                  {/* Reflexo superior */}
-                  <div
-                    className="absolute top-0 left-0 right-0 h-1/3 opacity-30"
-                    style={{
-                      background:
-                        "linear-gradient(to bottom, rgba(255,255,255,0.3), transparent)",
-                    }}
-                  />
-
-                  {/* Partículas douradas discretas */}
-                  <div className="absolute inset-0 pointer-events-none opacity-60">
-                    <div
-                      className="absolute w-0.5 h-0.5 bg-white rounded-full animate-ping"
-                      style={{
-                        top: "20%",
-                        left: "25%",
-                        animationDelay: "0s",
-                        animationDuration: "2s",
-                      }}
-                    />
-                    <div
-                      className="absolute w-0.5 h-0.5 bg-yellow-200 rounded-full animate-pulse"
-                      style={{
-                        top: "30%",
-                        right: "20%",
-                        animationDelay: "0.7s",
-                        animationDuration: "1.5s",
-                      }}
-                    />
-                    <div
-                      className="absolute w-0.5 h-0.5 bg-white rounded-full animate-ping"
-                      style={{
-                        bottom: "25%",
-                        left: "35%",
-                        animationDelay: "1.4s",
-                        animationDuration: "2.2s",
-                      }}
-                    />
-                  </div>
-
-                  {/* Conteúdo do botão */}
-                  <div className="relative py-4 px-6 text-center">
-                    {isCompleting ? (
-                      <div className="flex items-center justify-center gap-3">
-                        {/* Spinner dourado */}
-                        <div className="relative">
-                          <div className="w-5 h-5 border-2 border-yellow-800/30 rounded-full"></div>
-                          <div className="absolute inset-0 border-2 border-t-yellow-800 border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin"></div>
-                        </div>
-                        <span
-                          className="font-bold text-base tracking-wide text-yellow-900 animate-pulse"
-                          style={{
-                            textShadow: "0 1px 1px rgba(0,0,0,0.2)",
-                          }}
-                        >
-                          FINALIZANDO...
-                        </span>
-                      </div>
-                    ) : (
-                      <div className="flex items-center justify-center gap-2">
-                        <span
-                          className="font-bold text-base tracking-wide text-yellow-900"
-                          style={{
-                            textShadow: "0 1px 1px rgba(0,0,0,0.2)",
-                          }}
-                        >
-                          CONCLUIR DIA
-                        </span>
-                        <span
-                          className="text-xl animate-bounce"
-                          style={{
-                            animationDuration: "2s",
-                            animationDelay: "0.3s",
-                          }}
-                        >
-                          🏆
-                        </span>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Borda interna sutil */}
-                  <div className="absolute inset-0.5 rounded-lg border border-yellow-300/30 pointer-events-none" />
+                  {isSaving ? (
+                    <span className="flex items-center justify-center gap-2">
+                      <div className="w-4 h-4 border-2 border-blue-300 border-t-transparent rounded-full animate-spin"></div>
+                      Salvando...
+                    </span>
+                  ) : showSaveSuccess ? (
+                    <span className="flex items-center justify-center gap-2">
+                      ✅ Salvo com Sucesso!
+                    </span>
+                  ) : (
+                    "💾 Salvar Reflexão"
+                  )}
                 </button>
-              )}
+
+                {/* Botão completar dia - Barra de Ouro Premium */}
+                {!(selectedDay.isComplete || selectedDay.isCompleted) && (
+                  <button
+                    onClick={handleCompleteDayWithLoading}
+                    disabled={isCompleting}
+                    className={`flex-1 relative overflow-hidden rounded-xl transition-all duration-300 transform focus:outline-none group ${
+                      isCompleting
+                        ? "scale-95 cursor-not-allowed"
+                        : "hover:scale-[1.02] cursor-pointer"
+                    }`}
+                    style={{
+                      background: isCompleting
+                        ? "linear-gradient(135deg, #B8860B 0%, #8B7D6B 25%, #B8860B 50%, #6B6B47 75%, #B8860B 100%)"
+                        : "linear-gradient(135deg, #FFD700 0%, #FFA500 25%, #FFD700 50%, #B8860B 75%, #FFD700 100%)",
+                      boxShadow: isCompleting
+                        ? "0 2px 10px rgba(184, 134, 11, 0.3), 0 0 0 1px rgba(184, 134, 11, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)"
+                        : "0 4px 20px rgba(255, 215, 0, 0.3), 0 0 0 1px rgba(255, 215, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3)",
+                    }}
+                  >
+                    {/* Textura de ouro sutil */}
+                    <div
+                      className="absolute inset-0 opacity-20"
+                      style={{
+                        background:
+                          "repeating-linear-gradient(45deg, transparent, transparent 1px, rgba(255,255,255,0.1) 1px, rgba(255,255,255,0.1) 2px)",
+                      }}
+                    />
+
+                    {/* Brilho animado no hover */}
+                    <div
+                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                      style={{
+                        background:
+                          "linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%)",
+                        animation: "sweep 1.5s ease-in-out",
+                        transform: "translateX(-100%)",
+                      }}
+                    />
+
+                    {/* Reflexo superior */}
+                    <div
+                      className="absolute top-0 left-0 right-0 h-1/3 opacity-30"
+                      style={{
+                        background:
+                          "linear-gradient(to bottom, rgba(255,255,255,0.3), transparent)",
+                      }}
+                    />
+
+                    {/* Partículas douradas discretas */}
+                    <div className="absolute inset-0 pointer-events-none opacity-60">
+                      <div
+                        className="absolute w-0.5 h-0.5 bg-white rounded-full animate-ping"
+                        style={{
+                          top: "20%",
+                          left: "25%",
+                          animationDelay: "0s",
+                          animationDuration: "2s",
+                        }}
+                      />
+                      <div
+                        className="absolute w-0.5 h-0.5 bg-yellow-200 rounded-full animate-pulse"
+                        style={{
+                          top: "30%",
+                          right: "20%",
+                          animationDelay: "0.7s",
+                          animationDuration: "1.5s",
+                        }}
+                      />
+                      <div
+                        className="absolute w-0.5 h-0.5 bg-white rounded-full animate-ping"
+                        style={{
+                          bottom: "25%",
+                          left: "35%",
+                          animationDelay: "1.4s",
+                          animationDuration: "2.2s",
+                        }}
+                      />
+                    </div>
+
+                    {/* Conteúdo do botão */}
+                    <div className="relative py-4 px-6 text-center">
+                      {isCompleting ? (
+                        <div className="flex items-center justify-center gap-3">
+                          {/* Spinner dourado */}
+                          <div className="relative">
+                            <div className="w-5 h-5 border-2 border-yellow-800/30 rounded-full"></div>
+                            <div className="absolute inset-0 border-2 border-t-yellow-800 border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin"></div>
+                          </div>
+                          <span
+                            className="font-bold text-base tracking-wide text-yellow-900 animate-pulse"
+                            style={{
+                              textShadow: "0 1px 1px rgba(0,0,0,0.2)",
+                            }}
+                          >
+                            FINALIZANDO...
+                          </span>
+                        </div>
+                      ) : (
+                        <div className="flex items-center justify-center gap-2">
+                          <span
+                            className="font-bold text-base tracking-wide text-yellow-900"
+                            style={{
+                              textShadow: "0 1px 1px rgba(0,0,0,0.2)",
+                            }}
+                          >
+                            CONCLUIR DIA
+                          </span>
+                          <span
+                            className="text-xl animate-bounce"
+                            style={{
+                              animationDuration: "2s",
+                              animationDelay: "0.3s",
+                            }}
+                          >
+                            🏆
+                          </span>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Borda interna sutil */}
+                    <div className="absolute inset-0.5 rounded-lg border border-yellow-300/30 pointer-events-none" />
+                  </button>
+                )}
               </div>
             )}
 
