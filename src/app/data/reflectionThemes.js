@@ -1,6 +1,6 @@
 // Temas de reflexão para cada dia da jornada
 export const reflectionThemes = [
-    // Primeiros 28 dias - Baseados no YAML fornecido
+    "Qual é o preço real da minha próxima aposta? Estou disposto a pagar com minha paz, minha família e meu futuro?",
     "O que o jogo trouxe de negativo para nossas vidas?",
     "O que significa para mim chegar ao fundo do poço?",
     "O que eu mais perdi com o vício (tempo, dinheiro, saúde, confiança)?",
@@ -29,8 +29,6 @@ export const reflectionThemes = [
     "A importância de cortar acessos (cartões, apps, contatos).",
     "Celebrando pequenas vitórias diárias.",
     "Como refletir diariamente nos ajuda a vencer?",
-
-    // Temas adicionais (29-90) - Continuação da jornada de recuperação
     "Como o vício afetou meus objetivos de vida?",
     "O que significa ter uma vida equilibrada sem jogos?",
     "Como posso reconstruir minha autoconfiança?",
