@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 /**
- * 🗄️ BACKUP AUTOMÁTICO - 2025-10-11T03-15-35
+ * 🗄️ BACKUP AUTOMÁTICO - 2025-10-09T03-20-51
  * 
  * Este arquivo foi gerado automaticamente pelo script de backup
  * Contém todos os dados do banco no momento do backup
@@ -12,7 +12,7 @@ const prisma = new PrismaClient()
  */
 async function restoreBackup() {
   try {
-    console.log('🔄 Restaurando backup de 2025-10-11T03-15-35...')
+    console.log('🔄 Restaurando backup de 2025-10-09T03-20-51...')
     
     // Limpar dados existentes
     console.log('🗑️  Limpando dados existentes...')
@@ -316,10 +316,10 @@ async function restoreBackup() {
       },
       {
         "dayNumber": 42,
-        "isCompleted": true,
-        "reflection": "Acreditamos fortemente que a disciplina de como ganhar, gerenciar e valorizar nosso dinheiro tenha sido perdida nesses tempo todo de jogo e vício.\n\nDurante esses mais de 2 anos, aprendemos a desmerecer nosso dinheiro, fruto do nosso trabalho, seja não achando que somos merecedores do que temos, seja lidando com altas quantias e sentido que são apenas números (já que o jogo cria essa ilusão) e aí a gente acha que pode gastar que tá tudo bem; seja ganhando dinheiro ou recebendo o salário e nem sentindo alegria porque a gente meio que sabia que a gente ia perder tudo.\n\nEssa disciplina de ganhar nosso dinheiro e pagar as contas, investir, gastar com que é necessário, gastar com nossos sonhos, foi perdida. Estamos no processo de regastá-la e vamos conseguir, com fé em Deus. Eu creio nisso.\n\nJá teve DIVERSOS momentos em que nos sentimos incapazes de gerir nosso próprio dinheiro, de acreditar que somos capazes de controlar nossos impulsos, de achar que tudo deveria ser travado em investimentos de longo prazo, de achar que tudo deveria ter sido enviado pra contas de pessoas de confiança porque sentimos que não éramos mais donos de nós mesmos. Mas esses dias acabaram!\n\nHoje, temos dinheiro \"disponível\" pra negócios do Welder, tenho meu dinheiro investido e dinheiro na conta corrente pra gastos inesperados, e SIM, somos capazes de fazer escolhas reais, seguras, inteligentes, somos disciplinados sim.\n\nVamos recuperar todo o dinheiro perdido em trabalho e muito esforço. Tenho certeza disso. Amém!",
-        "difficulty": "dificil",
-        "completedAt": "2025-10-10"
+        "isCompleted": false,
+        "reflection": null,
+        "difficulty": null,
+        "completedAt": null
       },
       {
         "dayNumber": 43,
