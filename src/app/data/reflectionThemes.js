@@ -42,7 +42,7 @@ export const reflectionThemes = {
     40: "Qual é a importância do perdão na recuperação?",
     41: "O que me motiva nos momentos de fraqueza?",
     42: "O que significa ter disciplina financeira?",
-    43: "Como posso melhorar minha comunicação nos relacionamentos?",
+    43: "Como o vício em jogos destrói a noção de escolha e liberdade?",
     44: "Qual é o papel da espiritualidade na minha jornada?",
     45: "Como lidar com sentimentos de inadequação?",
     46: "O que posso fazer quando me sinto sozinho?",
