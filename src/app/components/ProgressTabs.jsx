@@ -98,6 +98,7 @@ export default function ProgressTabs({
   const tabs = [
     { id: "daily", label: `Seus ${totalDays} Dias`, icon: "📅" },
     { id: "achievements", label: "Trilha das Conquistas", icon: "🏆" },
+    { id: "analytics", label: "Análise da Jornada", icon: "📊" },
   ];
 
   return (
@@ -162,6 +163,13 @@ export default function ProgressTabs({
         )}
         {activeTab === "achievements" && (
           <AchievementsPanel
+            completedDays={completedDays}
+            totalDays={totalDays}
+          />
+        )}
+        {activeTab === "analytics" && (
+          <AnalyticsPanel
+            days={days}
             completedDays={completedDays}
             totalDays={totalDays}
           />
@@ -535,3 +543,361 @@ function AchievementsPanel({ completedDays, totalDays = 90 }) {
     </div>
   );
 }
+
+// Painel de Análise e Gráficos
+function AnalyticsPanel({ days, completedDays, totalDays = 90 }) {
+  const [analytics, setAnalytics] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Carregar dados de analytics da API
+  useEffect(() => {
+    async function fetchAnalytics() {
+      try {
+        setLoading(true);
+        const response = await fetch('/api/journey/analytics');
+        
+        if (!response.ok) {
+          throw new Error('Erro ao carregar analytics');
+        }
+        
+        const data = await response.json();
+        setAnalytics(data.analytics);
+        setError(null);
+      } catch (err) {
+        console.error('Erro ao buscar analytics:', err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchAnalytics();
+  }, [days, completedDays]); // Recarregar quando days ou completedDays mudarem
+
+  // Loading state
+  if (loading) {
+    return (
+      <div className="max-w-6xl mx-auto">
+        <div className="flex items-center justify-center py-20">
+          <div className="text-center">
+            <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mb-4"></div>
+            <p className="text-gray-400">Carregando análise...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error || !analytics) {
+    return (
+      <div className="max-w-6xl mx-auto">
+        <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-8 text-center">
+          <div className="text-4xl mb-4">⚠️</div>
+          <h3 className="text-xl font-bold text-red-400 mb-2">Erro ao carregar dados</h3>
+          <p className="text-gray-300">{error || 'Não foi possível carregar os dados de analytics'}</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Mapear dificuldade do banco para número (1-10)
+  const difficultyToNumber = (difficulty) => {
+    const map = {
+      'facil': 3,
+      'medio': 5,
+      'dificil': 7,
+      'muito_dificil': 9
+    };
+    return map[difficulty] || 5;
+  };
+
+  // Usar dados da API
+  const chartData = analytics.dailyData.map(day => ({
+    day: day.day,
+    difficulty: difficultyToNumber(day.difficulty),
+    completed: day.completed,
+    phase: day.phase,
+    completedAt: day.completedAt
+  }));
+
+  const weeklyData = analytics.weeklyStats;
+  const stats = analytics.stats;
+
+  return (
+    <div className="max-w-6xl mx-auto">
+      {/* Header */}
+      <div className="text-center mb-12">
+        <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl mb-4">
+          <span className="text-3xl">📊</span>
+        </div>
+        <h2 className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 mb-3">
+          Análise da Sua Jornada
+        </h2>
+        <p className="text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed">
+          Visualize a dificuldade de cada fase e seu progresso ao longo do tempo
+        </p>
+      </div>
+
+      {/* Estatísticas Rápidas */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 max-w-4xl mx-auto">
+        <div className="bg-gradient-to-br from-red-500/10 to-orange-500/10 backdrop-blur-xl border border-red-500/20 rounded-2xl p-6 text-center">
+          <div className="text-4xl mb-3">🔥</div>
+          <div className="text-3xl font-bold text-red-400">{stats.hardDaysCompleted}</div>
+          <div className="text-sm text-gray-400 uppercase tracking-wide mt-2">Dias Difíceis Vencidos</div>
+          <div className="text-xs text-gray-500 mt-1">Dificuldade 7-10</div>
+        </div>
+        
+        <div className="bg-gradient-to-br from-blue-500/10 to-cyan-500/10 backdrop-blur-xl border border-blue-500/20 rounded-2xl p-6 text-center">
+          <div className="text-4xl mb-3">📈</div>
+          <div className="text-3xl font-bold text-blue-400">{stats.averageDifficulty}/10</div>
+          <div className="text-sm text-gray-400 uppercase tracking-wide mt-2">Dificuldade Média</div>
+          <div className="text-xs text-gray-500 mt-1">Dos dias completados</div>
+        </div>
+        
+        <div className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 backdrop-blur-xl border border-purple-500/20 rounded-2xl p-6 text-center">
+          <div className="text-4xl mb-3">🎯</div>
+          <div className="text-3xl font-bold text-purple-400">Semana {stats.hardestWeek.week}</div>
+          <div className="text-sm text-gray-400 uppercase tracking-wide mt-2">Mais Desafiadora</div>
+          <div className="text-xs text-gray-500 mt-1">Dificuldade {stats.hardestWeek.avgDifficulty}/10</div>
+        </div>
+      </div>
+
+      {/* Gráfico de Dificuldade por Dia */}
+      <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 mb-8">
+        <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+          <span>📉</span>
+          Curva de Dificuldade da Jornada
+        </h3>
+        
+        <div className="relative h-64 mb-4">
+          {/* Grid de fundo */}
+          <div className="absolute inset-0 flex flex-col justify-between">
+            {[10, 7.5, 5, 2.5, 0].map((level) => (
+              <div key={level} className="flex items-center gap-2">
+                <span className="text-xs text-gray-500 w-8">{level}</span>
+                <div className="flex-1 border-t border-gray-700/50"></div>
+              </div>
+            ))}
+          </div>
+
+          {/* Barras do gráfico */}
+          <div className="absolute inset-0 flex items-end gap-[2px] pl-10 pt-4">
+            {chartData.map((data, index) => {
+              const height = (data.difficulty / 10) * 100;
+              const isCompleted = data.completed;
+              
+              return (
+                <div
+                  key={index}
+                  className="flex-1 flex flex-col justify-end group relative"
+                  style={{ height: '100%' }}
+                >
+                  {/* Barra */}
+                  <div
+                    className={`w-full rounded-t transition-all duration-300 ${
+                      isCompleted
+                        ? data.difficulty >= 7
+                          ? 'bg-gradient-to-t from-red-600 to-red-400 shadow-lg shadow-red-500/50'
+                          : data.difficulty >= 5
+                          ? 'bg-gradient-to-t from-orange-600 to-orange-400'
+                          : 'bg-gradient-to-t from-green-600 to-green-400'
+                        : 'bg-gradient-to-t from-gray-700 to-gray-600 opacity-40'
+                    } hover:opacity-100`}
+                    style={{ height: `${height}%` }}
+                  >
+                    {/* Tooltip */}
+                    <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-10">
+                      <div className="bg-gray-900 text-white text-xs rounded-lg py-2 px-3 whitespace-nowrap shadow-xl border border-white/10">
+                        <div className="font-bold">Dia {data.day}</div>
+                        <div className="text-gray-300">Dificuldade: {data.difficulty}/10</div>
+                        <div className={isCompleted ? 'text-green-400' : 'text-gray-500'}>
+                          {isCompleted ? '✓ Completo' : '○ Pendente'}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Legenda */}
+        <div className="flex flex-wrap gap-4 justify-center text-sm mt-6">
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 rounded bg-gradient-to-t from-red-600 to-red-400"></div>
+            <span className="text-gray-300">🔥 Alta dificuldade vencida (7-10)</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 rounded bg-gradient-to-t from-orange-600 to-orange-400"></div>
+            <span className="text-gray-300">⚠️ Média dificuldade vencida (5-7)</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 rounded bg-gradient-to-t from-green-600 to-green-400"></div>
+            <span className="text-gray-300">✅ Baixa dificuldade vencida (1-5)</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 rounded bg-gradient-to-t from-gray-700 to-gray-600 opacity-40"></div>
+            <span className="text-gray-300">○ Pendente</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Análise por Semana */}
+      <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8">
+        <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+          <span>📅</span>
+          Progresso Semanal
+        </h3>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {weeklyData.map((week) => {
+            const isCurrentWeek = completedDays >= (week.week - 1) * 7 && completedDays < week.week * 7;
+            
+            // Calcular datas da semana
+            const startDate = new Date(analytics.journey.startDate + 'T00:00:00');
+            const weekStartDate = new Date(startDate);
+            weekStartDate.setDate(startDate.getDate() + ((week.week - 1) * 7));
+            
+            const weekEndDate = new Date(weekStartDate);
+            weekEndDate.setDate(weekStartDate.getDate() + 6);
+            
+            // Formatar datas
+            const formatDate = (date) => {
+              const day = String(date.getDate()).padStart(2, '0');
+              const month = String(date.getMonth() + 1).padStart(2, '0');
+              const year = date.getFullYear();
+              return `${day}/${month}/${year}`;
+            };
+            
+            const dateRange = `${formatDate(weekStartDate)} - ${formatDate(weekEndDate)}`;
+            
+            return (
+              <div
+                key={week.week}
+                className={`relative overflow-hidden rounded-xl p-5 transition-all duration-300 ${
+                  isCurrentWeek
+                    ? 'bg-gradient-to-br from-blue-500/20 to-purple-500/20 border-2 border-blue-400 shadow-lg shadow-blue-500/20'
+                    : week.completionRate === 100
+                    ? 'bg-gradient-to-br from-emerald-500/10 to-teal-500/10 border border-emerald-500/30'
+                    : 'bg-gray-800/50 border border-gray-700'
+                }`}
+              >
+                {/* Badge de status */}
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm font-bold text-gray-300">Semana {week.week}</span>
+                  {isCurrentWeek && (
+                    <span className="px-2 py-1 bg-blue-500 text-white text-xs font-bold rounded-full">
+                      Atual
+                    </span>
+                  )}
+                  {week.completionRate === 100 && !isCurrentWeek && (
+                    <span className="text-emerald-400 text-xl">✓</span>
+                  )}
+                </div>
+                
+                {/* Datas da semana */}
+                <div className="mb-3">
+                  <span className="text-xs text-gray-500">{dateRange}</span>
+                </div>
+
+                {/* Progresso */}
+                <div className="mb-3">
+                  <div className="flex justify-between text-xs text-gray-400 mb-1">
+                    <span>Progresso</span>
+                    <span className="font-bold">{week.completed}/{week.total}</span>
+                  </div>
+                  <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
+                    <div
+                      className={`h-full transition-all duration-500 ${
+                        week.completionRate === 100
+                          ? 'bg-gradient-to-r from-emerald-500 to-teal-500'
+                          : 'bg-gradient-to-r from-blue-500 to-purple-500'
+                      }`}
+                      style={{ width: `${week.completionRate}%` }}
+                    ></div>
+                  </div>
+                </div>
+
+                {/* Dificuldade */}
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-gray-400">Dificuldade Média:</span>
+                  <div className="flex items-center gap-1">
+                    <span className="text-sm font-bold text-orange-400">{week.avgDifficulty}</span>
+                    <span className="text-xs text-gray-500">/10</span>
+                  </div>
+                </div>
+
+                {/* Indicador de dificuldade visual */}
+                <div className="flex gap-1 mt-2">
+                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((level) => (
+                    <div
+                      key={level}
+                      className={`flex-1 h-1 rounded-full ${
+                        level <= week.avgDifficulty
+                          ? week.avgDifficulty >= 7
+                            ? 'bg-red-500'
+                            : week.avgDifficulty >= 5
+                            ? 'bg-orange-500'
+                            : 'bg-yellow-500'
+                          : 'bg-gray-700'
+                      }`}
+                    ></div>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Insights */}
+      <div className="mt-8 bg-gradient-to-br from-indigo-500/10 to-purple-500/10 backdrop-blur-xl border border-indigo-500/20 rounded-3xl p-8">
+        <h3 className="text-2xl font-bold text-white mb-4 flex items-center gap-3">
+          <span>💡</span>
+          Insights da Sua Jornada
+        </h3>
+        
+        <div className="space-y-4 text-gray-300">
+          <p className="leading-relaxed">
+            <strong className="text-white">Fase Atual:</strong> Você está na fase de{' '}
+            {analytics.journey.currentPhase === 'Início Intenso' ? (
+              <span className="text-red-400 font-semibold">Início Intenso</span>
+            ) : analytics.journey.currentPhase === 'Consolidação' ? (
+              <span className="text-blue-400 font-semibold">Consolidação</span>
+            ) : (
+              <span className="text-purple-400 font-semibold">Finalização</span>
+            )}
+            . {analytics.journey.currentPhase === 'Início Intenso' && 'Os primeiros dias são os mais desafiadores, mas cada dia vencido te torna mais forte.'}
+            {analytics.journey.currentPhase === 'Consolidação' && 'Continue firme! Você está construindo hábitos sólidos.'}
+            {analytics.journey.currentPhase === 'Finalização' && 'A reta final! Cada dia é uma vitória significativa rumo à transformação completa.'}
+          </p>
+          
+          {stats.hardDaysCompleted > 0 && (
+            <p className="leading-relaxed">
+              <strong className="text-red-400">🔥 Você venceu {stats.hardDaysCompleted} dias de alta dificuldade!</strong> 
+              {' '}Isso mostra uma força de vontade excepcional. Continue assim!
+            </p>
+          )}
+
+          {stats.maxStreak >= 7 && (
+            <p className="leading-relaxed">
+              <strong className="text-green-400">⚡ Sua maior sequência foi de {stats.maxStreak} dias consecutivos!</strong>
+              {' '}Você já provou que tem o que é preciso para vencer!
+            </p>
+          )}
+          
+          {analytics.journey.completionPercentage >= 50 && (
+            <p className="leading-relaxed">
+              <strong className="text-purple-400">🎯 Você já completou {analytics.journey.completionPercentage}% da jornada!</strong>
+              {' '}Mais da metade do caminho percorrido. Continue firme!
+            </p>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
