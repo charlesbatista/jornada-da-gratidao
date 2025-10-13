@@ -94,23 +94,45 @@ body {
   animation: shimmer 2s infinite;
 }
 
-/* Melhorias para scrollbar */
+/* Melhorias para scrollbar - Barra Principal (mais grossa) */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 14px;
+  height: 14px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.5);
+  background: rgba(15, 23, 42, 0.6);
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(147, 51, 234, 0.5);
+  background: linear-gradient(180deg, rgba(147, 51, 234, 0.7), rgba(168, 85, 247, 0.7));
   border-radius: 10px;
-  border: 2px solid rgba(15, 23, 42, 0.5);
+  border: 3px solid rgba(15, 23, 42, 0.6);
 }
 
 ::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, rgba(147, 51, 234, 0.9), rgba(168, 85, 247, 0.9));
+}
+
+/* Scrollbar para modais e elementos internos (mais fina) */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.3);
+  border-radius: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(147, 51, 234, 0.5);
+  border-radius: 8px;
+  border: 2px solid rgba(15, 23, 42, 0.3);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: rgba(147, 51, 234, 0.8);
 }
 

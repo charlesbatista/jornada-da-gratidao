@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import DaysGrid from "./DaysGrid.jsx";
 
 export default function ProgressTabs({
@@ -956,35 +956,40 @@ function DiaryPanel({ days, startDate }) {
     fetchDaysData();
   }, [days, startDate]);
 
-  // Filtrar dias com reflexões
-  const daysWithReflections = daysData.filter(day => day.completed && day.reflection);
+  // Filtrar e ordenar dias com useMemo para otimização
+  const filteredDays = useMemo(() => {
+    // Filtrar dias com reflexões
+    let filtered = daysData.filter(day => day.completed && day.reflection);
 
-  // Aplicar filtros
-  let filteredDays = daysWithReflections;
-
-  // Filtro de busca
-  if (searchTerm.trim()) {
-    filteredDays = filteredDays.filter(day =>
-      day.reflection?.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  }
-
-  // Filtro de semana
-  if (filterWeek !== "all") {
-    const weekNum = parseInt(filterWeek);
-    filteredDays = filteredDays.filter(day => 
-      Math.ceil(day.dayNumber / 7) === weekNum
-    );
-  }
-
-  // Ordenação
-  filteredDays.sort((a, b) => {
-    if (sortOrder === "recent") {
-      return b.dayNumber - a.dayNumber;
-    } else {
-      return a.dayNumber - b.dayNumber;
+    // Filtro de busca
+    if (searchTerm.trim()) {
+      filtered = filtered.filter(day =>
+        day.reflection?.toLowerCase().includes(searchTerm.toLowerCase())
+      );
     }
-  });
+
+    // Filtro de semana
+    if (filterWeek !== "all") {
+      const weekNum = parseInt(filterWeek);
+      filtered = filtered.filter(day => 
+        Math.ceil(day.dayNumber / 7) === weekNum
+      );
+    }
+
+    // Ordenação
+    filtered.sort((a, b) => {
+      if (sortOrder === "recent") {
+        return b.dayNumber - a.dayNumber;
+      } else {
+        return a.dayNumber - b.dayNumber;
+      }
+    });
+
+    return filtered;
+  }, [daysData, searchTerm, filterWeek, sortOrder]);
+
+  // Dias com reflexões (para estatísticas)
+  const daysWithReflections = daysData.filter(day => day.completed && day.reflection);
 
   // Estatísticas
   const stats = {

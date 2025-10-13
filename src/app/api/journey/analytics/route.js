@@ -104,7 +104,7 @@ export async function GET() {
       completed: day.isCompleted,
       difficulty: day.difficulty,
       completedAt: day.completedAt,
-      reflection: day.reflection ? day.reflection.substring(0, 100) : null,
+      reflection: day.reflection,
       // Determinar fase baseada no dia
       phase: day.dayNumber <= 21 ? 'Início' : 
              day.dayNumber <= 60 ? 'Consolidação' : 
