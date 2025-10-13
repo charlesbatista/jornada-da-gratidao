@@ -160,7 +160,7 @@ export default function DaysGrid({
                   </span>
                 </div>
 
-                {/* Footer com data e check */}
+                {/* Footer com data e letra de dificuldade */}
                 <div className="w-full flex justify-between items-end">
                   <span
                     className={`text-xs ${
@@ -171,8 +171,22 @@ export default function DaysGrid({
                     {(dayDate.getMonth() + 1).toString().padStart(2, "0")}
                   </span>
 
-                  {/* Ícone de check para dias concluídos */}
-                  {isCompleted && (
+                  {/* Letra de dificuldade para dias concluídos */}
+                  {isCompleted && day.difficulty && (
+                    <div className={`w-6 h-6 rounded-full flex items-center justify-center font-black text-sm ${
+                      day.difficulty === 'muito_dificil' ? 'bg-red-500 text-white' :
+                      day.difficulty === 'dificil' ? 'bg-orange-500 text-white' :
+                      day.difficulty === 'medio' ? 'bg-yellow-500 text-white' :
+                      'bg-green-500 text-white'
+                    }`}>
+                      {day.difficulty === 'muito_dificil' ? 'E' :
+                       day.difficulty === 'dificil' ? 'D' :
+                       day.difficulty === 'medio' ? 'M' : 'F'}
+                    </div>
+                  )}
+                  
+                  {/* Check padrão se não tiver dificuldade */}
+                  {isCompleted && !day.difficulty && (
                     <div className="w-5 h-5 rounded-full bg-white flex items-center justify-center">
                       <svg
                         className="w-3 h-3 text-emerald-600"

@@ -13,6 +13,10 @@ export default function ReflectionModal({
   handleDifficultyChange,
   handleCompleteDay,
   isViewMode = false,
+  onPreviousDay,
+  onNextDay,
+  canGoPrevious = false,
+  canGoNext = false,
 }) {
   const [isSaving, setIsSaving] = useState(false);
   const [showSaveSuccess, setShowSaveSuccess] = useState(false);
@@ -143,6 +147,37 @@ export default function ReflectionModal({
             aria-label="Fechar modal"
           >
             <XIcon className="w-5 h-5" />
+          </button>
+
+          {/* Botões de navegação */}
+          <button
+            onClick={onPreviousDay}
+            disabled={!canGoPrevious}
+            className={`absolute left-4 top-1/2 -translate-y-1/2 text-white p-3 rounded-full transition-all duration-300 ${
+              canGoPrevious
+                ? 'bg-white/10 hover:bg-white/20 cursor-pointer'
+                : 'bg-white/5 opacity-30 cursor-not-allowed'
+            }`}
+            aria-label="Dia anterior"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+
+          <button
+            onClick={onNextDay}
+            disabled={!canGoNext}
+            className={`absolute right-16 top-1/2 -translate-y-1/2 text-white p-3 rounded-full transition-all duration-300 ${
+              canGoNext
+                ? 'bg-white/10 hover:bg-white/20 cursor-pointer'
+                : 'bg-white/5 opacity-30 cursor-not-allowed'
+            }`}
+            aria-label="Próximo dia"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
           </button>
 
           {/* Conteúdo do header */}

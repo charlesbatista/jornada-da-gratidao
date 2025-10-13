@@ -99,6 +99,7 @@ export default function ProgressTabs({
     { id: "daily", label: `Seus ${totalDays} Dias`, icon: "📅" },
     { id: "achievements", label: "Trilha das Conquistas", icon: "🏆" },
     { id: "analytics", label: "Análise da Jornada", icon: "📊" },
+    { id: "diary", label: "Diário da Jornada", icon: "📝" },
   ];
 
   return (
@@ -172,6 +173,12 @@ export default function ProgressTabs({
             days={days}
             completedDays={completedDays}
             totalDays={totalDays}
+          />
+        )}
+        {activeTab === "diary" && (
+          <DiaryPanel
+            days={days}
+            startDate={startDate}
           />
         )}
       </div>
@@ -901,3 +908,295 @@ function AnalyticsPanel({ days, completedDays, totalDays = 90 }) {
   );
 }
 
+// Painel do Diário da Jornada
+function DiaryPanel({ days, startDate }) {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterWeek, setFilterWeek] = useState("all");
+  const [sortOrder, setSortOrder] = useState("recent"); // recent, oldest
+  const [daysData, setDaysData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Buscar dados do banco de dados
+  useEffect(() => {
+    const fetchDaysData = async () => {
+      try {
+        setIsLoading(true);
+        const response = await fetch('/api/journey/analytics');
+        const data = await response.json();
+        
+        if (data.analytics && data.analytics.dailyData) {
+          // Mapear os dados da API para o formato esperado
+          const mappedDays = data.analytics.dailyData.map((day) => ({
+            dayNumber: day.day,
+            completed: day.completed,
+            reflection: day.reflection,
+            difficulty: day.difficulty,
+            date: day.completedAt ? new Date(day.completedAt) : new Date(data.analytics.journey.startDate + 'T00:00:00'),
+            phase: day.phase
+          }));
+          setDaysData(mappedDays);
+        }
+      } catch (error) {
+        console.error('Erro ao carregar dados do diário:', error);
+        // Fallback para dados locais em caso de erro
+        setDaysData(days.map((day, index) => ({
+          ...day,
+          dayNumber: index + 1,
+          date: (() => {
+            const date = new Date(startDate + 'T00:00:00');
+            date.setDate(date.getDate() + index);
+            return date;
+          })()
+        })));
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchDaysData();
+  }, [days, startDate]);
+
+  // Filtrar dias com reflexões
+  const daysWithReflections = daysData.filter(day => day.completed && day.reflection);
+
+  // Aplicar filtros
+  let filteredDays = daysWithReflections;
+
+  // Filtro de busca
+  if (searchTerm.trim()) {
+    filteredDays = filteredDays.filter(day =>
+      day.reflection?.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }
+
+  // Filtro de semana
+  if (filterWeek !== "all") {
+    const weekNum = parseInt(filterWeek);
+    filteredDays = filteredDays.filter(day => 
+      Math.ceil(day.dayNumber / 7) === weekNum
+    );
+  }
+
+  // Ordenação
+  filteredDays.sort((a, b) => {
+    if (sortOrder === "recent") {
+      return b.dayNumber - a.dayNumber;
+    } else {
+      return a.dayNumber - b.dayNumber;
+    }
+  });
+
+  // Estatísticas
+  const stats = {
+    totalReflections: daysWithReflections.length,
+    averageLength: Math.round(
+      daysWithReflections.reduce((sum, day) => sum + (day.reflection?.length || 0), 0) / 
+      (daysWithReflections.length || 1)
+    ),
+    longestReflection: daysWithReflections.reduce((max, day) => 
+      (day.reflection?.length || 0) > (max.reflection?.length || 0) ? day : max, 
+      daysWithReflections[0] || {}
+    )
+  };
+
+  return (
+    <div className="max-w-6xl mx-auto">
+      {/* Header */}
+      <div className="text-center mb-12">
+        <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl mb-4">
+          <span className="text-3xl">📝</span>
+        </div>
+        <h2 className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-rose-400 mb-3">
+          Diário da Sua Jornada
+        </h2>
+        <p className="text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed">
+          Todas as suas reflexões em um só lugar. Relembre sua evolução emocional.
+        </p>
+      </div>
+
+      {/* Loading State */}
+      {isLoading ? (
+        <div className="text-center py-12">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-500 mb-4"></div>
+          <p className="text-gray-400">Carregando suas reflexões...</p>
+        </div>
+      ) : (
+        <>
+
+      {/* Estatísticas Rápidas */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+        <div className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 backdrop-blur-xl border border-purple-500/20 rounded-2xl p-6 text-center">
+          <div className="text-3xl mb-2">📚</div>
+          <div className="text-2xl font-bold text-purple-400">{stats.totalReflections}</div>
+          <div className="text-xs text-gray-400 uppercase tracking-wide">Reflexões Escritas</div>
+        </div>
+        
+        <div className="bg-gradient-to-br from-blue-500/10 to-cyan-500/10 backdrop-blur-xl border border-blue-500/20 rounded-2xl p-6 text-center">
+          <div className="text-3xl mb-2">✍️</div>
+          <div className="text-2xl font-bold text-blue-400">{stats.averageLength}</div>
+          <div className="text-xs text-gray-400 uppercase tracking-wide">Caracteres em Média</div>
+        </div>
+        
+        <div className="bg-gradient-to-br from-rose-500/10 to-orange-500/10 backdrop-blur-xl border border-rose-500/20 rounded-2xl p-6 text-center">
+          <div className="text-3xl mb-2">🎯</div>
+          <div className="text-2xl font-bold text-rose-400">Dia {stats.longestReflection?.dayNumber || '-'}</div>
+          <div className="text-xs text-gray-400 uppercase tracking-wide">Reflexão Mais Longa</div>
+        </div>
+      </div>
+
+      {/* Filtros e Busca */}
+      <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {/* Busca */}
+          <div className="md:col-span-2">
+            <label className="text-sm font-medium text-gray-300 mb-2 block">Buscar nas reflexões</label>
+            <input
+              type="text"
+              placeholder="Digite para buscar..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            />
+          </div>
+
+          {/* Filtro de Semana */}
+          <div>
+            <label className="text-sm font-medium text-gray-300 mb-2 block">Filtrar por semana</label>
+            <select
+              value={filterWeek}
+              onChange={(e) => setFilterWeek(e.target.value)}
+              className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+            >
+              <option value="all">Todas</option>
+              {Array.from({ length: 13 }, (_, i) => (
+                <option key={i + 1} value={i + 1}>Semana {i + 1}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        {/* Ordenação */}
+        <div className="flex gap-2 mt-4">
+          <button
+            onClick={() => setSortOrder("recent")}
+            className={`px-4 py-2 rounded-lg font-medium transition-all ${
+              sortOrder === "recent"
+                ? "bg-purple-500 text-white"
+                : "bg-gray-800 text-gray-400 hover:bg-gray-700"
+            }`}
+          >
+            Mais Recentes
+          </button>
+          <button
+            onClick={() => setSortOrder("oldest")}
+            className={`px-4 py-2 rounded-lg font-medium transition-all ${
+              sortOrder === "oldest"
+                ? "bg-purple-500 text-white"
+                : "bg-gray-800 text-gray-400 hover:bg-gray-700"
+            }`}
+          >
+            Mais Antigas
+          </button>
+        </div>
+      </div>
+
+      {/* Timeline de Reflexões */}
+      <div className="space-y-6">
+        {filteredDays.length === 0 ? (
+          <div className="text-center py-12 bg-gray-800/50 rounded-2xl">
+            <div className="text-4xl mb-4">📭</div>
+            <p className="text-gray-400">Nenhuma reflexão encontrada com esses filtros.</p>
+          </div>
+        ) : (
+          filteredDays.map((day) => (
+            <div
+              key={day.dayNumber}
+              className="bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-xl border border-white/10 rounded-2xl p-6 hover:border-purple-500/30 transition-all duration-300"
+            >
+              {/* Header do Card */}
+              <div className="flex items-start justify-between mb-4">
+                <div className="flex-1">
+                  <div className="flex items-center gap-3 mb-2">
+                    <span className="text-2xl font-bold text-purple-400">Dia {day.dayNumber}</span>
+                    <span className="px-3 py-1 bg-purple-500/20 text-purple-300 text-xs font-medium rounded-full">
+                      Semana {Math.ceil(day.dayNumber / 7)}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <p className="text-sm text-gray-400">
+                      {day.date.toLocaleDateString('pt-BR', { 
+                        weekday: 'long', 
+                        year: 'numeric', 
+                        month: 'long', 
+                        day: 'numeric' 
+                      })}
+                    </p>
+                    {day.difficulty && (
+                      <span className={`px-3 py-1 text-xs font-medium rounded-full ${
+                        day.difficulty === 'muito_dificil' ? 'bg-red-500/20 text-red-300' :
+                        day.difficulty === 'dificil' ? 'bg-orange-500/20 text-orange-300' :
+                        day.difficulty === 'medio' ? 'bg-yellow-500/20 text-yellow-300' :
+                        'bg-green-500/20 text-green-300'
+                      }`}>
+                        {day.difficulty === 'muito_dificil' ? '🔥 Muito Difícil' :
+                         day.difficulty === 'dificil' ? '⚠️ Difícil' :
+                         day.difficulty === 'medio' ? '📊 Médio' : '✅ Fácil'}
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <div className="text-xs text-gray-500 ml-4">
+                  {day.reflection?.length || 0} caracteres
+                </div>
+              </div>
+
+              {/* Reflexão */}
+              <div className="bg-black/20 rounded-xl p-4 border border-white/5">
+                <p className="text-gray-300 leading-relaxed whitespace-pre-wrap">
+                  {day.reflection}
+                </p>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+
+      {/* Botão de Exportar */}
+      {daysWithReflections.length > 0 && (
+        <div className="mt-12 text-center">
+          <button
+            onClick={() => {
+              // Preparar conteúdo para exportar
+              const content = daysWithReflections
+                .sort((a, b) => a.dayNumber - b.dayNumber)
+                .map(day => 
+                  `DIA ${day.dayNumber} - ${day.date.toLocaleDateString('pt-BR')}\n` +
+                  `Dificuldade: ${day.difficulty || 'Não informada'}\n\n` +
+                  `${day.reflection}\n\n` +
+                  `${'='.repeat(50)}\n\n`
+                )
+                .join('');
+              
+              // Criar e baixar arquivo
+              const blob = new Blob([content], { type: 'text/plain' });
+              const url = URL.createObjectURL(blob);
+              const a = document.createElement('a');
+              a.href = url;
+              a.download = `diario-jornada-90-dias-${new Date().toISOString().split('T')[0]}.txt`;
+              a.click();
+              URL.revokeObjectURL(url);
+            }}
+            className="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold rounded-xl shadow-lg shadow-purple-500/30 transition-all duration-300 transform hover:scale-105"
+          >
+            📥 Exportar Diário Completo
+          </button>
+          <p className="text-xs text-gray-500 mt-2">
+            Baixe todas as suas reflexões em um arquivo de texto
+          </p>
+        </div>
+      )}
+      </>
+      )}
+    </div>
+  );
+}

@@ -406,6 +406,51 @@ export default function JourneyBoard() {
     setIsModalOpen(true);
   };
 
+  // Navegar para o dia anterior
+  const handlePreviousDay = () => {
+    if (!selectedDay || !days.length) return;
+    
+    const currentDayNumber = selectedDay.dayNumber || selectedDay.id;
+    const previousDayNumber = currentDayNumber - 1;
+    
+    if (previousDayNumber >= 1) {
+      const previousDay = days.find(d => (d.dayNumber || d.id) === previousDayNumber);
+      if (previousDay) {
+        setSelectedDay(previousDay);
+      }
+    }
+  };
+
+  // Navegar para o próximo dia
+  const handleNextDay = () => {
+    if (!selectedDay || !days.length || !startDate) return;
+    
+    const currentDayNumber = selectedDay.dayNumber || selectedDay.id;
+    const nextDayNumber = currentDayNumber + 1;
+    
+    // Verificar se o próximo dia não é futuro
+    let baseDate;
+    if (typeof startDate === "string") {
+      baseDate = parseYmdLocal(startDate);
+    } else {
+      baseDate = new Date(startDate);
+    }
+
+    const nextDayDate = new Date(baseDate);
+    nextDayDate.setDate(baseDate.getDate() + nextDayNumber - 1);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    nextDayDate.setHours(0, 0, 0, 0);
+
+    // Se o próximo dia não é futuro e existe, navegar
+    if (nextDayDate <= today && nextDayNumber <= totalDays) {
+      const nextDay = days.find(d => (d.dayNumber || d.id) === nextDayNumber);
+      if (nextDay) {
+        setSelectedDay(nextDay);
+      }
+    }
+  };
+
   const handleCloseModal = async (shouldSave = false) => {
     // Salva as mudanças apenas se shouldSave for true
     if (shouldSave && selectedDay && (selectedDay.reflection || selectedDay.difficulty)) {
@@ -736,6 +781,10 @@ export default function JourneyBoard() {
         handleDifficultyChange={handleDifficultyChange}
         handleCompleteDay={handleCompleteDay}
         isViewMode={!isEditMode}
+        onPreviousDay={handlePreviousDay}
+        onNextDay={handleNextDay}
+        canGoPrevious={selectedDay && (selectedDay.dayNumber || selectedDay.id) > 1}
+        canGoNext={selectedDay && (selectedDay.dayNumber || selectedDay.id) < totalDays}
       />
     </>
   );
