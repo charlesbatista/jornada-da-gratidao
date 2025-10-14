@@ -77,18 +77,21 @@ export default function DaysGrid({
 
   // Auto scroll para o dia de hoje (otimizado para mobile)
   useEffect(() => {
-    if (todayCardRef.current) {
+    // Aguardar today ser inicializado antes de fazer scroll
+    if (todayCardRef.current && today) {
       const delay = isMobile ? 200 : 500; // Delay menor no mobile
       const behavior = isMobile ? "auto" : "smooth"; // Scroll instantâneo no mobile
       
       setTimeout(() => {
-        todayCardRef.current.scrollIntoView({
-          behavior,
-          block: "center",
-        });
+        if (todayCardRef.current) {
+          todayCardRef.current.scrollIntoView({
+            behavior,
+            block: "center",
+          });
+        }
       }, delay);
     }
-  }, [days, isMobile]);
+  }, [days, isMobile, today]);
 
   return (
     <div className="relative">
