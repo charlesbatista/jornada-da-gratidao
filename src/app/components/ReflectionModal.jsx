@@ -130,7 +130,7 @@ export default function ReflectionModal({
       </div>
 
       <div
-        className="relative bg-slate-900/95 backdrop-blur-xl border border-white/20 rounded-lg shadow-2xl w-full max-w-2xl max-h-[90vh] animate-slide-up cursor-default"
+        className="relative bg-slate-900/95 backdrop-blur-xl border border-white/20 rounded-lg shadow-2xl w-full max-w-2xl max-h-[95vh] animate-slide-up cursor-default"
         onClick={(e) => e.stopPropagation()}
         style={{ overflow: "hidden" }}
       >
@@ -210,12 +210,12 @@ export default function ReflectionModal({
           </div>
         </div>
 
-        {/* Conteúdo scrollável */}
+        {/* Conteúdo scrollável - AJUSTADO PARA MOBILE E DESKTOP */}
         <div
           ref={modalContentRef}
-          className="overflow-y-auto max-h-[calc(90vh-216px)] custom-scrollbar"
+          className="overflow-y-auto max-h-[calc(90vh-280px)] sm:max-h-[calc(90vh-240px)] custom-scrollbar"
         >
-          <div className="p-8">
+          <div className="p-4 sm:p-8">
             {/* Tema de reflexão */}
             <div className="mb-8">
               <h3 className="font-bold text-lg mb-3 text-purple-300 flex items-center gap-2">
@@ -243,16 +243,16 @@ export default function ReflectionModal({
                   <textarea
                     value={selectedDay.reflection || ""}
                     onChange={isViewMode ? undefined : handleReflectionChange}
-                    rows="20"
+                    rows="15"
                     placeholder={
                       isViewMode
                         ? "Nenhuma reflexão registrada ainda..."
                         : "Como foi seu dia? Quais foram seus desafios? O que você aprendeu? Escreva aqui seus pensamentos e sentimentos..."
                     }
                     readOnly={isViewMode}
-                    className={`w-full p-4 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl text-gray-300 placeholder-gray-500 transition-all duration-300 resize-none ${
+                    className={`w-full p-4 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl text-gray-300 placeholder-gray-500 transition-all duration-300 resize-y min-h-[200px] max-h-[500px] ${
                       isViewMode
-                        ? "cursor-default"
+                        ? "cursor-default resize-none"
                         : "focus:ring-2 focus:ring-blue-400/50 focus:border-blue-400/50"
                     }`}
                   />
