@@ -596,6 +596,34 @@ export default function JourneyBoard() {
     [startDate]
   );
 
+  // Calcular se pode navegar para o próximo dia (evita erro de hidratação)
+  const canGoNext = useMemo(() => {
+    // No servidor, retornar false para evitar erro de hidratação
+    if (!isClient) return false;
+    
+    if (!selectedDay || !startDate) return false;
+    const currentDayNumber = selectedDay.dayNumber || selectedDay.id;
+    if (currentDayNumber >= totalDays) return false;
+    
+    // Verificar se o próximo dia já chegou
+    const nextDayNumber = currentDayNumber + 1;
+    let baseDate;
+    if (typeof startDate === "string") {
+      baseDate = parseYmdLocal(startDate);
+    } else {
+      baseDate = new Date(startDate);
+    }
+    
+    const nextDayDate = new Date(baseDate);
+    nextDayDate.setDate(baseDate.getDate() + nextDayNumber - 1);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    nextDayDate.setHours(0, 0, 0, 0);
+    
+    // Só pode avançar se o próximo dia já chegou (não é futuro)
+    return nextDayDate <= today;
+  }, [isClient, selectedDay, startDate, totalDays]);
+
   const completedDays = useMemo(() => {
     return days.filter((day) => day.isComplete || day.isCompleted).length;
   }, [days]);
@@ -784,7 +812,7 @@ export default function JourneyBoard() {
         onPreviousDay={handlePreviousDay}
         onNextDay={handleNextDay}
         canGoPrevious={selectedDay && (selectedDay.dayNumber || selectedDay.id) > 1}
-        canGoNext={selectedDay && (selectedDay.dayNumber || selectedDay.id) < totalDays}
+        canGoNext={canGoNext}
       />
     </>
   );

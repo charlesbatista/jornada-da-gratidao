@@ -1,5 +1,5 @@
 import { formatPtBR, parseYmdLocal, getWeekdayPtBR } from "@/app/utils/date";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 
 export default function DaysGrid({
@@ -11,8 +11,18 @@ export default function DaysGrid({
   const todayCardRef = useRef(null);
   const { isEditMode } = useAuth();
   
+  // Data de hoje (inicializada no cliente para evitar erro de hidratação)
+  const [today, setToday] = useState(null);
+  
   // Detectar mobile para otimizações
   const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+  
+  // Inicializar a data de hoje apenas no cliente
+  useEffect(() => {
+    const now = new Date();
+    now.setHours(0, 0, 0, 0);
+    setToday(now);
+  }, []);
 
   const getDayDate = (dayIndex) => {
     if (!startDate) return null;
@@ -98,13 +108,13 @@ export default function DaysGrid({
           // Usar dayNumber se existir (dados do banco), senão day.id (dados antigos)
           const dayNumber = day.dayNumber || day.id;
           const dayDate = getDayDate(dayNumber);
-          const today = new Date();
-          today.setHours(0, 0, 0, 0); // Zerar horas para comparar apenas a data
+          
+          // Se today ainda não foi inicializado, assumir valores padrão (não é hoje, não é futuro)
           const dayDateWithoutTime = new Date(dayDate);
           dayDateWithoutTime.setHours(0, 0, 0, 0);
 
-          const isToday = dayDateWithoutTime.getTime() === today.getTime();
-          const isFutureDay = dayDateWithoutTime > today;
+          const isToday = today ? dayDateWithoutTime.getTime() === today.getTime() : false;
+          const isFutureDay = today ? dayDateWithoutTime > today : false;
 
           const isCompleted = day.isComplete || day.isCompleted;
 
