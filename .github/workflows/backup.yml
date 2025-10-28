@@ -8,10 +8,12 @@ on:
   # Permite execução manual
   workflow_dispatch:
 
-# Permissões necessárias para salvar no repositório
+# Permissões necessárias para o workflow
+# contents: write -> permite commit/push no job save-to-repo
+# actions: write  -> necessário para deletar artifacts no job cleanup
 permissions:
   contents: write
-  actions: read
+  actions: write
 
 jobs:
   backup:
@@ -100,6 +102,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: backup
     if: success() && github.event_name == 'schedule'
+    permissions:
+      actions: write
+      contents: read
     
     steps:
       - name: 🗑️ Limpar artifacts antigos (manter 15 mais recentes)
@@ -125,12 +130,22 @@ jobs:
               console.log(`🗑️ Removendo ${toDelete.length} artifacts antigos...`);
               
               for (const artifact of toDelete) {
-                console.log(`❌ Removendo: ${artifact.name} (${artifact.created_at})`);
-                await github.rest.actions.deleteArtifact({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  artifact_id: artifact.id,
-                });
+                try {
+                  console.log(`❌ Removendo: ${artifact.name} (${artifact.created_at})`);
+                  await github.rest.actions.deleteArtifact({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    artifact_id: artifact.id,
+                  });
+                } catch (err) {
+                  if (err.status === 403) {
+                    console.log('⚠️ Sem permissão para remover este artifact (403). Verifique as permissões do GITHUB_TOKEN.');
+                  } else if (err.status === 404) {
+                    console.log('ℹ️ Artifact já inexistente (404), seguindo...');
+                  } else {
+                    throw err;
+                  }
+                }
               }
               
               console.log('✅ Limpeza concluída!');
