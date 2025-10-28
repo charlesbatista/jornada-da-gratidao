@@ -1,5 +1,6 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import DaysGrid from "./DaysGrid.jsx";
+import { reflectionThemes } from "../data/reflectionThemes.js";
 
 export default function ProgressTabs({
   completedDays,
@@ -915,6 +916,9 @@ function DiaryPanel({ days, startDate }) {
   const [sortOrder, setSortOrder] = useState("recent"); // recent, oldest
   const [daysData, setDaysData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const PAGE_SIZE = 3;
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  const loadMoreRef = useRef(null);
 
   // Buscar dados do banco de dados
   useEffect(() => {
@@ -932,7 +936,8 @@ function DiaryPanel({ days, startDate }) {
             reflection: day.reflection,
             difficulty: day.difficulty,
             date: day.completedAt ? new Date(day.completedAt) : new Date(data.analytics.journey.startDate + 'T00:00:00'),
-            phase: day.phase
+            phase: day.phase,
+            theme: day.theme || reflectionThemes?.[day.day]
           }));
           setDaysData(mappedDays);
         }
@@ -946,7 +951,8 @@ function DiaryPanel({ days, startDate }) {
             const date = new Date(startDate + 'T00:00:00');
             date.setDate(date.getDate() + index);
             return date;
-          })()
+          })(),
+          theme: day.theme || reflectionThemes?.[index + 1]
         })));
       } finally {
         setIsLoading(false);
@@ -955,6 +961,11 @@ function DiaryPanel({ days, startDate }) {
 
     fetchDaysData();
   }, [days, startDate]);
+
+  // Resetar paginação quando filtros/dados mudarem
+  useEffect(() => {
+    setVisibleCount(PAGE_SIZE);
+  }, [searchTerm, filterWeek, sortOrder, daysData]);
 
   // Filtrar e ordenar dias com useMemo para otimização
   const filteredDays = useMemo(() => {
@@ -987,6 +998,33 @@ function DiaryPanel({ days, startDate }) {
 
     return filtered;
   }, [daysData, searchTerm, filterWeek, sortOrder]);
+
+  // Lista visível com paginação incremental
+  const visibleDays = useMemo(() => {
+    return filteredDays.slice(0, visibleCount);
+  }, [filteredDays, visibleCount]);
+
+  const hasMore = visibleCount < filteredDays.length;
+
+  // Infinite scroll via IntersectionObserver
+  useEffect(() => {
+    if (!hasMore) return;
+    const target = loadMoreRef.current;
+    if (!target) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        if (entry.isIntersecting) {
+          setVisibleCount((prev) => Math.min(prev + PAGE_SIZE, filteredDays.length));
+        }
+      },
+      { root: null, rootMargin: "400px 0px", threshold: 0 }
+    );
+
+    observer.observe(target);
+    return () => observer.disconnect();
+  }, [hasMore, filteredDays.length]);
 
   // Dias com reflexões (para estatísticas)
   const daysWithReflections = daysData.filter(day => day.completed && day.reflection);
@@ -1113,22 +1151,37 @@ function DiaryPanel({ days, startDate }) {
             <p className="text-gray-400">Nenhuma reflexão encontrada com esses filtros.</p>
           </div>
         ) : (
-          filteredDays.map((day) => (
+          visibleDays.map((day) => (
             <div
               key={day.dayNumber}
-              className="bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-xl border border-white/10 rounded-2xl p-6 hover:border-purple-500/30 transition-all duration-300"
+              className="bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-xl border border-white/10 rounded-2xl p-6 hover:border-purple-500/30 transition-all duration-300 animate-fade-in"
             >
-              {/* Header do Card */}
-              <div className="flex items-start justify-between mb-4">
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-2">
+              {/* Header do Card (responsivo) */}
+              <div className="mb-4 grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-3 sm:gap-4 items-start">
+                {/* Bloco esquerdo */}
+                <div className="min-w-0">
+                  {/* Linha 1: Título e semana */}
+                  <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
                     <span className="text-2xl font-bold text-purple-400">Dia {day.dayNumber}</span>
-                    <span className="px-3 py-1 bg-purple-500/20 text-purple-300 text-xs font-medium rounded-full">
+                    <span className="px-3 py-1 bg-purple-500/20 text-purple-300 text-xs font-medium rounded-full whitespace-nowrap">
                       Semana {Math.ceil(day.dayNumber / 7)}
                     </span>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <p className="text-sm text-gray-400">
+                  {/* Linha 2: Tema em destaque (base da reflexão) */}
+                  {day.theme && (
+                    <div className="mb-2">
+                      <span
+                        className="block w-full sm:inline-flex items-start gap-2 px-3 py-1.5 sm:py-2 rounded-xl bg-gradient-to-r from-fuchsia-600/20 to-violet-600/20 text-fuchsia-200 border border-fuchsia-500/20"
+                        title={day.theme}
+                      >
+                        <span className="shrink-0 mt-0.5">📖</span>
+                        <span className="font-semibold whitespace-normal break-words">{day.theme}</span>
+                      </span>
+                    </div>
+                  )}
+                  {/* Linha 3: Data e dificuldade - com quebra automática */}
+                  <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+                    <p className="text-sm text-gray-400 whitespace-nowrap">
                       {day.date.toLocaleDateString('pt-BR', { 
                         weekday: 'long', 
                         year: 'numeric', 
@@ -1150,7 +1203,8 @@ function DiaryPanel({ days, startDate }) {
                     )}
                   </div>
                 </div>
-                <div className="text-xs text-gray-500 ml-4">
+                {/* Contagem de caracteres - vai para direita no desktop e para baixo no mobile */}
+                <div className="text-xs text-gray-500 sm:ml-4 sm:text-right">
                   {day.reflection?.length || 0} caracteres
                 </div>
               </div>
@@ -1165,6 +1219,20 @@ function DiaryPanel({ days, startDate }) {
           ))
         )}
       </div>
+
+      {/* Sentinela de paginação / loader */}
+      {filteredDays.length > 0 && (
+        <div className="mt-6 flex items-center justify-center">
+          {hasMore ? (
+            <div ref={loadMoreRef} className="flex items-center gap-3 text-gray-400">
+              <div className="w-5 h-5 border-2 border-purple-400 border-t-transparent rounded-full animate-spin"></div>
+              <span>Carregando mais dias…</span>
+            </div>
+          ) : (
+            <div className="text-xs text-gray-500">Você chegou ao fim do diário</div>
+          )}
+        </div>
+      )}
 
       {/* Botão de Exportar */}
       {daysWithReflections.length > 0 && (
