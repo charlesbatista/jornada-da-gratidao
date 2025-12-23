@@ -5,7 +5,7 @@ import AuthModal from "./components/AuthModal";
 import AuthIndicator from "./components/AuthIndicator";
 
 export const metadata: Metadata = {
-  title: "Jornada da Transformação",
+  title: "Jornada da Gratidão",
   description: "Sua jornada de transformação pessoal e crescimento.",
 };
 

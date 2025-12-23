@@ -69,7 +69,7 @@ export default function AuthModal() {
         <div className="text-center mb-8">
           <div className="text-4xl mb-4 animate-bounce">🔐</div>
           <h2 className="text-2xl font-bold text-white mb-2">
-            Jornada da Transformação
+            Jornada da Gratidão
           </h2>
           <p className="text-gray-300 text-sm">
             Escolha como deseja acessar a aplicação

@@ -1,4 +1,4 @@
-# 🚀 Jornada da Transformação
+# 🚀 Jornada da Gratidão
 
 Uma aplicação de acompanhamento pessoal para jornadas de transformação de 1 a 365 dias.
 

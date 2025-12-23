@@ -217,7 +217,7 @@ export default function Header({ completedDays, totalDays = 90, startDate }) {
             {/* Header com conteúdo */}
             <header className="relative text-center my-12 z-10">
                 <div className="relative px-4">
-                {/* ÍCONE CENTRAL INCRÍVEL - Portal da Transformação */}
+                {/* ÍCONE CENTRAL INCRÍVEL - Portal da Gratidão */}
                 <div className="mb-16 relative flex justify-center">
                     <div className="relative w-40 h-40">
                         {/* Anéis de energia cósmica */}
@@ -295,7 +295,7 @@ export default function Header({ completedDays, totalDays = 90, startDate }) {
                     {/* Glow de fundo */}
                     <div className="absolute inset-0 blur-3xl opacity-30">
                         <h1 className="text-5xl md:text-7xl font-black bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500">
-                            Jornada da Transformação
+                            Jornada da Gratidão
                         </h1>
                     </div>
                     
@@ -314,7 +314,7 @@ export default function Header({ completedDays, totalDays = 90, startDate }) {
                             animationDelay: '0.6s', 
                             animation: 'slideInRight 1s ease-out, textShine 3s ease-in-out infinite'
                         }}>
-                            Transformação
+                            Gratidão
                         </span>
                     </h1>
                 </div>
