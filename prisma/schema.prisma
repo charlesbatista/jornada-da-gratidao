@@ -25,6 +25,8 @@ model Day {
   dayNumber   Int
   isCompleted Boolean @default(false)
   reflection  String?
+  reflectionCharles String?
+  reflectionWelder  String?
   difficulty  String?
   completedAt String?
   journey     Journey @relation(fields: [journeyId], references: [id], onDelete: Cascade)

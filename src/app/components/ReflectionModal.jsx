@@ -9,7 +9,8 @@ export default function ReflectionModal({
   onClose,
   selectedDay,
   getDayDate,
-  handleReflectionChange,
+  handleReflectionCharlesChange,
+  handleReflectionWelderChange,
   handleDifficultyChange,
   handleCompleteDay,
   isViewMode = false,
@@ -239,27 +240,57 @@ export default function ReflectionModal({
               </h3>
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-2xl blur-lg" />
-                <div className="relative">
-                  <textarea
-                    value={selectedDay.reflection || ""}
-                    onChange={isViewMode ? undefined : handleReflectionChange}
-                    rows="15"
-                    placeholder={
-                      isViewMode
-                        ? "Nenhuma reflexão registrada ainda..."
-                        : "Como foi seu dia? Quais foram seus desafios? O que você aprendeu? Escreva aqui seus pensamentos e sentimentos..."
-                    }
-                    readOnly={isViewMode}
-                    className={`w-full p-4 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl text-gray-300 placeholder-gray-500 transition-all duration-300 resize-y min-h-[200px] max-h-[500px] ${
-                      isViewMode
-                        ? "cursor-default resize-none"
-                        : "focus:ring-2 focus:ring-blue-400/50 focus:border-blue-400/50"
-                    }`}
-                  />
+                <div className="relative space-y-4">
+                  {/* Charles */}
+                  <div className="relative">
+                    <div className="mb-2 text-sm font-semibold text-white/80">
+                      Texto do Charles
+                    </div>
+                    <textarea
+                      value={selectedDay.reflectionCharles ?? selectedDay.reflection ?? ""}
+                      onChange={isViewMode ? undefined : handleReflectionCharlesChange}
+                      rows="8"
+                      placeholder={
+                        isViewMode
+                          ? "Nenhum texto do Charles registrado ainda..."
+                          : "Escreva aqui a reflexão do Charles..."
+                      }
+                      readOnly={isViewMode}
+                      className={`w-full p-4 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl text-gray-300 placeholder-gray-500 transition-all duration-300 resize-y min-h-[140px] max-h-[420px] ${
+                        isViewMode
+                          ? "cursor-default resize-none"
+                          : "focus:ring-2 focus:ring-blue-400/50 focus:border-blue-400/50"
+                      }`}
+                    />
+                    <div className="absolute bottom-3 right-3 text-xs text-gray-500">
+                      {(selectedDay.reflectionCharles ?? selectedDay.reflection ?? "").length} caracteres
+                    </div>
+                  </div>
 
-                  {/* Contador de caracteres */}
-                  <div className="absolute bottom-3 right-3 text-xs text-gray-500">
-                    {(selectedDay.reflection || "").length} caracteres
+                  {/* Welder */}
+                  <div className="relative">
+                    <div className="mb-2 text-sm font-semibold text-white/80">
+                      Texto do Welder
+                    </div>
+                    <textarea
+                      value={selectedDay.reflectionWelder || ""}
+                      onChange={isViewMode ? undefined : handleReflectionWelderChange}
+                      rows="8"
+                      placeholder={
+                        isViewMode
+                          ? "Nenhum texto do Welder registrado ainda..."
+                          : "Escreva aqui a reflexão do Welder..."
+                      }
+                      readOnly={isViewMode}
+                      className={`w-full p-4 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl text-gray-300 placeholder-gray-500 transition-all duration-300 resize-y min-h-[140px] max-h-[420px] ${
+                        isViewMode
+                          ? "cursor-default resize-none"
+                          : "focus:ring-2 focus:ring-blue-400/50 focus:border-blue-400/50"
+                      }`}
+                    />
+                    <div className="absolute bottom-3 right-3 text-xs text-gray-500">
+                      {(selectedDay.reflectionWelder || "").length} caracteres
+                    </div>
                   </div>
                 </div>
               </div>
