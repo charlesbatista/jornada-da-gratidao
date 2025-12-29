@@ -20,16 +20,16 @@ model Journey {
 }
 
 model Day {
-  id          String  @id @default(cuid())
-  journeyId   String
-  dayNumber   Int
-  isCompleted Boolean @default(false)
-  reflection  String?
+  id                String  @id @default(cuid())
+  journeyId         String
+  dayNumber         Int
+  isCompleted       Boolean @default(false)
+  reflection        String?
   reflectionCharles String?
   reflectionWelder  String?
-  difficulty  String?
-  completedAt String?
-  journey     Journey @relation(fields: [journeyId], references: [id], onDelete: Cascade)
+  difficulty        String?
+  completedAt       String?
+  journey           Journey @relation(fields: [journeyId], references: [id], onDelete: Cascade)
 
   @@unique([journeyId, dayNumber])
   @@map("days")
