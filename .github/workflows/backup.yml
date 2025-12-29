@@ -32,11 +32,19 @@ jobs:
           
       - name: 📚 Instalar dependências
         run: npm ci
+
+      - name: 🔑 Validar Secrets do Banco
+        run: |
+          if [ -z "${{ secrets.PRISMA_DATABASE_URL }}" ] && [ -z "${{ secrets.POSTGRES_URL }}" ]; then
+            echo "::error::Você precisa configurar PRISMA_DATABASE_URL (ou POSTGRES_URL como fallback) em Settings > Secrets and variables > Actions."
+            exit 1
+          fi
+          echo "✅ Secrets do banco presentes (ao menos um)."
         
       - name: 🔧 Setup Prisma
         run: npx prisma generate
         env:
-          PRISMA_DATABASE_URL: ${{ secrets.PRISMA_DATABASE_URL }}
+          PRISMA_DATABASE_URL: ${{ secrets.PRISMA_DATABASE_URL != '' && secrets.PRISMA_DATABASE_URL || secrets.POSTGRES_URL }}
           POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
           
       - name: 🗄️ Executar Backup Automático (Debug)
@@ -51,7 +59,7 @@ jobs:
           echo "🗄️ Executando backup automático:"
           npm run backup:auto
         env:
-          PRISMA_DATABASE_URL: ${{ secrets.PRISMA_DATABASE_URL }}
+          PRISMA_DATABASE_URL: ${{ secrets.PRISMA_DATABASE_URL != '' && secrets.PRISMA_DATABASE_URL || secrets.POSTGRES_URL }}
           POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
           BACKUP_WEBHOOK_URL: ${{ secrets.BACKUP_WEBHOOK_URL }}
           
@@ -174,17 +182,25 @@ jobs:
           
       - name: 📚 Instalar dependências
         run: npm ci
+
+      - name: 🔑 Validar Secrets do Banco
+        run: |
+          if [ -z "${{ secrets.PRISMA_DATABASE_URL }}" ] && [ -z "${{ secrets.POSTGRES_URL }}" ]; then
+            echo "::error::Você precisa configurar PRISMA_DATABASE_URL (ou POSTGRES_URL como fallback) em Settings > Secrets and variables > Actions."
+            exit 1
+          fi
+          echo "✅ Secrets do banco presentes (ao menos um)."
         
       - name: 🔧 Setup Prisma
         run: npx prisma generate
         env:
-          PRISMA_DATABASE_URL: ${{ secrets.PRISMA_DATABASE_URL }}
+          PRISMA_DATABASE_URL: ${{ secrets.PRISMA_DATABASE_URL != '' && secrets.PRISMA_DATABASE_URL || secrets.POSTGRES_URL }}
           POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
           
       - name: 🗄️ Criar Backup
         run: npm run backup
         env:
-          PRISMA_DATABASE_URL: ${{ secrets.PRISMA_DATABASE_URL }}
+          PRISMA_DATABASE_URL: ${{ secrets.PRISMA_DATABASE_URL != '' && secrets.PRISMA_DATABASE_URL || secrets.POSTGRES_URL }}
           POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
           
       - name: 📝 Commit Backup no Repositório

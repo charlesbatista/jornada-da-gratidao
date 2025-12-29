@@ -2,6 +2,15 @@ import { PrismaClient } from '@prisma/client'
 import fs from 'fs'
 import path from 'path'
 
+if (!process.env.PRISMA_DATABASE_URL) {
+  process.env.PRISMA_DATABASE_URL = process.env.POSTGRES_URL || ''
+}
+
+if (!process.env.PRISMA_DATABASE_URL) {
+  console.error('❌ PRISMA_DATABASE_URL está vazio. Configure PRISMA_DATABASE_URL (ou POSTGRES_URL como fallback).')
+  process.exit(1)
+}
+
 const prisma = new PrismaClient()
 
 /**
@@ -95,7 +104,8 @@ const prisma = new PrismaClient()
     const daysData = journey.days.map(day => ({
       dayNumber: day.dayNumber,
       isCompleted: day.isCompleted,
-      reflection: day.reflection,
+      reflectionCharles: day.reflectionCharles,
+      reflectionWelder: day.reflectionWelder,
       difficulty: day.difficulty,
       completedAt: day.completedAt
     }))
@@ -148,7 +158,8 @@ async function restoreBackup() {
             journeyId: journey.id,
             dayNumber: day.dayNumber,
             isCompleted: day.isCompleted,
-            reflection: day.reflection,
+            reflectionCharles: day.reflectionCharles ?? (day.reflection ? day.reflection : null),
+            reflectionWelder: day.reflectionWelder ?? null,
             difficulty: day.difficulty,
             completedAt: day.completedAt
           }))

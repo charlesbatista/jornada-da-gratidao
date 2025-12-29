@@ -1,6 +1,16 @@
-import { PrismaClient } from '@prisma/client'
 import fs from 'fs'
 import path from 'path'
+
+import { PrismaClient } from '@prisma/client'
+
+if (!process.env.PRISMA_DATABASE_URL) {
+  process.env.PRISMA_DATABASE_URL = process.env.POSTGRES_URL || ''
+}
+
+if (!process.env.PRISMA_DATABASE_URL) {
+  console.error('❌ PRISMA_DATABASE_URL está vazio. Configure PRISMA_DATABASE_URL (ou POSTGRES_URL como fallback).')
+  process.exit(1)
+}
 
 const prisma = new PrismaClient()
 
@@ -42,10 +52,21 @@ async function restoreFromBackup(backupFileName = null) {
     }
 
     console.log(`📄 Usando backup: ${path.basename(backupFile)}`)
-    
-    // Importar e executar o backup
-    const backupModule = await import(`file://${backupFile}`)
-    await backupModule.restoreBackup()
+
+    // Preferir restaurar por parsing do conteúdo (mais robusto entre mudanças de schema)
+    const raw = fs.readFileSync(backupFile, 'utf8')
+    const journeysData = extractJourneysData(raw)
+
+    if (journeysData) {
+      await restoreFromJourneysData(journeysData)
+    } else {
+      // Fallback: importar e executar o restore do módulo
+      const backupModule = await import(`file://${backupFile}`)
+      if (typeof backupModule.restoreBackup !== 'function') {
+        throw new Error('❌ Backup inválido: não foi possível extrair journeysData nem encontrar restoreBackup().')
+      }
+      await backupModule.restoreBackup()
+    }
     
     console.log('✅ Restore concluído com sucesso!')
 
@@ -55,6 +76,56 @@ async function restoreFromBackup(backupFileName = null) {
   } finally {
     await prisma.$disconnect()
   }
+}
+
+function extractJourneysData(fileContent) {
+  try {
+    const match = fileContent.match(/const\s+journeysData\s*=\s*(\[[\s\S]*?\n\s*\])\s*\n\s*console\.log\(/m)
+    if (!match) return null
+    return JSON.parse(match[1])
+  } catch {
+    return null
+  }
+}
+
+async function restoreFromJourneysData(journeysData) {
+  console.log(`📊 Restaurando ${journeysData.length} jornadas (modo parse)...`)
+
+  // Limpar dados existentes
+  console.log('🗑️  Limpando dados existentes...')
+  await prisma.day.deleteMany({})
+  await prisma.journey.deleteMany({})
+
+  for (const journeyData of journeysData) {
+    const { days, ...journeyInfo } = journeyData
+
+    const journey = await prisma.journey.create({
+      data: {
+        id: journeyInfo.id,
+        startDate: journeyInfo.startDate,
+        totalDays: journeyInfo.totalDays,
+        createdAt: new Date(journeyInfo.createdAt),
+        updatedAt: new Date(journeyInfo.updatedAt)
+      }
+    })
+
+    if (Array.isArray(days) && days.length > 0) {
+      await prisma.day.createMany({
+        data: days.map((day) => ({
+          journeyId: journey.id,
+          dayNumber: day.dayNumber,
+          isCompleted: day.isCompleted,
+          reflectionCharles: day.reflectionCharles ?? (day.reflection ? day.reflection : null),
+          reflectionWelder: day.reflectionWelder ?? null,
+          difficulty: day.difficulty ?? null,
+          completedAt: day.completedAt ?? null,
+        }))
+      })
+    }
+  }
+
+  const totalDays = journeysData.reduce((sum, j) => sum + (Array.isArray(j.days) ? j.days.length : 0), 0)
+  console.log(`✅ Backup restaurado com sucesso! (${journeysData.length} jornadas, ${totalDays} dias)`) 
 }
 
 // Listar backups disponíveis
