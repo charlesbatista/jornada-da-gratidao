@@ -7,9 +7,9 @@ export async function PUT(request, { params }) {
   try {
     const { day } = await params
     const dayNumber = parseInt(day)
-    const { isCompleted, reflection, reflectionCharles, reflectionWelder, difficulty } = await request.json()
+    const { isCompleted, reflectionCharles, reflectionWelder, difficulty } = await request.json()
 
-    console.log('Dados recebidos na API:', { dayNumber, isCompleted, reflection, reflectionCharles, reflectionWelder, difficulty })
+    console.log('Dados recebidos na API:', { dayNumber, isCompleted, reflectionCharles, reflectionWelder, difficulty })
 
     // Validar dayNumber
     if (isNaN(dayNumber) || dayNumber < 1) {
@@ -25,25 +25,9 @@ export async function PUT(request, { params }) {
       return NextResponse.json({ error: 'Nenhuma jornada encontrada' }, { status: 404 })
     }
 
-    const hasSeparateReflections =
-      typeof reflectionCharles === 'string' || typeof reflectionWelder === 'string'
-
-    const legacyReflectionFromSeparate = (() => {
-      const c = (reflectionCharles || '').trim()
-      const w = (reflectionWelder || '').trim()
-
-      if (!c && !w) return null
-
-      const parts = []
-      if (c) parts.push(`Charles:\n${c}`)
-      if (w) parts.push(`Welder:\n${w}`)
-      return parts.join('\n\n')
-    })()
-
     // Preparar os dados para atualização
     const updateData = {
       isCompleted: Boolean(isCompleted),
-      reflection: (typeof reflection === 'string' ? reflection : (hasSeparateReflections ? legacyReflectionFromSeparate : null)) || null,
       reflectionCharles: typeof reflectionCharles === 'string' ? (reflectionCharles || null) : undefined,
       reflectionWelder: typeof reflectionWelder === 'string' ? (reflectionWelder || null) : undefined,
       difficulty: difficulty || null,

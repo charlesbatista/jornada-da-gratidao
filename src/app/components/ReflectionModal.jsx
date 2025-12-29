@@ -247,7 +247,7 @@ export default function ReflectionModal({
                       Texto do Charles
                     </div>
                     <textarea
-                      value={selectedDay.reflectionCharles ?? selectedDay.reflection ?? ""}
+                      value={selectedDay.reflectionCharles || ""}
                       onChange={isViewMode ? undefined : handleReflectionCharlesChange}
                       rows="8"
                       placeholder={
@@ -263,7 +263,7 @@ export default function ReflectionModal({
                       }`}
                     />
                     <div className="absolute bottom-3 right-3 text-xs text-gray-500">
-                      {(selectedDay.reflectionCharles ?? selectedDay.reflection ?? "").length} caracteres
+                      {(selectedDay.reflectionCharles || "").length} caracteres
                     </div>
                   </div>
 

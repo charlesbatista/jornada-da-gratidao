@@ -110,7 +110,6 @@ export default function JourneyBoard() {
                 ...data.day,
                 isComplete: data.day.isCompleted, // Compatibilidade com dados antigos
                 isCompleted: data.day.isCompleted, // Dados novos
-                reflection: data.day.reflection,
                 reflectionCharles: data.day.reflectionCharles,
                 reflectionWelder: data.day.reflectionWelder,
                 difficulty: data.day.difficulty,
@@ -454,20 +453,9 @@ export default function JourneyBoard() {
   };
 
   const handleCloseModal = async (shouldSave = false) => {
-    const legacyReflectionFromSeparate = (day) => {
-      const c = (day?.reflectionCharles ?? day?.reflection ?? "").trim();
-      const w = (day?.reflectionWelder ?? "").trim();
-      if (!c && !w) return null;
-      const parts = [];
-      if (c) parts.push(`Charles:\n${c}`);
-      if (w) parts.push(`Welder:\n${w}`);
-      return parts.join("\n\n");
-    };
-
     // Salva as mudanças apenas se shouldSave for true
     const hasAnyReflection = Boolean(
       selectedDay && (
-        (typeof selectedDay.reflection === 'string' && selectedDay.reflection.trim()) ||
         (typeof selectedDay.reflectionCharles === 'string' && selectedDay.reflectionCharles.trim()) ||
         (typeof selectedDay.reflectionWelder === 'string' && selectedDay.reflectionWelder.trim())
       )
@@ -476,18 +464,10 @@ export default function JourneyBoard() {
     if (shouldSave && selectedDay && (hasAnyReflection || selectedDay.difficulty)) {
       const dayNumberToUpdate = selectedDay.dayNumber || selectedDay.id;
 
-      const reflectionCharlesToSave =
-        (selectedDay.reflectionCharles ?? selectedDay.reflection ?? null);
-      const reflectionWelderToSave = (selectedDay.reflectionWelder ?? null);
-
       await updateDay(dayNumberToUpdate, {
         isCompleted: selectedDay.isCompleted || selectedDay.isComplete,
-        reflection:
-          (typeof selectedDay.reflection === 'string' && selectedDay.reflection.trim()
-            ? selectedDay.reflection
-            : legacyReflectionFromSeparate(selectedDay)) || null,
-        reflectionCharles: reflectionCharlesToSave,
-        reflectionWelder: reflectionWelderToSave,
+        reflectionCharles: selectedDay.reflectionCharles || null,
+        reflectionWelder: selectedDay.reflectionWelder || null,
         difficulty: selectedDay.difficulty,
       });
     }
@@ -542,7 +522,6 @@ export default function JourneyBoard() {
                 isCompleted: true,
                 isComplete: true, // Garantir ambos os campos para compatibilidade
                 difficulty: selectedDay.difficulty,
-                reflection: selectedDay.reflection,
                 reflectionCharles: selectedDay.reflectionCharles,
                 reflectionWelder: selectedDay.reflectionWelder,
                 completedAt: completedAtString,
@@ -557,7 +536,6 @@ export default function JourneyBoard() {
         isCompleted: true,
         isComplete: true,
         difficulty: selectedDay.difficulty,
-        reflection: selectedDay.reflection,
         reflectionCharles: selectedDay.reflectionCharles,
         reflectionWelder: selectedDay.reflectionWelder,
         completedAt: completedAtString,
@@ -568,8 +546,7 @@ export default function JourneyBoard() {
       try {
         await updateDay(dayNumberToUpdate, {
           isCompleted: true,
-          reflection: selectedDay.reflection,
-          reflectionCharles: (selectedDay.reflectionCharles ?? selectedDay.reflection ?? null),
+          reflectionCharles: (selectedDay.reflectionCharles ?? null),
           reflectionWelder: (selectedDay.reflectionWelder ?? null),
           difficulty: selectedDay.difficulty,
         });

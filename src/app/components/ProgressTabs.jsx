@@ -933,7 +933,8 @@ function DiaryPanel({ days, startDate }) {
           const mappedDays = data.analytics.dailyData.map((day) => ({
             dayNumber: day.day,
             completed: day.completed,
-            reflection: day.reflection,
+            reflectionCharles: day.reflectionCharles,
+            reflectionWelder: day.reflectionWelder,
             difficulty: day.difficulty,
             date: day.completedAt ? new Date(day.completedAt) : new Date(data.analytics.journey.startDate + 'T00:00:00'),
             phase: day.phase,
@@ -970,12 +971,14 @@ function DiaryPanel({ days, startDate }) {
   // Filtrar e ordenar dias com useMemo para otimização
   const filteredDays = useMemo(() => {
     // Filtrar dias com reflexões
-    let filtered = daysData.filter(day => day.completed && day.reflection);
+    let filtered = daysData.filter(day =>
+      day.completed && ((day.reflectionCharles && day.reflectionCharles.trim()) || (day.reflectionWelder && day.reflectionWelder.trim()))
+    );
 
     // Filtro de busca
     if (searchTerm.trim()) {
       filtered = filtered.filter(day =>
-        day.reflection?.toLowerCase().includes(searchTerm.toLowerCase())
+        `${day.reflectionCharles || ''}\n${day.reflectionWelder || ''}`.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 
@@ -1027,17 +1030,22 @@ function DiaryPanel({ days, startDate }) {
   }, [hasMore, filteredDays.length]);
 
   // Dias com reflexões (para estatísticas)
-  const daysWithReflections = daysData.filter(day => day.completed && day.reflection);
+  const daysWithReflections = daysData.filter(day =>
+    day.completed && ((day.reflectionCharles && day.reflectionCharles.trim()) || (day.reflectionWelder && day.reflectionWelder.trim()))
+  );
 
   // Estatísticas
   const stats = {
     totalReflections: daysWithReflections.length,
     averageLength: Math.round(
-      daysWithReflections.reduce((sum, day) => sum + (day.reflection?.length || 0), 0) / 
+      daysWithReflections.reduce((sum, day) => sum + ((day.reflectionCharles?.length || 0) + (day.reflectionWelder?.length || 0)), 0) / 
       (daysWithReflections.length || 1)
     ),
     longestReflection: daysWithReflections.reduce((max, day) => 
-      (day.reflection?.length || 0) > (max.reflection?.length || 0) ? day : max, 
+      ((day.reflectionCharles?.length || 0) + (day.reflectionWelder?.length || 0)) >
+      ((max.reflectionCharles?.length || 0) + (max.reflectionWelder?.length || 0))
+        ? day
+        : max, 
       daysWithReflections[0] || {}
     )
   };
@@ -1205,15 +1213,30 @@ function DiaryPanel({ days, startDate }) {
                 </div>
                 {/* Contagem de caracteres - vai para direita no desktop e para baixo no mobile */}
                 <div className="text-xs text-gray-500 sm:ml-4 sm:text-right">
-                  {day.reflection?.length || 0} caracteres
+                  {(day.reflectionCharles?.length || 0) + (day.reflectionWelder?.length || 0)} caracteres
                 </div>
               </div>
 
               {/* Reflexão */}
               <div className="bg-black/20 rounded-xl p-4 border border-white/5">
-                <p className="text-gray-300 leading-relaxed whitespace-pre-wrap">
-                  {day.reflection}
-                </p>
+                <div className="space-y-4">
+                  {day.reflectionCharles && (
+                    <div>
+                      <div className="text-xs font-semibold text-white/70 mb-2">Texto do Charles</div>
+                      <p className="text-gray-300 leading-relaxed whitespace-pre-wrap">
+                        {day.reflectionCharles}
+                      </p>
+                    </div>
+                  )}
+                  {day.reflectionWelder && (
+                    <div>
+                      <div className="text-xs font-semibold text-white/70 mb-2">Texto do Welder</div>
+                      <p className="text-gray-300 leading-relaxed whitespace-pre-wrap">
+                        {day.reflectionWelder}
+                      </p>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           ))
@@ -1245,7 +1268,8 @@ function DiaryPanel({ days, startDate }) {
                 .map(day => 
                   `DIA ${day.dayNumber} - ${day.date.toLocaleDateString('pt-BR')}\n` +
                   `Dificuldade: ${day.difficulty || 'Não informada'}\n\n` +
-                  `${day.reflection}\n\n` +
+                  `Texto do Charles:\n${day.reflectionCharles || ''}\n\n` +
+                  `Texto do Welder:\n${day.reflectionWelder || ''}\n\n` +
                   `${'='.repeat(50)}\n\n`
                 )
                 .join('');
