@@ -557,6 +557,7 @@ function AnalyticsPanel({ days, completedDays, totalDays = 90 }) {
   const [analytics, setAnalytics] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showAllWeeks, setShowAllWeeks] = useState(false);
 
   // Carregar dados de analytics da API
   useEffect(() => {
@@ -679,56 +680,59 @@ function AnalyticsPanel({ days, completedDays, totalDays = 90 }) {
           Curva de Dificuldade da Jornada
         </h3>
         
-        <div className="relative h-64 mb-4">
-          {/* Grid de fundo */}
-          <div className="absolute inset-0 flex flex-col justify-between">
-            {[10, 7.5, 5, 2.5, 0].map((level) => (
-              <div key={level} className="flex items-center gap-2">
-                <span className="text-xs text-gray-500 w-8">{level}</span>
-                <div className="flex-1 border-t border-gray-700/50"></div>
-              </div>
-            ))}
-          </div>
+        {/* Container com scroll horizontal */}
+        <div className="overflow-x-auto pb-2">
+          <div style={{ minWidth: `${Math.max(600, chartData.length * 5)}px` }} className="relative h-64 mb-4">
+            {/* Grid de fundo */}
+            <div className="absolute inset-0 flex flex-col justify-between">
+              {[10, 7.5, 5, 2.5, 0].map((level) => (
+                <div key={level} className="flex items-center gap-2">
+                  <span className="text-xs text-gray-500 w-8">{level}</span>
+                  <div className="flex-1 border-t border-gray-700/50"></div>
+                </div>
+              ))}
+            </div>
 
-          {/* Barras do gráfico */}
-          <div className="absolute inset-0 flex items-end gap-[2px] pl-10 pt-4">
-            {chartData.map((data, index) => {
-              const height = (data.difficulty / 10) * 100;
-              const isCompleted = data.completed;
-              
-              return (
-                <div
-                  key={index}
-                  className="flex-1 flex flex-col justify-end group relative"
-                  style={{ height: '100%' }}
-                >
-                  {/* Barra */}
+            {/* Barras do gráfico */}
+            <div className="absolute inset-0 flex items-end gap-[2px] pl-10 pt-4">
+              {chartData.map((data, index) => {
+                const height = (data.difficulty / 10) * 100;
+                const isCompleted = data.completed;
+                
+                return (
                   <div
-                    className={`w-full rounded-t transition-all duration-300 ${
-                      isCompleted
-                        ? data.difficulty >= 7
-                          ? 'bg-gradient-to-t from-red-600 to-red-400 shadow-lg shadow-red-500/50'
-                          : data.difficulty >= 5
-                          ? 'bg-gradient-to-t from-orange-600 to-orange-400'
-                          : 'bg-gradient-to-t from-green-600 to-green-400'
-                        : 'bg-gradient-to-t from-gray-700 to-gray-600 opacity-40'
-                    } hover:opacity-100`}
-                    style={{ height: `${height}%` }}
+                    key={index}
+                    className="flex flex-col justify-end group relative"
+                    style={{ height: '100%', minWidth: '4px', flex: '1 0 4px' }}
                   >
-                    {/* Tooltip */}
-                    <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-10">
-                      <div className="bg-gray-900 text-white text-xs rounded-lg py-2 px-3 whitespace-nowrap shadow-xl border border-white/10">
-                        <div className="font-bold">Dia {data.day}</div>
-                        <div className="text-gray-300">Dificuldade: {data.difficulty}/10</div>
-                        <div className={isCompleted ? 'text-green-400' : 'text-gray-500'}>
-                          {isCompleted ? '✓ Completo' : '○ Pendente'}
+                    {/* Barra */}
+                    <div
+                      className={`w-full rounded-t transition-all duration-300 ${
+                        isCompleted
+                          ? data.difficulty >= 7
+                            ? 'bg-gradient-to-t from-red-600 to-red-400 shadow-lg shadow-red-500/50'
+                            : data.difficulty >= 5
+                            ? 'bg-gradient-to-t from-orange-600 to-orange-400'
+                            : 'bg-gradient-to-t from-green-600 to-green-400'
+                          : 'bg-gradient-to-t from-gray-700 to-gray-600 opacity-40'
+                      } hover:opacity-100`}
+                      style={{ height: `${height}%` }}
+                    >
+                      {/* Tooltip */}
+                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-10">
+                        <div className="bg-gray-900 text-white text-xs rounded-lg py-2 px-3 whitespace-nowrap shadow-xl border border-white/10">
+                          <div className="font-bold">Dia {data.day}</div>
+                          <div className="text-gray-300">Dificuldade: {data.difficulty}/10</div>
+                          <div className={isCompleted ? 'text-green-400' : 'text-gray-500'}>
+                            {isCompleted ? '✓ Completo' : '○ Pendente'}
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
 
@@ -760,8 +764,49 @@ function AnalyticsPanel({ days, completedDays, totalDays = 90 }) {
           Progresso Semanal
         </h3>
         
+        {/* Semanas passadas (colapsáveis) */}
+        {(() => {
+          // Índice da semana vigente
+          const currentWeekIdx = weeklyData.findIndex(
+            w => completedDays >= (w.week - 1) * 7 && completedDays < w.week * 7
+          );
+          // Se não achou (jornada completa), usa a última semana
+          const pivotIdx = currentWeekIdx >= 0 ? currentWeekIdx : weeklyData.length - 1;
+          // Janela padrão: 2 antes da atual + a própria (ou as 3 últimas se for no início)
+          const windowStart = Math.max(0, pivotIdx - 2);
+          const windowEnd = pivotIdx;
+          const hiddenCount = weeklyData.length - (windowEnd - windowStart + 1);
+
+          return hiddenCount > 0 ? (
+            <div className="mb-4">
+              <button
+                onClick={() => setShowAllWeeks(v => !v)}
+                className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors duration-200 cursor-pointer"
+              >
+                <svg
+                  className={`w-4 h-4 transition-transform duration-300 ${showAllWeeks ? 'rotate-180' : ''}`}
+                  fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+                {showAllWeeks
+                  ? `Ocultar semanas anteriores`
+                  : `Ver todas as ${weeklyData.length} semanas`}
+              </button>
+            </div>
+          ) : null;
+        })()}
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {weeklyData.map((week) => {
+          {(() => {
+            const currentWeekIdx = weeklyData.findIndex(
+              w => completedDays >= (w.week - 1) * 7 && completedDays < w.week * 7
+            );
+            const pivotIdx = currentWeekIdx >= 0 ? currentWeekIdx : weeklyData.length - 1;
+            const windowStart = Math.max(0, pivotIdx - 2);
+            const visibleWeeks = showAllWeeks ? weeklyData : weeklyData.slice(windowStart, pivotIdx + 1);
+            return visibleWeeks;
+          })().map((week) => {
             const isCurrentWeek = completedDays >= (week.week - 1) * 7 && completedDays < week.week * 7;
             
             // Calcular datas da semana
