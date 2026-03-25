@@ -154,24 +154,6 @@ export default function JourneyBoard() {
     }
   };
 
-  const resetJourney = async () => {
-    try {
-      const response = await fetch("/api/journey", { method: "DELETE" });
-
-      if (response.ok) {
-        // Resetar estados
-        setDays([]);
-        setStartDate(null);
-        setTotalDays(365);
-        setIsModalOpen(false);
-        setSelectedDay(null);
-        setIsConfigured(false);
-      }
-    } catch (error) {
-      console.error("Erro ao resetar jornada:", error);
-    }
-  };
-
   useEffect(() => {
     setIsClient(true);
     // Adiciona o script do confetti ao head do documento
@@ -204,24 +186,6 @@ export default function JourneyBoard() {
     console.log("data inicial: ", newStartDateYmd);
 
     await createJourney(newStartDateYmd, customTotalDays);
-  };
-
-  const handleResetJourney = async () => {
-    const confirmationWord = "CITRINO";
-    const userInput = window.prompt(
-      `⚠️ ATENÇÃO: Esta ação é irreversível e apagará todo o seu progresso.\n\n` +
-        `Para confirmar, digite a palavra secreta abaixo:`
-    );
-
-    if (userInput === confirmationWord) {
-      console.log("Reiniciando jornada...");
-      await resetJourney();
-      console.log("Jornada resetada com sucesso.");
-    } else if (userInput !== null) {
-      // O usuário digitou algo, mas não a palavra correta
-      alert("Palavra de confirmação incorreta. A jornada não foi reiniciada.");
-    }
-    // Se userInput for null, o usuário clicou em "Cancelar", então não fazemos nada.
   };
 
   // Função para tocar som de conquista melhorado
@@ -841,15 +805,6 @@ export default function JourneyBoard() {
                 totalDays={totalDays}
               />
 
-              {/* Botão de Reset - Posicionado discretamente no final */}
-              <div className="mt-16 mb-8 flex justify-center opacity-50 hover:opacity-100 transition-opacity duration-300">
-                <button
-                  onClick={handleResetJourney}
-                  className="text-xs text-gray-500 hover:text-red-400 px-4 py-2 rounded-lg hover:bg-red-500/5 transition-all duration-300 cursor-pointer border border-gray-800/30 hover:border-red-400/30"
-                >
-                  🔄 Reiniciar Jornada
-                </button>
-              </div>
             </main>
           </div>
         </div>

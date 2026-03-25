@@ -783,9 +783,17 @@ function AnalyticsPanel({ days, completedDays, totalDays = 90 }) {
         
         {/* Semanas passadas (colapsáveis) */}
         {(() => {
+          // Dia atual na jornada baseado na data de hoje
+          const todayJourneyDay = (() => {
+            if (!analytics.journey?.startDate) return 1;
+            const s = new Date(analytics.journey.startDate + 'T00:00:00');
+            s.setHours(0, 0, 0, 0);
+            const now = new Date(); now.setHours(0, 0, 0, 0);
+            return Math.floor((now - s) / (1000 * 60 * 60 * 24)) + 1;
+          })();
           // Índice da semana vigente
           const currentWeekIdx = weeklyData.findIndex(
-            w => completedDays >= (w.week - 1) * 7 && completedDays < w.week * 7
+            w => todayJourneyDay >= (w.week - 1) * 7 + 1 && todayJourneyDay <= w.week * 7
           );
           // Se não achou (jornada completa), usa a última semana
           const pivotIdx = currentWeekIdx >= 0 ? currentWeekIdx : weeklyData.length - 1;
@@ -816,15 +824,29 @@ function AnalyticsPanel({ days, completedDays, totalDays = 90 }) {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {(() => {
+            const todayJourneyDay2 = (() => {
+              if (!analytics.journey?.startDate) return 1;
+              const s = new Date(analytics.journey.startDate + 'T00:00:00');
+              s.setHours(0, 0, 0, 0);
+              const now = new Date(); now.setHours(0, 0, 0, 0);
+              return Math.floor((now - s) / (1000 * 60 * 60 * 24)) + 1;
+            })();
             const currentWeekIdx = weeklyData.findIndex(
-              w => completedDays >= (w.week - 1) * 7 && completedDays < w.week * 7
+              w => todayJourneyDay2 >= (w.week - 1) * 7 + 1 && todayJourneyDay2 <= w.week * 7
             );
             const pivotIdx = currentWeekIdx >= 0 ? currentWeekIdx : weeklyData.length - 1;
             const windowStart = Math.max(0, pivotIdx - 2);
             const visibleWeeks = showAllWeeks ? weeklyData : weeklyData.slice(windowStart, pivotIdx + 1);
             return visibleWeeks;
           })().map((week) => {
-            const isCurrentWeek = completedDays >= (week.week - 1) * 7 && completedDays < week.week * 7;
+            const todayJD = (() => {
+              if (!analytics.journey?.startDate) return 1;
+              const s = new Date(analytics.journey.startDate + 'T00:00:00');
+              s.setHours(0, 0, 0, 0);
+              const now = new Date(); now.setHours(0, 0, 0, 0);
+              return Math.floor((now - s) / (1000 * 60 * 60 * 24)) + 1;
+            })();
+            const isCurrentWeek = todayJD >= (week.week - 1) * 7 + 1 && todayJD <= week.week * 7;
             
             // Calcular datas da semana
             const startDate = new Date(analytics.journey.startDate + 'T00:00:00');
