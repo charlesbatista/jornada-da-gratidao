@@ -23,6 +23,17 @@ export default function ReflectionModal({
   const [showSaveSuccess, setShowSaveSuccess] = useState(false);
   const [isCompleting, setIsCompleting] = useState(false);
   const modalContentRef = useRef(null);
+  // Guardar os valores no momento em que o modal abre, para detectar alterações
+  const initialValuesRef = useRef(null);
+
+  useEffect(() => {
+    if (isOpen && selectedDay) {
+      initialValuesRef.current = {
+        reflectionCharles: selectedDay.reflectionCharles || "",
+        reflectionWelder: selectedDay.reflectionWelder || "",
+      };
+    }
+  }, [isOpen, selectedDay?.dayNumber]);
 
   // Effect para capturar scroll e redirecionar para o modal
   useEffect(() => {
@@ -59,8 +70,23 @@ export default function ReflectionModal({
 
   if (!isOpen || !selectedDay) return null;
 
+  // Verifica se há texto novo não salvo
+  const hasUnsavedText = (() => {
+    const initial = initialValuesRef.current;
+    if (!initial) return false;
+    const currentCharles = selectedDay.reflectionCharles || "";
+    const currentWelder = selectedDay.reflectionWelder || "";
+    return currentCharles !== initial.reflectionCharles || currentWelder !== initial.reflectionWelder;
+  })();
+
   // Função para fechar modal sem salvar
   const handleCloseModal = () => {
+    if (hasUnsavedText) {
+      const confirmed = window.confirm(
+        "Você tem texto não salvo. Deseja fechar sem salvar?"
+      );
+      if (!confirmed) return;
+    }
     onClose(false); // Passa false para indicar que não deve salvar
   };
 
