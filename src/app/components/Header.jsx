@@ -95,7 +95,7 @@ const customStyles = `
   }
 `;
 
-export default function Header({ completedDays, totalDays = 90, startDate }) {
+export default function Header({ completedDays, totalDays = 365, startDate }) {
     const progressPercentage = (completedDays / totalDays) * 100;
     const motivationalMessage = getMotivationalMessage(completedDays, totalDays);
     

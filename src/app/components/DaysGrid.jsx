@@ -6,7 +6,7 @@ export default function DaysGrid({
   days,
   handleDayClick,
   startDate,
-  totalDays = 90,
+  totalDays = 365,
 }) {
   const todayCardRef = useRef(null);
   const { isEditMode } = useAuth();
@@ -23,6 +23,33 @@ export default function DaysGrid({
     now.setHours(0, 0, 0, 0);
     setToday(now);
   }, []);
+
+  // Calcular o dia atual na jornada com base na data de início
+  const currentJourneyDay = (() => {
+    if (!startDate || !today) return 1;
+    let baseDate;
+    if (typeof startDate === 'string') {
+      baseDate = parseYmdLocal(startDate);
+    } else {
+      baseDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+    }
+    baseDate.setHours(0, 0, 0, 0);
+    const diffMs = today.getTime() - baseDate.getTime();
+    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24)) + 1;
+    return Math.max(1, Math.min(diffDays, totalDays));
+  })();
+
+  // Janela de exibição: sempre 90 dias, começando dos últimos 6 dias
+  const WINDOW_SIZE = 90;
+  const windowStart = Math.max(1, currentJourneyDay - 5);
+  const windowEnd = Math.min(totalDays, windowStart + WINDOW_SIZE - 1);
+  // Caso a janela seja menor que 90 dias pelo fim, empurra para trás o início
+  const adjustedWindowStart = Math.max(1, windowEnd - WINDOW_SIZE + 1);
+
+  const visibleDays = days.filter(d => {
+    const num = d.dayNumber || d.id;
+    return num >= adjustedWindowStart && num <= windowEnd;
+  });
 
   const getDayDate = (dayIndex) => {
     if (!startDate) return null;
@@ -98,7 +125,8 @@ export default function DaysGrid({
       {/* Título da seção */}
       <div className="mb-8 text-center">
         <h2 className="text-3xl font-black text-white mb-2">
-          Seus {totalDays} Dias
+          Dias {adjustedWindowStart} a {windowEnd}{" "}
+          <span className="text-gray-400 text-xl font-medium">/ {totalDays}</span>
         </h2>
         <p className="text-gray-300 mb-6">
           Registre cada dia vencido e sua reflexão.
@@ -107,7 +135,7 @@ export default function DaysGrid({
 
       {/* Grid de dias */}
       <div className="grid grid-cols-1 min-[425px]:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4 md:gap-5 lg:gap-6 mb-8">
-        {days.map((day) => {
+        {visibleDays.map((day) => {
           // Usar dayNumber se existir (dados do banco), senão day.id (dados antigos)
           const dayNumber = day.dayNumber || day.id;
           const dayDate = getDayDate(dayNumber);

@@ -15,7 +15,7 @@ export default function JourneyBoard() {
   const [startDate, setStartDate] = useState(toYmd(new Date()));
   const [isClient, setIsClient] = useState(false);
   const [isConfigured, setIsConfigured] = useState(false);
-  const [totalDays, setTotalDays] = useState(90);
+  const [totalDays, setTotalDays] = useState(365);
   const [isLoading, setIsLoading] = useState(true);
 
   // Efeito para carregar o estado para inicializar a jornada
@@ -27,7 +27,24 @@ export default function JourneyBoard() {
       console.log("Resposta da API:", data);
 
       if (data.journey) {
-        const { startDate, totalDays, days } = data.journey;
+        let { startDate, totalDays, days } = data.journey;
+
+        // Se a jornada tem menos de 365 dias, estender automaticamente
+        if (totalDays < 365) {
+          console.log(`Estendendo jornada de ${totalDays} para 365 dias...`);
+          const extendResponse = await fetch("/api/journey", {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ newTotalDays: 365 }),
+          });
+          if (extendResponse.ok) {
+            const extendData = await extendResponse.json();
+            totalDays = extendData.journey.totalDays;
+            days = extendData.journey.days;
+            console.log("Jornada estendida com sucesso para 365 dias.");
+          }
+        }
+
         setStartDate(startDate);
         setTotalDays(totalDays);
         setDays(days);
@@ -145,7 +162,7 @@ export default function JourneyBoard() {
         // Resetar estados
         setDays([]);
         setStartDate(null);
-        setTotalDays(90);
+        setTotalDays(365);
         setIsModalOpen(false);
         setSelectedDay(null);
         setIsConfigured(false);
@@ -648,6 +665,14 @@ export default function JourneyBoard() {
     return days.filter((day) => day.isComplete || day.isCompleted).length;
   }, [days]);
 
+  // Se não está configurado após carregar, inicializar automaticamente com 365 dias
+  useEffect(() => {
+    if (isClient && !isLoading && !isConfigured) {
+      initializeJourney(null, 365);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isClient, isLoading, isConfigured]);
+
   if (!isClient || isLoading) {
     // Renderiza uma bela tela de carregamento
     return (
@@ -717,9 +742,19 @@ export default function JourneyBoard() {
     );
   }
 
-  // Tela de configuração inicial
+  // Criando jornada automaticamente
   if (!isConfigured) {
-    return <InitialConfigScreen onConfigComplete={initializeJourney} />;
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-slate-950 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 mx-auto mb-6 relative">
+            <div className="absolute inset-0 border-4 border-t-emerald-400 border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin"></div>
+          </div>
+          <h3 className="text-xl font-bold text-white mb-2 animate-pulse">Iniciando sua jornada...</h3>
+          <p className="text-gray-400 text-sm">Preparando 365 dias de transformação</p>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -836,198 +871,5 @@ export default function JourneyBoard() {
         canGoNext={canGoNext}
       />
     </>
-  );
-}
-
-// Componente para configuração inicial da jornada
-function InitialConfigScreen({ onConfigComplete }) {
-  const [startDate, setStartDate] = useState(
-    new Date().toISOString().split("T")[0]
-  );
-  const [totalDays, setTotalDays] = useState(90);
-  const [isLoading, setIsLoading] = useState(false);
-  const [loadingStage, setLoadingStage] = useState(0);
-
-  const loadingMessages = [
-    { icon: "🚀", text: "Preparando foguetes..." },
-    { icon: "⛽", text: "Abastecendo combustível..." },
-    { icon: "🧭", text: "Calibrando navegação..." },
-    { icon: "✨", text: "Sincronizando estrelas..." },
-    { icon: "🌌", text: "Abrindo portal dimensional..." },
-    { icon: "🎯", text: "Definindo coordenadas..." },
-    { icon: "🔥", text: "Iniciando sua jornada!" }
-  ];
-
-  const handleStartJourney = async () => {
-    setIsLoading(true);
-    
-    // Simular processo de carregamento com etapas
-    for (let stage = 0; stage < loadingMessages.length; stage++) {
-      setLoadingStage(stage);
-      await new Promise(resolve => setTimeout(resolve, 800));
-    }
-    
-    // Executar a função real de criação da jornada
-    await onConfigComplete(startDate, totalDays);
-  };
-
-  return (
-    <div className="min-h-screen relative overflow-hidden">
-      {/* Background com luzes vibrantes */}
-      <div className="fixed inset-0 bg-gradient-to-br from-slate-950 via-purple-950 to-slate-950">
-        {/* Luzes de fundo animadas */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-20 left-20 w-96 h-96 bg-purple-500/30 rounded-full blur-3xl animate-pulse" />
-          <div
-            className="absolute bottom-20 right-20 w-80 h-80 bg-cyan-400/25 rounded-full blur-3xl animate-pulse"
-            style={{ animationDelay: "1s" }}
-          />
-          <div
-            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-pink-500/20 rounded-full blur-3xl animate-pulse"
-            style={{ animationDelay: "0.5s" }}
-          />
-        </div>
-      </div>
-
-      {/* Conteúdo da configuração */}
-      <div className="relative z-10 min-h-screen flex items-center justify-center p-4">
-        <div className="max-w-2xl w-full">
-          {/* Card de configuração */}
-          <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl shadow-2xl p-8 md:p-12">
-            {/* Header */}
-            <div className="text-center mb-8">
-              <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-2xl mb-6">
-                <span className="text-3xl">🚀</span>
-              </div>
-              <h1 className="text-4xl font-black text-white mb-4">
-                Configure Sua Jornada
-              </h1>
-              <p className="text-lg text-gray-300 leading-relaxed">
-                Defina quando sua jornada começará e por quantos dias você quer
-                se desafiar.
-              </p>
-            </div>
-
-            {/* Formulário */}
-            <div className="space-y-6">
-              {/* Data de início */}
-              <div>
-                <label className="block text-lg font-medium text-white mb-3">
-                  📅 Data de Início
-                </label>
-                <input
-                  type="date"
-                  value={startDate}
-                  onChange={(e) => setStartDate(e.target.value)}
-                  className="w-full p-4 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl text-white focus:ring-2 focus:ring-emerald-400/50 focus:border-emerald-400/50 transition-all duration-300"
-                />
-              </div>
-
-              {/* Número de dias */}
-              <div>
-                <label className="block text-lg font-medium text-white mb-3">
-                  🎯 Duração do Desafio
-                </label>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
-                  {[30, 60, 90, 120].map((days) => (
-                    <button
-                      key={days}
-                      onClick={() => setTotalDays(days)}
-                      className={`p-3 rounded-xl transition-all duration-300 cursor-pointer ${
-                        totalDays === days
-                          ? "bg-emerald-500/20 border-2 border-emerald-400 text-emerald-300"
-                          : "bg-white/5 border border-white/10 text-gray-300 hover:bg-white/10"
-                      }`}
-                    >
-                      <div className="font-bold">{days}</div>
-                      <div className="text-xs">dias</div>
-                    </button>
-                  ))}
-                </div>
-                <input
-                  type="number"
-                  min="1"
-                  max="365"
-                  value={totalDays}
-                  onChange={(e) => setTotalDays(parseInt(e.target.value))}
-                  placeholder="Ou digite um número personalizado..."
-                  className="w-full p-4 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl text-white placeholder-gray-500 focus:ring-2 focus:ring-emerald-400/50 focus:border-emerald-400/50 transition-all duration-300"
-                />
-              </div>
-            </div>
-
-            {/* Botão iniciar com animações de loading */}
-            <div className="mt-8 text-center">
-              {!isLoading ? (
-                <button
-                  onClick={handleStartJourney}
-                  className="inline-flex items-center gap-3 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold py-4 px-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 cursor-pointer group"
-                >
-                  <span className="text-2xl group-hover:animate-bounce">🎯</span>
-                  <span>Iniciar Minha Jornada</span>
-                </button>
-              ) : (
-                <div className="inline-block">
-                  {/* Container de animação de carregamento */}
-                  <div className="bg-gradient-to-r from-purple-600 via-blue-600 to-cyan-500 text-white font-bold py-6 px-10 rounded-3xl shadow-2xl border border-white/20 backdrop-blur-xl animate-pulse">
-                    <div className="flex flex-col items-center gap-4">
-                      {/* Ícone animado da etapa atual */}
-                      <div className={`text-6xl ${loadingStage < 2 ? 'animate-bounce' : 'animate-spin'} transition-all duration-500`}>
-                        {loadingMessages[loadingStage]?.icon}
-                      </div>
-                      
-                      {/* Texto da etapa */}
-                      <div className="text-xl font-bold animate-pulse">
-                        {loadingMessages[loadingStage]?.text}
-                      </div>
-                      
-                      {/* Barra de progresso cósmica */}
-                      <div className="w-80 h-3 bg-white/20 rounded-full overflow-hidden">
-                        <div 
-                          className="h-full bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 rounded-full transition-all duration-800 ease-in-out shadow-lg shadow-orange-400/50"
-                          style={{ 
-                            width: `${((loadingStage + 1) / loadingMessages.length) * 100}%`,
-                            boxShadow: '0 0 20px rgba(251, 146, 60, 0.8)'
-                          }}
-                        />
-                      </div>
-                      
-                      {/* Indicadores de progresso */}
-                      <div className="flex gap-2 mt-2">
-                        {loadingMessages.map((_, index) => (
-                          <div
-                            key={index}
-                            className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                              index <= loadingStage
-                                ? 'bg-emerald-400 shadow-lg shadow-emerald-400/60 animate-pulse'
-                                : 'bg-white/20'
-                            }`}
-                          />
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Efeitos de partículas durante o carregamento */}
-                  <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                    <div className="absolute -top-2 -left-2 w-2 h-2 bg-yellow-400 rounded-full animate-ping" style={{animationDelay: '0s'}} />
-                    <div className="absolute -top-3 -right-4 w-1 h-1 bg-cyan-400 rounded-full animate-ping" style={{animationDelay: '0.5s'}} />
-                    <div className="absolute -bottom-2 -left-3 w-1.5 h-1.5 bg-pink-400 rounded-full animate-ping" style={{animationDelay: '1s'}} />
-                    <div className="absolute -bottom-1 -right-2 w-2 h-2 bg-purple-400 rounded-full animate-ping" style={{animationDelay: '1.5s'}} />
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Info adicional */}
-            <div className="mt-6 text-center">
-              <p className="text-sm text-gray-400">
-                💡 Você poderá reiniciar sua jornada a qualquer momento
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   );
 }
