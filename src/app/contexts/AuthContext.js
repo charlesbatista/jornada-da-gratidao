@@ -2,9 +2,6 @@
 
 import { createContext, useContext, useState, useEffect } from 'react';
 
-// Senha para modo edição (em produção, use variável de ambiente)
-const EDIT_PASSWORD = process.env.NEXT_PUBLIC_EDIT_PASSWORD || "liberdade2025";
-
 const AuthContext = createContext({
   isEditMode: false,
   isAuthenticated: false,
@@ -52,17 +49,28 @@ export function AuthProvider({ children }) {
     return false;
   };
 
-  const login = (password) => {
-    if (password === EDIT_PASSWORD) {
-      const authData = {
-        timestamp: Date.now(),
-        mode: 'edit'
-      };
-      localStorage.setItem('jornada-auth', JSON.stringify(authData));
-      setIsEditMode(true);
-      setIsAuthenticated(true);
-      return true;
+  const login = async (password) => {
+    try {
+      const res = await fetch('/api/admin/verify-edit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password })
+      });
+
+      if (res.ok) {
+        const authData = {
+          timestamp: Date.now(),
+          mode: 'edit'
+        };
+        localStorage.setItem('jornada-auth', JSON.stringify(authData));
+        setIsEditMode(true);
+        setIsAuthenticated(true);
+        return true;
+      }
+    } catch (error) {
+      console.error('Erro no login:', error);
     }
+
     return false;
   };
 
