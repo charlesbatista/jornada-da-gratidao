@@ -558,6 +558,7 @@ function AnalyticsPanel({ days, completedDays, totalDays = 90 }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showAllWeeks, setShowAllWeeks] = useState(false);
+  const [hoveredBar, setHoveredBar] = useState(null); // { day, difficulty, completed, x, y }
 
   // Carregar dados de analytics da API
   useEffect(() => {
@@ -702,8 +703,19 @@ function AnalyticsPanel({ days, completedDays, totalDays = 90 }) {
                 return (
                   <div
                     key={index}
-                    className="flex flex-col justify-end group relative"
+                    className="flex flex-col justify-end relative"
                     style={{ height: '100%', minWidth: '4px', flex: '1 0 4px' }}
+                    onMouseEnter={(e) => {
+                      const rect = e.currentTarget.getBoundingClientRect();
+                      setHoveredBar({
+                        day: data.day,
+                        difficulty: data.difficulty,
+                        completed: isCompleted,
+                        x: rect.left + rect.width / 2,
+                        y: rect.top,
+                      });
+                    }}
+                    onMouseLeave={() => setHoveredBar(null)}
                   >
                     {/* Barra */}
                     <div
@@ -715,26 +727,31 @@ function AnalyticsPanel({ days, completedDays, totalDays = 90 }) {
                             ? 'bg-gradient-to-t from-orange-600 to-orange-400'
                             : 'bg-gradient-to-t from-green-600 to-green-400'
                           : 'bg-gradient-to-t from-gray-700 to-gray-600 opacity-40'
-                      } hover:opacity-100`}
+                      } hover:brightness-125`}
                       style={{ height: `${height}%` }}
-                    >
-                      {/* Tooltip */}
-                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-10">
-                        <div className="bg-gray-900 text-white text-xs rounded-lg py-2 px-3 whitespace-nowrap shadow-xl border border-white/10">
-                          <div className="font-bold">Dia {data.day}</div>
-                          <div className="text-gray-300">Dificuldade: {data.difficulty}/10</div>
-                          <div className={isCompleted ? 'text-green-400' : 'text-gray-500'}>
-                            {isCompleted ? '✓ Completo' : '○ Pendente'}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    />
                   </div>
                 );
               })}
             </div>
           </div>
         </div>
+
+        {/* Tooltip fixo — escapa de qualquer overflow */}
+        {hoveredBar && (
+          <div
+            className="fixed z-[9999] pointer-events-none"
+            style={{ top: hoveredBar.y - 88, left: hoveredBar.x }}
+          >
+            <div className="-translate-x-1/2 transform bg-gray-900/95 text-white text-xs rounded-lg py-2 px-3 whitespace-nowrap shadow-2xl border border-white/20">
+              <div className="font-bold mb-1">Dia {hoveredBar.day}</div>
+              <div className="text-gray-300">Dificuldade: {hoveredBar.difficulty}/10</div>
+              <div className={hoveredBar.completed ? 'text-green-400' : 'text-gray-500'}>
+                {hoveredBar.completed ? '✓ Completo' : '○ Pendente'}
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Legenda */}
         <div className="flex flex-wrap gap-4 justify-center text-sm mt-6">
