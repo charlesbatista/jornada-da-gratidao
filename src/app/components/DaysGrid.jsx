@@ -39,12 +39,15 @@ export default function DaysGrid({
     return Math.max(1, Math.min(diffDays, totalDays));
   })();
 
-  // Janela de exibição: sempre 90 dias, começando dos últimos 6 dias
-  const WINDOW_SIZE = 90;
-  const windowStart = Math.max(1, currentJourneyDay - 5);
-  const windowEnd = Math.min(totalDays, windowStart + WINDOW_SIZE - 1);
-  // Caso a janela seja menor que 90 dias pelo fim, empurra para trás o início
-  const adjustedWindowStart = Math.max(1, windowEnd - WINDOW_SIZE + 1);
+  // Encontrar o último dia completado
+  const lastCompletedDay = days.reduce((max, d) => {
+    return (d.isCompleted || d.isComplete) ? Math.max(max, d.dayNumber || d.id) : max;
+  }, 0);
+
+  // Janela de exibição: começa no dia 90 e vai até o último dia completado + 90 dias
+  const windowStart = 90;
+  const windowEnd = Math.min(totalDays, lastCompletedDay + 90);
+  const adjustedWindowStart = windowStart;
 
   const visibleDays = days.filter(d => {
     const num = d.dayNumber || d.id;
