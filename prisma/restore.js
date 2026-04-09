@@ -4,7 +4,29 @@ import path from 'path'
 import { PrismaClient } from '@prisma/client'
 
 if (!process.env.PRISMA_DATABASE_URL) {
-  process.env.PRISMA_DATABASE_URL = process.env.POSTGRES_URL || ''
+  // Tentar carregar .env manualmente caso não esteja pré-carregado
+  try {
+    const envPath = path.join(process.cwd(), '.env')
+    if (fs.existsSync(envPath)) {
+      const envContent = fs.readFileSync(envPath, 'utf8')
+      envContent.split(/\r?\n/).forEach((line) => {
+        const l = line.trim()
+        if (!l || l.startsWith('#')) return
+        const idx = l.indexOf('=')
+        if (idx === -1) return
+        const key = l.slice(0, idx).trim()
+        let val = l.slice(idx + 1).trim()
+        if ((val.startsWith("'") && val.endsWith("'")) || (val.startsWith('"') && val.endsWith('"'))) {
+          val = val.slice(1, -1)
+        }
+        if (!(key in process.env)) process.env[key] = val
+      })
+    }
+  } catch (e) {
+    // não fatal — seguimos para a verificação abaixo
+  }
+
+  process.env.PRISMA_DATABASE_URL = process.env.PRISMA_DATABASE_URL || process.env.POSTGRES_URL || ''
 }
 
 if (!process.env.PRISMA_DATABASE_URL) {
