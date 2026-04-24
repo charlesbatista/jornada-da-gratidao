@@ -15,6 +15,7 @@ export default function JourneyBoard() {
   const [startDate, setStartDate] = useState(toYmd(new Date()));
   const [isClient, setIsClient] = useState(false);
   const [isConfigured, setIsConfigured] = useState(false);
+  const [loadError, setLoadError] = useState(false);
   const [totalDays, setTotalDays] = useState(365);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -52,48 +53,10 @@ export default function JourneyBoard() {
       }
     } catch (error) {
       console.error("Erro ao carregar jornada:", error);
-      // Em caso de erro, mostrar tela de configuração
-      setIsConfigured(false);
+      setLoadError(true);
     } finally {
       // Sempre definir loading como false ao final
       setIsLoading(false);
-    }
-  };
-
-  const createJourney = async (startDate, totalDays) => {
-    try {
-      const startDateYmd = normalizeToYmd(startDate);
-
-      const response = await fetch("/api/journey", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ startDateYmd, totalDays }),
-      });
-
-      const data = await response.json();
-
-      // Verificar se houve erro na resposta
-      if (!response.ok) {
-        alert(`Erro: ${data.error || "Erro desconhecido"}`);
-        return null;
-      }
-
-      if (data.journey) {
-        setStartDate(data.journey.startDate);
-        setTotalDays(data.journey.totalDays);
-
-        const compatibleDays = data.journey.days.map((day) => ({
-          ...day,
-          isComplete: day.isCompleted,
-        }));
-
-        console.log("Dias com compatibilidade:", compatibleDays);
-        setDays(compatibleDays);
-
-        setIsConfigured(true);
-      }
-    } catch (error) {
-      console.error("Erro ao criar jornada:", error);
     }
   };
 
@@ -172,21 +135,6 @@ export default function JourneyBoard() {
     // Carregar jornada do banco de dados (sem aguardar para não bloquear renderização)
     loadJourney().catch(console.error);
   }, []);
-
-  // Função para inicializar ou reiniciar a jornada
-  const initializeJourney = async (
-    customStartDate = null,
-    customTotalDays = totalDays
-  ) => {
-    const newStartDateYmd =
-      typeof customStartDate === "string"
-        ? customStartDate
-        : toYmd(customStartDate || new Date());
-
-    console.log("data inicial: ", newStartDateYmd);
-
-    await createJourney(newStartDateYmd, customTotalDays);
-  };
 
   // Função para tocar som de conquista melhorado
   const playAchievementSound = () => {
@@ -629,14 +577,6 @@ export default function JourneyBoard() {
     return days.filter((day) => day.isComplete || day.isCompleted).length;
   }, [days]);
 
-  // Se não está configurado após carregar, inicializar automaticamente com 365 dias
-  useEffect(() => {
-    if (isClient && !isLoading && !isConfigured) {
-      initializeJourney(null, 365);
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isClient, isLoading, isConfigured]);
-
   if (!isClient || isLoading) {
     // Renderiza uma bela tela de carregamento
     return (
@@ -710,12 +650,22 @@ export default function JourneyBoard() {
   if (!isConfigured) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-slate-950 flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-16 h-16 mx-auto mb-6 relative">
-            <div className="absolute inset-0 border-4 border-t-emerald-400 border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin"></div>
-          </div>
-          <h3 className="text-xl font-bold text-white mb-2 animate-pulse">Iniciando sua jornada...</h3>
-          <p className="text-gray-400 text-sm">Preparando 365 dias de transformação</p>
+        <div className="text-center max-w-sm mx-auto p-8">
+          <div className="text-5xl mb-6">⚠️</div>
+          <h3 className="text-xl font-bold text-white mb-2">
+            {loadError ? "Erro ao carregar a jornada" : "Jornada não encontrada"}
+          </h3>
+          <p className="text-gray-400 text-sm mb-6">
+            {loadError
+              ? "Ocorreu um erro ao conectar com o banco de dados. Verifique sua conexão e tente recarregar."
+              : "Nenhuma jornada foi encontrada no banco de dados."}
+          </p>
+          <button
+            onClick={() => window.location.reload()}
+            className="px-6 py-3 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg font-semibold transition-colors"
+          >
+            Recarregar página
+          </button>
         </div>
       </div>
     );
