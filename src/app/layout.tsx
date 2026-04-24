@@ -3,6 +3,7 @@ import "./globals.css";
 import { AuthProvider } from "./contexts/AuthContext";
 import AuthModal from "./components/AuthModal";
 import AuthIndicator from "./components/AuthIndicator";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   title: "Jornada da Gratidão",
@@ -24,6 +25,7 @@ export default function RootLayout({
           <AuthIndicator />
           {children}
         </AuthProvider>
+        <Analytics />
       </body>
     </html>
   );
