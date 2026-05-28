@@ -1,8 +1,8 @@
-import { useState, useEffect, useMemo, useRef } from "react";
+import { memo, useState, useEffect, useMemo, useRef } from "react";
 import DaysGrid from "./DaysGrid.jsx";
 import { reflectionThemes } from "../data/reflectionThemes.js";
 
-export default function ProgressTabs({
+function ProgressTabs({
   completedDays,
   days,
   handleDayClick,
@@ -264,6 +264,8 @@ export default function ProgressTabs({
     </div>
   );
 }
+
+export default memo(ProgressTabs);
 
 // Painel de Progresso Diário
 function DailyProgressPanel({
@@ -553,7 +555,7 @@ function AchievementsPanel({ completedDays, totalDays = 90 }) {
 }
 
 // Painel de Análise e Gráficos
-function AnalyticsPanel({ days, completedDays, totalDays = 90 }) {
+function AnalyticsPanel({ days, completedDays }) {
   const [analytics, setAnalytics] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

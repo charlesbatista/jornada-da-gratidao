@@ -1,5 +1,6 @@
 ﻿import { getMotivationalMessage } from '../utils/achievements.js';
 import { formatPtBR } from '../utils/date.js';
+import { memo } from 'react';
 
 // Estilos CSS customizados para animações
 const customStyles = `
@@ -95,7 +96,7 @@ const customStyles = `
   }
 `;
 
-export default function Header({ completedDays, totalDays = 365, startDate }) {
+function Header({ completedDays, totalDays = 365, startDate }) {
     const progressPercentage = (completedDays / totalDays) * 100;
     const motivationalMessage = getMotivationalMessage(completedDays, totalDays);
     
@@ -455,3 +456,5 @@ export default function Header({ completedDays, totalDays = 365, startDate }) {
         </>
     );
 }
+
+export default memo(Header);

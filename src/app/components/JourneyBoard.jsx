@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, useMemo } from "react";
 import Header from "./Header.jsx";
 import ReflectionModal from "./ReflectionModal.jsx";
 import ProgressTabs from "./ProgressTabs.jsx";
-import { parseYmdLocal, toYmd, normalizeToYmd } from "../utils/date.js";
+import { parseYmdLocal, toYmd } from "../utils/date.js";
 import { useAuth } from "../contexts/AuthContext.js";
 
 export default function JourneyBoard() {
@@ -60,7 +60,7 @@ export default function JourneyBoard() {
     }
   };
 
-  const updateDay = async (dayNumber, dayData) => {
+  const updateDay = useCallback(async (dayNumber, dayData) => {
     try {
       console.log("Atualizando dia:", dayNumber, "com dados:", dayData);
 
@@ -115,7 +115,7 @@ export default function JourneyBoard() {
       console.error("Erro ao atualizar dia:", error);
       throw error; // Re-throw para que o handleCompleteDay possa tratar
     }
-  };
+  }, []);
 
   useEffect(() => {
     setIsClient(true);
@@ -244,7 +244,7 @@ export default function JourneyBoard() {
           ding.start(audioContext.currentTime);
           ding.stop(audioContext.currentTime + 0.5);
         }, 800);
-      } catch (error) {
+      } catch {
         console.log("Som não disponível neste navegador");
       }
     }
@@ -277,7 +277,7 @@ export default function JourneyBoard() {
 
         oscillator.start(audioContext.currentTime);
         oscillator.stop(audioContext.currentTime + 0.1);
-      } catch (error) {
+      } catch {
         // Som silencioso se não suportado
       }
     }
@@ -309,7 +309,7 @@ export default function JourneyBoard() {
     }
   };
 
-  const handleDayClick = (day) => {
+  const handleDayClick = useCallback((day) => {
     // Verificar se o dia não é futuro (não permite abrir modal de dias futuros)
     if (!startDate) return;
 
@@ -334,10 +334,10 @@ export default function JourneyBoard() {
 
     setSelectedDay(day);
     setIsModalOpen(true);
-  };
+  }, [startDate]);
 
   // Navegar para o dia anterior
-  const handlePreviousDay = () => {
+  const handlePreviousDay = useCallback(() => {
     if (!selectedDay || !days.length) return;
     
     const currentDayNumber = selectedDay.dayNumber || selectedDay.id;
@@ -349,10 +349,10 @@ export default function JourneyBoard() {
         setSelectedDay(previousDay);
       }
     }
-  };
+  }, [days, selectedDay]);
 
   // Navegar para o próximo dia
-  const handleNextDay = () => {
+  const handleNextDay = useCallback(() => {
     if (!selectedDay || !days.length || !startDate) return;
     
     const currentDayNumber = selectedDay.dayNumber || selectedDay.id;
@@ -379,56 +379,32 @@ export default function JourneyBoard() {
         setSelectedDay(nextDay);
       }
     }
-  };
+  }, [days, selectedDay, startDate, totalDays]);
 
-  const handleCloseModal = async (shouldSave = false) => {
+  const handleCloseModal = useCallback(async (shouldSave = false, draftDay = selectedDay) => {
     // Salva as mudanças apenas se shouldSave for true
-    const hasAnyReflection = Boolean(
-      selectedDay && (
-        (typeof selectedDay.reflectionCharles === 'string' && selectedDay.reflectionCharles.trim()) ||
-        (typeof selectedDay.reflectionWelder === 'string' && selectedDay.reflectionWelder.trim())
-      )
-    );
+    const dayToSave = draftDay || selectedDay;
 
-    if (shouldSave && selectedDay && (hasAnyReflection || selectedDay.difficulty)) {
-      const dayNumberToUpdate = selectedDay.dayNumber || selectedDay.id;
+    if (shouldSave && dayToSave) {
+      const dayNumberToUpdate = dayToSave.dayNumber || dayToSave.id;
 
       await updateDay(dayNumberToUpdate, {
-        isCompleted: selectedDay.isCompleted || selectedDay.isComplete,
-        reflectionCharles: selectedDay.reflectionCharles || null,
-        reflectionWelder: selectedDay.reflectionWelder || null,
-        difficulty: selectedDay.difficulty,
+        isCompleted: dayToSave.isCompleted || dayToSave.isComplete,
+        reflectionCharles: dayToSave.reflectionCharles || null,
+        reflectionWelder: dayToSave.reflectionWelder || null,
+        difficulty: dayToSave.difficulty,
       });
     }
     setIsModalOpen(false);
     setSelectedDay(null);
-  };
+  }, [selectedDay, updateDay]);
 
-  const handleReflectionCharlesChange = (e) => {
-    if (selectedDay) {
-      const updatedDay = { ...selectedDay, reflectionCharles: e.target.value };
-      setSelectedDay(updatedDay);
-    }
-  };
+  const handleCompleteDay = useCallback(async (draftDay = selectedDay) => {
+    const dayToComplete = draftDay || selectedDay;
 
-  const handleReflectionWelderChange = (e) => {
-    if (selectedDay) {
-      const updatedDay = { ...selectedDay, reflectionWelder: e.target.value };
-      setSelectedDay(updatedDay);
-    }
-  };
-
-  const handleDifficultyChange = (difficulty) => {
-    if (selectedDay) {
-      const updatedDay = { ...selectedDay, difficulty };
-      setSelectedDay(updatedDay);
-    }
-  };
-
-  const handleCompleteDay = async () => {
-    if (selectedDay) {
+    if (dayToComplete) {
       // Validar se dificuldade foi selecionada (obrigatória)
-      if (!selectedDay.difficulty) {
+      if (!dayToComplete.difficulty) {
         alert(
           "⚠️ Por favor, selecione o nível de dificuldade antes de concluir o dia!"
         );
@@ -438,7 +414,7 @@ export default function JourneyBoard() {
       // Som de feedback imediato
       playClickSound();
 
-      const dayNumberToUpdate = selectedDay.dayNumber || selectedDay.id;
+      const dayNumberToUpdate = dayToComplete.dayNumber || dayToComplete.id;
 
       // 1. Atualizar estado local IMEDIATAMENTE para feedback visual instantâneo
       const completedAtString = toYmd(new Date()); // Formato YYYY-MM-DD
@@ -450,9 +426,9 @@ export default function JourneyBoard() {
                 ...day,
                 isCompleted: true,
                 isComplete: true, // Garantir ambos os campos para compatibilidade
-                difficulty: selectedDay.difficulty,
-                reflectionCharles: selectedDay.reflectionCharles,
-                reflectionWelder: selectedDay.reflectionWelder,
+                difficulty: dayToComplete.difficulty,
+                reflectionCharles: dayToComplete.reflectionCharles,
+                reflectionWelder: dayToComplete.reflectionWelder,
                 completedAt: completedAtString,
               }
             : day
@@ -461,12 +437,12 @@ export default function JourneyBoard() {
 
       // 2. Atualizar selectedDay também
       const updatedSelectedDay = {
-        ...selectedDay,
+        ...dayToComplete,
         isCompleted: true,
         isComplete: true,
-        difficulty: selectedDay.difficulty,
-        reflectionCharles: selectedDay.reflectionCharles,
-        reflectionWelder: selectedDay.reflectionWelder,
+        difficulty: dayToComplete.difficulty,
+        reflectionCharles: dayToComplete.reflectionCharles,
+        reflectionWelder: dayToComplete.reflectionWelder,
         completedAt: completedAtString,
       };
       setSelectedDay(updatedSelectedDay);
@@ -475,9 +451,9 @@ export default function JourneyBoard() {
       try {
         await updateDay(dayNumberToUpdate, {
           isCompleted: true,
-          reflectionCharles: (selectedDay.reflectionCharles ?? null),
-          reflectionWelder: (selectedDay.reflectionWelder ?? null),
-          difficulty: selectedDay.difficulty,
+          reflectionCharles: (dayToComplete.reflectionCharles ?? null),
+          reflectionWelder: (dayToComplete.reflectionWelder ?? null),
+          difficulty: dayToComplete.difficulty,
         });
 
         console.log("Dia salvo com sucesso no banco!");
@@ -512,7 +488,7 @@ export default function JourneyBoard() {
         playAchievementSound();
       }, 300);
     }
-  };
+  }, [selectedDay, updateDay]);
 
   const getDayDate = useCallback(
     (dayIndex) => {
@@ -765,9 +741,6 @@ export default function JourneyBoard() {
         onClose={handleCloseModal}
         selectedDay={selectedDay}
         getDayDate={getDayDate}
-        handleReflectionCharlesChange={handleReflectionCharlesChange}
-        handleReflectionWelderChange={handleReflectionWelderChange}
-        handleDifficultyChange={handleDifficultyChange}
         handleCompleteDay={handleCompleteDay}
         isViewMode={!isEditMode}
         onPreviousDay={handlePreviousDay}
