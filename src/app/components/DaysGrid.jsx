@@ -1,6 +1,25 @@
-import { formatPtBR, parseYmdLocal, getWeekdayPtBR } from "@/app/utils/date";
+import { parseYmdLocal, getWeekdayPtBR } from "@/app/utils/date";
 import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
+
+const FIRST_WINDOW_START = 90;
+const FIRST_WINDOW_END = 180;
+const WINDOW_SIZE = 90;
+
+function getVisibleWindow(lastCompletedDay, totalDays) {
+  const isFirstWindow = lastCompletedDay < FIRST_WINDOW_END;
+  const completedDaysAfterFirstWindow = lastCompletedDay - FIRST_WINDOW_END;
+  const calculatedStart = isFirstWindow
+    ? FIRST_WINDOW_START
+    : FIRST_WINDOW_END + 1 + Math.floor(completedDaysAfterFirstWindow / WINDOW_SIZE) * WINDOW_SIZE;
+  const start = Math.min(calculatedStart, totalDays);
+  const end = Math.min(
+    totalDays,
+    isFirstWindow ? FIRST_WINDOW_END : start + WINDOW_SIZE - 1
+  );
+
+  return { start, end };
+}
 
 export default function DaysGrid({
   days,
@@ -24,34 +43,20 @@ export default function DaysGrid({
     setToday(now);
   }, []);
 
-  // Calcular o dia atual na jornada com base na data de início
-  const currentJourneyDay = (() => {
-    if (!startDate || !today) return 1;
-    let baseDate;
-    if (typeof startDate === 'string') {
-      baseDate = parseYmdLocal(startDate);
-    } else {
-      baseDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
-    }
-    baseDate.setHours(0, 0, 0, 0);
-    const diffMs = today.getTime() - baseDate.getTime();
-    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24)) + 1;
-    return Math.max(1, Math.min(diffDays, totalDays));
-  })();
-
   // Encontrar o último dia completado
   const lastCompletedDay = days.reduce((max, d) => {
     return (d.isCompleted || d.isComplete) ? Math.max(max, d.dayNumber || d.id) : max;
   }, 0);
 
-  // Janela de exibição: começa no dia 90 e vai até o último dia completado + 90 dias
-  const windowStart = 90;
-  const windowEnd = Math.min(totalDays, lastCompletedDay + 90);
-  const adjustedWindowStart = windowStart;
+  // Janela fixa: 90-180; ao concluir 180, avança em blocos de 90 dias.
+  const { start: windowStart, end: windowEnd } = getVisibleWindow(
+    lastCompletedDay,
+    totalDays
+  );
 
   const visibleDays = days.filter(d => {
     const num = d.dayNumber || d.id;
-    return num >= adjustedWindowStart && num <= windowEnd;
+    return num >= windowStart && num <= windowEnd;
   });
 
   const getDayDate = (dayIndex) => {
@@ -128,7 +133,7 @@ export default function DaysGrid({
       {/* Título da seção */}
       <div className="mb-8 text-center">
         <h2 className="text-3xl font-black text-white mb-2">
-          Dias {adjustedWindowStart} a {windowEnd}{" "}
+          Dias {windowStart} a {windowEnd}{" "}
           <span className="text-gray-400 text-xl font-medium">/ {totalDays}</span>
         </h2>
         <p className="text-gray-300 mb-6">
