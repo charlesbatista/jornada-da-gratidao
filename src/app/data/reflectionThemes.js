@@ -181,5 +181,26 @@ export const reflectionThemes = {
     177: "Como a sensação de controle genuíno — sobre mim, não sobre resultados — me liberta?",
     178: "Que modelo de vida saudável eu admiro e posso incorporar aos poucos?",
     179: "Como posso transformar a autoavaliação em alavanca de crescimento, não de culpa?",
-    180: "6 meses de jornada — que promessa firme eu faço a mim para os próximos 6 meses?"
+    180: "6 meses de jornada — que promessa firme eu faço a mim para os próximos 6 meses?",
+
+    // Fase 3 — Marcos de aprofundamento (dias 190–365)
+    190: "Depois de 190 dias, que verdade sobre mim eu não posso mais fingir que não sei?",
+    200: "200 dias de liberdade — que prova concreta eu tenho de que minha vida real vale mais que qualquer fuga?",
+    210: "Que parte de mim ainda tenta negociar com o passado, e como eu escolho encerrar essa conversa hoje?",
+    220: "O que eu preciso proteger com firmeza para nunca mais entregar minha paz ao impulso?",
+    230: "Que ferida eu vinha tentando anestesiar, e que cuidado verdadeiro posso oferecer a ela agora?",
+    240: "Se minha recuperação fosse uma decisão tomada em silêncio todos os dias, qual decisão eu reafirmo hoje?",
+    250: "Que tipo de homem eu estou me tornando quando escolho responsabilidade mesmo sem plateia?",
+    260: "Quais consequências antigas eu já transformei em maturidade, e quais ainda preciso reparar com coragem?",
+    270: "9 meses de jornada — que nascimento interior está acontecendo em mim desde que parei de apostar?",
+    280: "Que medo eu ainda uso como desculpa, e que atitude adulta posso tomar apesar dele?",
+    290: "O que minha família, meu futuro e minha consciência ganham quando eu permaneço firme hoje?",
+    300: "300 dias — que legado eu quero construir com a energia que antes era consumida pela compulsão?",
+    310: "Que padrão antigo ainda tenta voltar pela porta dos fundos, e qual limite definitivo eu coloco agora?",
+    320: "Como eu honro o preço que já paguei sem viver preso à culpa do que passou?",
+    330: "Que relação com dinheiro, prazer e descanso prova que eu estou escolhendo uma vida inteira, não um alívio rápido?",
+    340: "Se eu pudesse olhar meu eu do primeiro dia nos olhos, que orgulho e que responsabilidade eu entregaria a ele?",
+    350: "Que compromisso precisa ser inegociável para que minha liberdade continue depois desta jornada?",
+    360: "360 dias — quem eu sou agora quando ninguém está vendo e nenhuma recompensa imediata aparece?",
+    365: "365 dias de jornada — que pacto de vida eu faço comigo para continuar livre, grato e inteiro?"
 };

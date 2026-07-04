@@ -137,6 +137,10 @@ export default function ReflectionModal({
   if (!isOpen || !selectedDay) return null;
 
   const selectedDayNumber = selectedDay.dayNumber || selectedDay.id;
+  const registeredTheme = reflectionThemes[selectedDayNumber];
+  const dayTheme = selectedDay.theme || registeredTheme;
+  const shouldShowReflectionArea =
+    selectedDayNumber <= 180 || Boolean(registeredTheme);
   const selectedDifficulty = draftDifficulty || selectedDay.difficulty;
 
   const getDraftDay = () => {
@@ -204,7 +208,7 @@ export default function ReflectionModal({
     setDraftDifficulty(difficulty);
   };
 
-  // Função para salvar reflexão com feedback visual
+  // Função para salvar os dados do dia com feedback visual
   const handleSaveReflection = async () => {
     setIsSaving(true);
     setShowSaveSuccess(false);
@@ -216,10 +220,10 @@ export default function ReflectionModal({
       // Não mostra sucesso pois o modal já fecha
       setIsSaving(false);
     } catch (error) {
-      console.error("Erro ao salvar reflexão:", error);
+      console.error("Erro ao salvar o dia:", error);
       setIsSaving(false);
       // Em caso de erro, mostrar feedback
-      alert("Erro ao salvar reflexão. Tente novamente.");
+      alert("Erro ao salvar o dia. Tente novamente.");
     }
   };
 
@@ -356,64 +360,67 @@ export default function ReflectionModal({
           className="flex-1 min-h-0 overflow-y-auto overscroll-contain custom-scrollbar"
         >
           <div className="p-4 sm:p-8 pb-[calc(1rem+env(safe-area-inset-bottom))] sm:pb-8">
-            {/* Tema de reflexão */}
-            <div className="mb-6 sm:mb-8">
-              <h3 className="font-bold text-lg mb-3 text-purple-300 flex items-center gap-2">
-                🎯 Tema de Reflexão
-              </h3>
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-2xl blur-lg hidden sm:block" />
-                <div className="relative bg-white/5 sm:backdrop-blur-xl border border-white/10 rounded-2xl p-4 sm:p-6">
-                  <p className="text-gray-300 leading-relaxed text-base sm:text-lg">
-                    {selectedDay.theme ||
-                      reflectionThemes[selectedDayNumber]}
-                  </p>
+            {shouldShowReflectionArea && (
+              <>
+                {/* Tema de reflexão */}
+                <div className="mb-6 sm:mb-8">
+                  <h3 className="font-bold text-lg mb-3 text-purple-300 flex items-center gap-2">
+                    🎯 Tema de Reflexão
+                  </h3>
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-2xl blur-lg hidden sm:block" />
+                    <div className="relative bg-white/5 sm:backdrop-blur-xl border border-white/10 rounded-2xl p-4 sm:p-6">
+                      <p className="text-gray-300 leading-relaxed text-base sm:text-lg">
+                        {dayTheme}
+                      </p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
 
-            {/* Área de anotações */}
-            <div className="mb-6 sm:mb-8">
-              <h3 className="font-bold text-lg mb-4 text-blue-300 flex items-center gap-2">
-                ✍️ Suas Reflexões
-              </h3>
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-2xl blur-lg hidden sm:block" />
-                <div className="relative space-y-4">
-                  {/* Charles */}
-                  <ReflectionTextArea
-                    key={`charles-${selectedDayNumber}`}
-                    label="Texto do Charles"
-                    initialValue={selectedDay.reflectionCharles || ""}
-                    placeholder={
-                      isViewMode
-                        ? "Nenhum texto do Charles registrado ainda..."
-                        : "Escreva aqui a reflexão do Charles..."
-                    }
-                    readOnly={isViewMode}
-                    onValueChange={(value) =>
-                      handleDraftTextChange("reflectionCharles", value)
-                    }
-                  />
+                {/* Área de anotações */}
+                <div className="mb-6 sm:mb-8">
+                  <h3 className="font-bold text-lg mb-4 text-blue-300 flex items-center gap-2">
+                    ✍️ Suas Reflexões
+                  </h3>
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-2xl blur-lg hidden sm:block" />
+                    <div className="relative space-y-4">
+                      {/* Charles */}
+                      <ReflectionTextArea
+                        key={`charles-${selectedDayNumber}`}
+                        label="Texto do Charles"
+                        initialValue={selectedDay.reflectionCharles || ""}
+                        placeholder={
+                          isViewMode
+                            ? "Nenhum texto do Charles registrado ainda..."
+                            : "Escreva aqui a reflexão do Charles..."
+                        }
+                        readOnly={isViewMode}
+                        onValueChange={(value) =>
+                          handleDraftTextChange("reflectionCharles", value)
+                        }
+                      />
 
-                  {/* Welder */}
-                  <ReflectionTextArea
-                    key={`welder-${selectedDayNumber}`}
-                    label="Texto do Welder"
-                    initialValue={selectedDay.reflectionWelder || ""}
-                    placeholder={
-                      isViewMode
-                        ? "Nenhum texto do Welder registrado ainda..."
-                        : "Escreva aqui a reflexão do Welder..."
-                    }
-                    readOnly={isViewMode}
-                    onValueChange={(value) =>
-                      handleDraftTextChange("reflectionWelder", value)
-                    }
-                  />
+                      {/* Welder */}
+                      <ReflectionTextArea
+                        key={`welder-${selectedDayNumber}`}
+                        label="Texto do Welder"
+                        initialValue={selectedDay.reflectionWelder || ""}
+                        placeholder={
+                          isViewMode
+                            ? "Nenhum texto do Welder registrado ainda..."
+                            : "Escreva aqui a reflexão do Welder..."
+                        }
+                        readOnly={isViewMode}
+                        onValueChange={(value) =>
+                          handleDraftTextChange("reflectionWelder", value)
+                        }
+                      />
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
+              </>
+            )}
 
             {/* Campo de dificuldade */}
             <div className="mb-6 sm:mb-8">
@@ -518,7 +525,7 @@ export default function ReflectionModal({
                       ✅ Salvo com Sucesso!
                     </span>
                   ) : (
-                    "💾 Salvar Reflexão"
+                    shouldShowReflectionArea ? "💾 Salvar Reflexão" : "💾 Salvar Dia"
                   )}
                 </button>
 

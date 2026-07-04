@@ -137,7 +137,9 @@ export default function DaysGrid({
           <span className="text-gray-400 text-xl font-medium">/ {totalDays}</span>
         </h2>
         <p className="text-gray-300 mb-6">
-          Registre cada dia vencido e sua reflexão.
+          {windowStart <= 180
+            ? "Registre cada dia vencido e sua reflexão."
+            : "Registre cada dia vencido. As reflexões aparecem nos marcos da jornada."}
         </p>
       </div>
 
