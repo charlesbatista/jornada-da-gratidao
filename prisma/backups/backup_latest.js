@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 /**
- * 🗄️ BACKUP AUTOMÁTICO - 2026-10-11T03-25-11
+ * 🗄️ BACKUP AUTOMÁTICO - 2026-10-13T03-26-40
  * 
  * Este arquivo foi gerado automaticamente pelo script de backup
  * Contém todos os dados do banco no momento do backup
@@ -12,7 +12,7 @@ const prisma = new PrismaClient()
  */
 async function restoreBackup() {
   try {
-    console.log('🔄 Restaurando backup de 2026-10-11T03-25-11...')
+    console.log('🔄 Restaurando backup de 2026-10-13T03-26-40...')
     
     // Limpar dados existentes
     console.log('🗑️  Limpando dados existentes...')
@@ -2285,83 +2285,83 @@ async function restoreBackup() {
       },
       {
         "dayNumber": 283,
-        "isCompleted": false,
+        "isCompleted": true,
         "reflectionCharles": null,
         "reflectionWelder": null,
-        "difficulty": null,
-        "completedAt": null
+        "difficulty": "facil",
+        "completedAt": "2026-10-12"
       },
       {
         "dayNumber": 284,
-        "isCompleted": false,
+        "isCompleted": true,
         "reflectionCharles": null,
         "reflectionWelder": null,
-        "difficulty": null,
-        "completedAt": null
+        "difficulty": "facil",
+        "completedAt": "2026-10-12"
       },
       {
         "dayNumber": 285,
-        "isCompleted": false,
+        "isCompleted": true,
         "reflectionCharles": null,
         "reflectionWelder": null,
-        "difficulty": null,
-        "completedAt": null
+        "difficulty": "facil",
+        "completedAt": "2026-10-12"
       },
       {
         "dayNumber": 286,
-        "isCompleted": false,
+        "isCompleted": true,
         "reflectionCharles": null,
         "reflectionWelder": null,
-        "difficulty": null,
-        "completedAt": null
+        "difficulty": "facil",
+        "completedAt": "2026-10-12"
       },
       {
         "dayNumber": 287,
-        "isCompleted": false,
+        "isCompleted": true,
         "reflectionCharles": null,
         "reflectionWelder": null,
-        "difficulty": null,
-        "completedAt": null
+        "difficulty": "facil",
+        "completedAt": "2026-10-12"
       },
       {
         "dayNumber": 288,
-        "isCompleted": false,
+        "isCompleted": true,
         "reflectionCharles": null,
         "reflectionWelder": null,
-        "difficulty": null,
-        "completedAt": null
+        "difficulty": "facil",
+        "completedAt": "2026-10-12"
       },
       {
         "dayNumber": 289,
-        "isCompleted": false,
+        "isCompleted": true,
         "reflectionCharles": null,
         "reflectionWelder": null,
-        "difficulty": null,
-        "completedAt": null
+        "difficulty": "facil",
+        "completedAt": "2026-10-12"
       },
       {
         "dayNumber": 290,
-        "isCompleted": false,
-        "reflectionCharles": null,
-        "reflectionWelder": null,
-        "difficulty": null,
-        "completedAt": null
+        "isCompleted": true,
+        "reflectionCharles": "É uma coisa que a gente tem falado demais, né? Do porquê eu não jogo, por que a gente continua sem jogar. E exatamente essa é a resposta dessa pergunta.\n\nPorque vontade, você sabe que a gente tem. Eu acho que a vontade nunca deixou de existir. Quando a gente pensa e fala: \"Se tirasse tudo de ruim, a gente jogaria?\", eu tenho certeza que você falaria que sim. Se eu tivesse consciência, se fosse realmente uma brincadeira, um entretenimento, muito provavelmente a gente já teria voltado a jogar.\n\nMas eu escolho e permaneço firme justamente porque a nossa família... A gente criou uma família, né? Eu e você somos uma família. E a gente vai perder muito. Primeiro, a gente vai perder o nosso casamento. Depois, a gente vai perder as coisas que vem conquistando, que já conquistou. Meu futuro... Talvez eu nem estaria aqui, mas, se estivesse, o que seria da minha vida, do meu trabalho? Talvez eu não teria nenhum trabalho bom como a gente tem hoje, como eu tenho hoje.\n\nE, principalmente, a minha consciência. Porque hoje eu tenho muita consciência da gravidade do problema, de tudo que eu tava fazendo, de todo o dinheiro que eu tava jogando fora, de todas as possibilidades. Você um dia até falou, né, que o que mais te machucava era saber que o dinheiro que você perdeu poderia ser um dinheiro que faria com que sua mãe nem precisasse trabalhar hoje, que pudesse ter parado antes ainda.\n\nEntão acho que são tantas coisas que eu não consigo mesmo abrir mão disso. Acho que eu tenho conseguido dar muito mais valor a essas coisas. Eu já dava, mas acho que agora bem mais. E são coisas que me fazem pensar mil vezes, nem duas vezes, antes de cogitar jogar.\n\nÉ igual a Milena me falava: \"Você vai sentir desejo de jogar, você vai sentir vontade, você vai ver um cassino, por exemplo, nessas viagens...\" Quando eu vejo essas imagens ali, igual a gente viu no vídeo do menino, os olhos brilham, porque a gente sabe que o prazer é muito grande ali, apesar da desgraça que é causada depois.\n\nMas eu não consigo, ou talvez eu não queira. Eu quero realmente distância daquilo, porque eu sei o tanto que eu perco, o quanto eu posso vir a perder de novo, o tanto que o meu dinheiro é suado. Por mais que hoje eu tenha um bom trabalho, um trabalho mais tranquilo, eu sei tudo que eu passei. Você sabe tudo que você passou pra ter o dinheiro que você tem e tudo que isso pode proporcionar, não só pra mim, pra você, mas pra nossa família.\n\nE eu não quero abrir mão disso. Eu escolho todos os dias não abrir mão disso.\n\nEntão, por mais que eu sinta esse medinho de relativizar em algum momento, eu acho que tenho muita coisa a perder. Eu coloquei na minha cabeça como se fosse uma lista de tudo que eu tenho, de tudo que eu posso abrir mão. E não só de dinheiro, porque parece que a gente via só dinheiro, né? \"Ah, vou perder dinheiro.\"\n\nMas a gente tava perdendo tudo. Não era só dinheiro.\n\nComeçou com dinheiro e depois foi pro trabalho. Eu tava correndo o risco de perder meu trabalho porque eu não trabalhava direito. Nosso casamento, a gente arriscou não sei quantas vezes. E a nossa vida também, né? Quantas vezes a gente arriscou se matar aqui, sei lá.\n\nEntão hoje eu vejo muita coisa que eu ganho permanecendo firme. E eu quero permanecer, sim, porque eu acho que tenho muita coisa ainda pra viver. E você tem muita coisa pra viver.\n\nEu tenho total consciência hoje de que recebi uma segunda chance de vida e eu quero fazer valer a pena, porque tem muita gente que, infelizmente, não teve essa mesma chance. E as pessoas que não se mataram, muitas estão com a vida uma merda, devendo muito, tendo que recomeçar do zero.\n\nÀs vezes, igual eu falei, um casamento, né? Que a gente poderia ter perdido. Eu poderia falar: \"Cara, onde eu estaria hoje se eu tivesse casado com o Welder, por exemplo, se a gente ainda estivesse junto?\" A gente ia sofrer demais em vida. A gente ia sofrer muito, porque eu tenho certeza que a gente ia falar: \"Cara, eu abri mão do amor da minha vida. Você abriu mão do seu em prol de um jogo.\"\n\nEntão tem muita coisa a perder. Sério, muita coisa mesmo.\n\nE, por isso, eu não consigo mais nem cogitar viver aquela vida de novo. Por mais que passe esse pensamento rápido na minha cabeça de \"jogaria\", parece que não vem. Parece que não tem como.\n\nÉ como se fosse a ignição de um carro: você tenta ligar, ele dá um barulhinho bem pequenininho, mas não pega. E, mesmo que pegasse, eu não ia colocar a primeira marcha e ir, porque eu sei que estaria indo pra um abismo. E eu não quero isso pra mim.\n\nEntão hoje eu valorizo muita coisa. E talvez, como eu sempre falo, bem mais do que antes. Hoje eu consigo ver com muito mais clareza o valor de tudo isso que eu tenho.\n\nE até o negócio da Amanda, né? Eu não vejo a minha vida resumida a dinheiro, que é o que eu acho que, infelizmente, acontece com ela. Eu acho que eu tô muito cheio de muita coisa. Eu sei o que o dinheiro pode me proporcionar, eu realmente sei o valor do dinheiro, mas não é só dinheiro.\n\nÉ saúde, né? Como a minha mãe. Eu sentia que poderia ter perdido a minha mãe. Você poderia ter perdido a sua naquele dia em que ela passou mal. Vai saber o que aquilo poderia virar se fosse uma doença grave. A própria Amanda, com a mãe com câncer. E a gente sabe que dinheiro realmente não é tudo. A gente tem muito mais que dinheiro.\n\nE, mesmo assim, eu sei que o dinheiro pode me proporcionar muitas viagens, conforto, uma casa, um carro bom. Então hoje eu tenho tanta coisa pra ser grato que o jogo se torna pequeno. Se torna uma bosta, uma bostinha assim. Ele não consegue mais bater de frente com o tamanho que a minha vida tem.\n\nCom o tamanho da minha vida que eu resgatei, né? Com o valor que eu resgatei da minha vida.\n\nPorque antes eu não tinha isso. Eu tinha colocado o valor dela no pó. Você também tinha colocado o valor da sua vida lá embaixo, ao ponto de falar: \"Ah, foda-se tudo. Eu quero jogar e quero me foder.\"\n\nE hoje eu sei que não. Eu sei que você pensa diferente. Eu penso diferente.\n\nE é assim que eu quero seguir: firme. Cada vez mais firme, inclusive.",
+        "reflectionWelder": "Eu acho que hoje, por mais que eu tenha falado da questão do jogo, que eu lembrei do jogo e o sentimento veio um pouquinho mais forte, não chega nem perto de ser uma vontade de jogar, uma vontade de fazer um depósito. Porque eu sei tudo que o jogo pode trazer de ruim pra gente.\n\nE uma das coisas que me fazem pensar muito em não jogar, em redobrar a minha razão, é pensar nisso. Pensar na minha família, pensar no meu futuro, pensar na minha consciência, pensar no nosso futuro, pensar nas coisas que podem perder o sentido.\n\nMuitas vezes, quando eu joguei, eu me senti muito mal de pensar que joguei fora o dinheiro de uma vida, da minha vida, e que poderia ser o dinheiro da vida de muita gente que eu poderia ajudar. Então acaba que eu joguei fora isso. E hoje eu ainda tenho condições de poder ajudar muita gente e quero poder ajudar muito mais.\n\nEntão esses motivos me fazem hoje me manter muito firme, com os pés no chão, e mandar embora qualquer tipo de pensamento ruim, de vontade de jogo, de fazer algum tipo de depósito.\n\nDe fato, hoje, fazer uma viagem e ver um cassino físico é algo que ainda desperta um sentimento em mim. Mas não é algo que eu acho que seja incontrolável, porque, na época, eu tava com um sentimento muito mais aflorado e consegui segurar por muito tempo. Foi um erro ter caído, mas já passou.\n\nEntão hoje é totalmente diferente. Hoje a gente tem a razão, hoje a gente tem propósito, a gente tem uma casa que tá construindo, tem um futuro que tá construindo, tem uma vida que tá tendo a chance de construir de novo.\n\nEntão eu não conseguiria abrir mão disso hoje por cinco minutinhos de lazer e pelo resto da minha vida de desgraça, de recaída, de sei lá, de maldição. O jogo, pra mim, hoje significa isso. Significa abrir a porta pra que a gente não seja digno de bênçãos. E eu acho que, desde quando a gente parou, a gente já recebeu muitas bênçãos. E eu quero continuar recebendo.\n\nEu sempre falei isso: as bênçãos nos alcançam, a prosperidade nos alcança sem que a gente dependa de sorte na nossa vida. O dinheiro vem pra gente sem a gente depender disso. Vem com trabalho, vem com bons trabalhos, com bons networks.\n\nEntão eu quero continuar nesse caminho. Eu não quero nenhum atalho, porque eu sei que também não é um atalho que vai me levar pra um bom caminho. Vai me levar pra um caminho ruim. No melhor dos cenários, em que eu ganhe dinheiro, ainda assim é um caminho ruim.\n\nEntão é algo que eu não quero, que eu não preciso. E eu quero me manter aqui, lúcido, firme, sem nenhum tipo de recaída, sem nenhum tipo de arrependimento.\n\nComo eu disse, até no meu sonho, em que eu ganhei dinheiro, em que eu joguei e você também jogou, eu estava arrependido. E que bom que foi só um sonho. Eu não quero trazer isso pra realidade. Não quero ter que me arrepender, não quero fazer com que o assunto do jogo vire de novo uma pauta diária aqui, de arrependimento, de \"eu vou mudar\", \"eu vou mudar\", \"acredite em mim que eu consigo\".\n\nE, realmente, hoje voltar pro jogo não é uma opção pra mim. Porque, se for pra ser uma opção, eu prefiro que todas as outras opções que eu tenho hoje nas minhas mãos continuem comigo. E, como elas já estão comigo, eu quero que continuem.\n\nEu não quero jogar. Eu não quero abrir mão de um futuro. Não quero ter que mentir. Eu não quero ter que me enganar, te enganar.\n\nEntão eu prefiro realmente hoje viver esse presente que a gente tá vivendo. Nos dois sentidos, né? Presente porque é o que a gente tá vivendo hoje e presente porque é um presente o que a gente ganhou: uma segunda chance de viver, de poder contar essa história, de falar disso hoje.\n\nE só eu e você entendemos a dificuldade que é isso. E, mesmo assim, a gente tá vivendo quase 300 dias longe dos jogos.\n\nEntão realmente é um presente muito grande o que a gente recebeu e o que a gente tá recebendo.\n\nHoje a gente tem dinheiro, que eu acho que era uma das coisas em que a gente mais pensava quando tinha um impulso de cair no jogo. Lógico que o vício alimentava muito esse sentimento de fazer com que a gente voltasse. A adrenalina, os altos e baixos do jogo, tudo isso alimentava muito a gente. Mas o dinheiro em si era um fator muito importante.\n\nE hoje você tá juntando o seu dinheiro. Eu também tô juntando o meu de novo, também já tenho muito dinheiro. E eu vou continuar tendo cada vez mais, porque, como eu disse, a gente não precisa de sorte pra ser bem-sucedido, pra conquistar as nossas coisas.\n\nE é isso. Eu não quero ser uma decepção pra você, pra minha família e nem pra mim mesmo.\n\nEu quero continuar acreditando que a gente consegue, que a gente é forte, que nós somos capazes e que nós vamos vencer. Não só esse ano, que é o primeiro propósito que a gente fez de ter um ano limpo, mas entrar em 2027 também limpos, em 2028, e continuar assim.\n\nContinuar recebendo várias bênçãos nas nossas vidas e, principalmente, mostrar que a gente merece receber essas bênçãos.",
+        "difficulty": "facil",
+        "completedAt": "2026-10-13"
       },
       {
         "dayNumber": 291,
-        "isCompleted": false,
+        "isCompleted": true,
         "reflectionCharles": null,
         "reflectionWelder": null,
-        "difficulty": null,
-        "completedAt": null
+        "difficulty": "facil",
+        "completedAt": "2026-10-12"
       },
       {
         "dayNumber": 292,
-        "isCompleted": false,
+        "isCompleted": true,
         "reflectionCharles": null,
         "reflectionWelder": null,
-        "difficulty": null,
-        "completedAt": null
+        "difficulty": "facil",
+        "completedAt": "2026-10-12"
       },
       {
         "dayNumber": 293,
