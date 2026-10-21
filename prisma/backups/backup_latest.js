@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 /**
- * 🗄️ BACKUP AUTOMÁTICO - 2026-10-19T03-21-29
+ * 🗄️ BACKUP AUTOMÁTICO - 2026-10-21T03-20-14
  * 
  * Este arquivo foi gerado automaticamente pelo script de backup
  * Contém todos os dados do banco no momento do backup
@@ -12,7 +12,7 @@ const prisma = new PrismaClient()
  */
 async function restoreBackup() {
   try {
-    console.log('🔄 Restaurando backup de 2026-10-19T03-21-29...')
+    console.log('🔄 Restaurando backup de 2026-10-21T03-20-14...')
     
     // Limpar dados existentes
     console.log('🗑️  Limpando dados existentes...')
