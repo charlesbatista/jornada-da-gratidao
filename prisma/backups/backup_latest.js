@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 /**
- * 🗄️ BACKUP AUTOMÁTICO - 2026-10-23T03-20-13
+ * 🗄️ BACKUP AUTOMÁTICO - 2026-10-25T03-18-16
  * 
  * Este arquivo foi gerado automaticamente pelo script de backup
  * Contém todos os dados do banco no momento do backup
@@ -12,7 +12,7 @@ const prisma = new PrismaClient()
  */
 async function restoreBackup() {
   try {
-    console.log('🔄 Restaurando backup de 2026-10-23T03-20-13...')
+    console.log('🔄 Restaurando backup de 2026-10-25T03-18-16...')
     
     // Limpar dados existentes
     console.log('🗑️  Limpando dados existentes...')
@@ -2405,51 +2405,51 @@ async function restoreBackup() {
       },
       {
         "dayNumber": 298,
-        "isCompleted": false,
+        "isCompleted": true,
         "reflectionCharles": null,
         "reflectionWelder": null,
-        "difficulty": null,
-        "completedAt": null
+        "difficulty": "facil",
+        "completedAt": "2026-10-23"
       },
       {
         "dayNumber": 299,
-        "isCompleted": false,
+        "isCompleted": true,
         "reflectionCharles": null,
         "reflectionWelder": null,
-        "difficulty": null,
-        "completedAt": null
+        "difficulty": "facil",
+        "completedAt": "2026-10-23"
       },
       {
         "dayNumber": 300,
-        "isCompleted": false,
+        "isCompleted": true,
         "reflectionCharles": null,
         "reflectionWelder": null,
-        "difficulty": null,
-        "completedAt": null
+        "difficulty": "facil",
+        "completedAt": "2026-10-23"
       },
       {
         "dayNumber": 301,
-        "isCompleted": false,
+        "isCompleted": true,
         "reflectionCharles": null,
         "reflectionWelder": null,
-        "difficulty": null,
-        "completedAt": null
+        "difficulty": "facil",
+        "completedAt": "2026-10-23"
       },
       {
         "dayNumber": 302,
-        "isCompleted": false,
+        "isCompleted": true,
         "reflectionCharles": null,
         "reflectionWelder": null,
-        "difficulty": null,
-        "completedAt": null
+        "difficulty": "facil",
+        "completedAt": "2026-10-23"
       },
       {
         "dayNumber": 303,
-        "isCompleted": false,
+        "isCompleted": true,
         "reflectionCharles": null,
         "reflectionWelder": null,
-        "difficulty": null,
-        "completedAt": null
+        "difficulty": "facil",
+        "completedAt": "2026-10-23"
       },
       {
         "dayNumber": 304,
