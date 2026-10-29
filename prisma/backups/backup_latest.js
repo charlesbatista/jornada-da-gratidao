@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 /**
- * 🗄️ BACKUP AUTOMÁTICO - 2026-10-27T03-17-57
+ * 🗄️ BACKUP AUTOMÁTICO - 2026-10-29T03-14-22
  * 
  * Este arquivo foi gerado automaticamente pelo script de backup
  * Contém todos os dados do banco no momento do backup
@@ -12,7 +12,7 @@ const prisma = new PrismaClient()
  */
 async function restoreBackup() {
   try {
-    console.log('🔄 Restaurando backup de 2026-10-27T03-17-57...')
+    console.log('🔄 Restaurando backup de 2026-10-29T03-14-22...')
     
     // Limpar dados existentes
     console.log('🗑️  Limpando dados existentes...')
@@ -2422,10 +2422,10 @@ async function restoreBackup() {
       {
         "dayNumber": 300,
         "isCompleted": true,
-        "reflectionCharles": null,
-        "reflectionWelder": null,
+        "reflectionCharles": "É engraçado essa pergunta estar sendo refletida hoje, nesse tema de hoje, porque eu falei com a Daiane sobre planos e objetivos de vida. Coisas que a gente quer muito fazer, coisas que ela quer fazer, coisas que eu quero fazer. E que demandam muita energia. A gente falou sobre isso, né? Energia, dinheiro e tempo. Três coisas das quais eu tenho medo da escassez. Eu tenho medo de ficar sem dinheiro e não conseguir fazer as coisas que eu quero. De não ter saúde, né? Energia, no caso, para a gente viajar, conquistar as coisas, trabalhar, correr atrás. Ter a idade, né? Ter saúde. E ter o tempo também, já que a gente não sabe quanto tempo de vida tem, né? Ninguém sabe.\nE também nunca vou ter 31 anos de novo. Nunca vou ter 32. Quando eu tiver 40, né? Vou estar com outra idade, outra cabeça, outro corpo, enfim. E é importante eu refletir sobre isso. Foi importante refletir sobre isso hoje, porque nada disso eu estaria pensando se eu não tivesse parado de apostar, se eu não estivesse mais sendo consumido pela compulsão. E eu fico realmente muito feliz. Triste também, às vezes, né? Porque realmente são coisas que até hoje eu não acredito que aconteceram, como aconteceram e a proporção que a compulsão que eu vivi se tornou. Mas eu fico feliz porque eu realmente estou conseguindo construir minha vida de novo e boa parte dela eu não perdi. Que bom que a gente parou antes de eu perder minha vida mesmo, porque dinheiro eu sei que eu consigo de novo, como estou conseguindo. Mas estou feliz porque estou conseguindo construir. E, literalmente, construindo uma casa, né? Com o dinheiro, com a mentalidade, com a saúde, com a vontade de viver que eu não tinha mais enquanto estava sendo consumido pela compulsão.\nEntão, eu fico muito feliz de ver o tanto que a gente está construindo, o tanto que a gente está avançando, o tanto que a gente conseguiu vencer, né? Dia 300, né? São muitos dias. São coisas assim que, quando eu penso nesse número, eu não consigo mensurar. Porque eu mal conseguia ficar 10 dias, 20 dias, muito menos 30. Estava muito difícil ficar 30 dias e agora eu marco 10 vezes esse número. Esse marco aí que a gente está alcançando hoje. Então, eu fico muito feliz, de verdade, de saber que muita coisa está sendo construída e muito rápido. Foi uma coisa que eu comentei com a sua mãe também, que ela perguntou como é que eu estava, né? Hoje eu só consigo falar bem: 'estou bem, estou ótimo'. Eu até achei que você ia falar que eu estava triste, porque ela não perguntou isso no mesmo dia, e eu falei que eu estava super feliz. Que eu estava super feliz com as coisas estarem dando certo, né? Do trabalho estar aparecendo, do dinheiro estar vindo, da saúde mental também estar cada vez melhor. Eu acredito, acho que a gente está se blindando de pessoas, a gente está se afastando de quem faz mal pra gente. A gente está escolhendo as pessoas que a gente quer ter por perto, os valores que a gente quer apresentar pro mundo e os valores que a gente quer receber também das pessoas com quem a gente convive.\nEntão, acho que a gente está numa das melhores fases e tudo isso garantido, realmente, porque a gente parou de viver nessa compulsão. Era uma compulsão, a gente não conseguia mais achar graça nas coisas, a gente jogava o nosso dinheiro fora. A gente hoje tem condição de comprar esse cruzeiro. A gente sofre porque a gente sabe que é muito dinheiro. É o dinheiro que, às vezes, não precisaria estar sendo gasto, a mesma coisa só por causa da data, né? Mas a gente sabe do valor do dinheiro, isso é muito bom. Mas, ao mesmo tempo, eu fico pensando quantas vezes a gente jogou fora esse dinheiro, né? Quantas vezes esse dinheiro foi jogado fora e a gente praticamente não conseguia entender o motivo. A gente fazia, a gente jogava, a gente era movido pela compulsão e, depois, quando passava aquele sentimento, a gente pensava: 'meu Deus, o que que eu fiz da minha vida, né? Por que que eu estou fazendo isso?'. E batia o desespero, o choro e tudo mais. Então, eu realmente não acreditava que a gente ia sair. Era uma compulsão extremamente forte, não era nada fácil como as pessoas de fora poderiam achar.\nEntão, eu só tenho a agradecer a Deus pela força. Estou feliz pela minha garra, porque 300 dias foram 300 dias de escolhas minhas e 300 dias de escolhas suas. Ninguém escolheu por nós, nem mesmo Deus, porque Ele faz a parte Dele, mas a gente tem que fazer a nossa. Ele sozinho não faz. Então, pra mim, é só alegria mesmo. Só um sentimento, assim, inexplicável de ver esse número na tela, né? 300. E você imaginar que, às vezes, de uma manhã pra noite, a gente não conseguia segurar. De uma tarde, de uma hora pra outra, a gente falava que não ia fazer e a gente fazia. Então, pra mim, é só felicidade mesmo. Só motivo. E esse é o legado que eu quero deixar pra mim mesmo, né? Saber que a gente consegue tudo o que a gente quiser e a gente vai conseguir ter mais frutos dessa força, dessas escolhas que a gente tem feito. Coisas boas estão por vir, eu tenho certeza.",
+        "reflectionWelder": "Eu acredito que hoje a gente já tá num lugar muito, muito sólido. Não de falar o que a gente quer construir, mas de falar o que a gente já tá construindo. Porque são 300 dias em que a gente escolheu manter a nossa lucidez, mesmo, de verdade.\n\nNaquele dia fatídico, naquele dia que eu nunca vou esquecer, a gente decidiu que, daquele momento em diante, ia manter a nossa lucidez. E foi uma decisão tão firme que, do segundo dia em diante, tudo foi ficando mais tranquilo. A gente bloqueou isso na nossa cabeça, a gente realmente fez um propósito de ter um ano limpo.\n\nE talvez, naquela época, a gente nem imaginasse que conseguiria. Aí hoje a gente vê que já tá há 300 dias sem fazer nenhuma aposta, que a gente não colocou 1/100 naquilo ali. Era algo que, pra mim, parecia ilusório, porque já tava tudo tão automático que qualquer momento de tédio era destinado ao jogo. Qualquer vazio que a gente sentia era jogo também.\n\nE a gente foi aprendendo a preencher essas lacunas sem o jogo, com outras coisas.\n\nHoje eu não sinto falta nenhuma do jogo mais. É como se ele nunca tivesse existido na minha vida. Até na questão do sofrimento mesmo. Lógico que, vez ou outra, a gente pensa, lembra como era. Mas o que mais me fazia sofrer era o fato de eu ter perdido dinheiro no jogo, aquele sentimento de não aceitar que eu cometi aquele erro e querer voltar no tempo pra não ter perdido tanto dinheiro naquilo ali.\n\nIsso, pra mim, foi o mais difícil. Depois passou a ser mais tranquilo, porque eu me perdoei pelo fato de ter errado, de ter te conduzido também pro jogo, de ter te levado pro jogo. E, pra mim, essas foram as maiores batalhas.\n\nA minha rotina era praticamente inteira de compulsão. Eu tava vivendo um vazio existencial muito grande naquela época. Aí teve a justificativa do processo, um monte de coisa, mas depois, por mais que fosse um vício, também teve a nossa escolha. Porque nem eu, nem você, a gente tomou remédio, a gente não foi internado. A gente simplesmente decidiu parar, segurou na mão um do outro e conseguiu.\n\nE aquela compulsão passou a ser cada vez menor com o passar dos dias.\n\nE hoje a gente já tá construindo o que a gente quer. A energia que a gente gastava no jogo, com compulsão, com ilusão, a gente tá focando nos nossos trabalhos, eu no meu, você no seu, na construção da nossa casa, em ter boas amizades, em praticar uma atividade física, em assistir a um filme, em ficar deitado sem fazer nada.\n\nEnfim, é o que a gente deveria conseguir fazer naquela época, só que não conseguia.\n\nE hoje parece que tudo é mais fácil. E, com o passar dos dias, vai ficando cada vez mais fácil. Eu lembro que falava pra gente que eu queria ficar cada vez mais longe daquele sentimento, de lembrar do jogo, de saber como ele era, das imagens, de como era chegar num bônus. E a gente tá fazendo isso.\n\nEu tô associando muito menos as coisas ao jogo hoje. Claro que alguma coisa lembra, remete. Tem dias e dias, né? Tem dias em que a gente ainda lembra e isso atinge de uma maneira que, às vezes, toca mais. Mas a gente tem conseguido seguir bem.\n\nE a gente tá construindo tudo muito rápido.\n\nHoje poderia ser um ponto em que a gente chegasse depois de 300 dias e a nossa vida não tivesse avançado tanto. Poderia ser o momento de começar a pensar e planejar o que a gente queria fazer como fruto desse resultado. Mas não. Enquanto a gente tá aprendendo, a gente tá fazendo também.\n\nA gente tá trabalhando, a gente tá recuperando o nosso dinheiro, a gente tá construindo estabilidade financeira, a gente tá agarrando oportunidades. E isso aconteceu durante todo o processo.\n\nE é uma trajetória muito bonita, porque até nos dias em que eu mais me xinguei, em que eu queria morrer, no dia seguinte, mesmo acabados, destruídos, eu e você levantávamos e seguíamos em frente.\n\nA gente ria, a gente brincava, a gente chorava, mas, ao mesmo tempo, a gente se recuperava. A gente se penalizava, mas, ao mesmo tempo, a gente se ajudava. A gente se culpava e, ao mesmo tempo, um era a força do outro.\n\nEntão hoje eu só tenho motivos mesmo pra agradecer por tudo que esse ano tá trazendo, por tudo que tá acontecendo. Acredito que tudo realmente é no tempo de Deus e que as coisas estão se encaminhando pra que fiquem cada vez melhores.\n\nA vida não é perfeita. A gente ainda vai ter momentos em que vai sofrer por coisas que nem imagina. Essa é a vida. A gente tá aqui muito pra isso também. Mas hoje a gente não vai usar nenhuma desculpa, nenhum fator externo, pra nos conduzir novamente a um erro que era o jogo.\n\nE toda essa compulsão, esse sentimento de querer ganhar dinheiro, hoje tá voltado não só pro dinheiro, mas pra nossa vida mesmo. Pra gente poder aproveitar, poder fazer viagens, aproveitar o dia a dia, aproveitar a vida, porque a gente não sabe quanto tempo tem aqui, como você falou.\n\nE é isso. Eu acho que a gente tá fazendo um trabalho excelente durante esse ano todo.\n\nNão tem nada que eu olhe e fale que mudaria, que faria diferente nesse ano.\n\nFaria exatamente igual.",
         "difficulty": "facil",
-        "completedAt": "2026-10-23"
+        "completedAt": "2026-10-28"
       },
       {
         "dayNumber": 301,
@@ -2453,35 +2453,35 @@ async function restoreBackup() {
       },
       {
         "dayNumber": 304,
-        "isCompleted": false,
+        "isCompleted": true,
         "reflectionCharles": null,
         "reflectionWelder": null,
-        "difficulty": null,
-        "completedAt": null
+        "difficulty": "facil",
+        "completedAt": "2026-10-28"
       },
       {
         "dayNumber": 305,
-        "isCompleted": false,
+        "isCompleted": true,
         "reflectionCharles": null,
         "reflectionWelder": null,
-        "difficulty": null,
-        "completedAt": null
+        "difficulty": "facil",
+        "completedAt": "2026-10-28"
       },
       {
         "dayNumber": 306,
-        "isCompleted": false,
+        "isCompleted": true,
         "reflectionCharles": null,
         "reflectionWelder": null,
-        "difficulty": null,
-        "completedAt": null
+        "difficulty": "facil",
+        "completedAt": "2026-10-28"
       },
       {
         "dayNumber": 307,
-        "isCompleted": false,
+        "isCompleted": true,
         "reflectionCharles": null,
         "reflectionWelder": null,
-        "difficulty": null,
-        "completedAt": null
+        "difficulty": "facil",
+        "completedAt": "2026-10-28"
       },
       {
         "dayNumber": 308,
