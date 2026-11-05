@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 /**
- * 🗄️ BACKUP AUTOMÁTICO - 2026-11-03T03-12-12
+ * 🗄️ BACKUP AUTOMÁTICO - 2026-11-05T03-12-13
  * 
  * Este arquivo foi gerado automaticamente pelo script de backup
  * Contém todos os dados do banco no momento do backup
@@ -12,7 +12,7 @@ const prisma = new PrismaClient()
  */
 async function restoreBackup() {
   try {
-    console.log('🔄 Restaurando backup de 2026-11-03T03-12-12...')
+    console.log('🔄 Restaurando backup de 2026-11-05T03-12-13...')
     
     // Limpar dados existentes
     console.log('🗑️  Limpando dados existentes...')
@@ -2485,59 +2485,59 @@ async function restoreBackup() {
       },
       {
         "dayNumber": 308,
-        "isCompleted": false,
+        "isCompleted": true,
         "reflectionCharles": null,
         "reflectionWelder": null,
-        "difficulty": null,
-        "completedAt": null
+        "difficulty": "facil",
+        "completedAt": "2026-11-04"
       },
       {
         "dayNumber": 309,
-        "isCompleted": false,
+        "isCompleted": true,
         "reflectionCharles": null,
         "reflectionWelder": null,
-        "difficulty": null,
-        "completedAt": null
+        "difficulty": "facil",
+        "completedAt": "2026-11-04"
       },
       {
         "dayNumber": 310,
-        "isCompleted": false,
-        "reflectionCharles": null,
-        "reflectionWelder": null,
-        "difficulty": null,
-        "completedAt": null
+        "isCompleted": true,
+        "reflectionCharles": "Pra mim, eu acho que esse padrão que tenta voltar pra minha vida, e que é um dos assuntos sobre os quais eu mais falo com a Milena, é essa ideia de ficar o tempo inteiro lembrando das atitudes que a gente tinha pelo fato de jogar e ter perdido dinheiro. E aí você vai lá e gasta dinheiro porque sente que tem que gastar em alguma coisa, já que antes jogava fora.\n\nEu acho que é um padrão que se criou com o jogo, porque eu nunca fui essa pessoa de pensar: \"Vou torrar dinheiro porque tenho que torrar dinheiro.\" E aí, no jogo, eu comecei a pensar: \"Já que eu torro dinheiro lá, vou torrar em outra coisa. Vou torrar em alguma coisa que eu vou usar, que é útil.\"\n\nVou comprar os materiais da Zari, por exemplo, que era pra ser uma coisa genuína, bonita. Não tô dizendo que não foi, mas o tempo todo eu ficava pensando que precisava comprar porque tinha ganhado dinheiro no jogo. A gente tinha ganhado dinheiro no jogo e, logo depois, perdeu. E aí eu fiquei usando isso como argumento com Deus: \"Como assim, Deus? Olha o que eu fiz!\" Olha que feio o pensamento que vem, né? A gente só pensa besteira.\n\n\"Como que eu ajudei uma pessoa e, logo depois, você permitiu que eu perdesse todo o dinheiro? Agora eu não tenho dinheiro. Ajudei uma pessoa e agora sou eu que preciso de ajuda, porque não tenho dinheiro.\"\n\nEntão, pra mim, isso é um padrão que a minha cabeça adquiriu, de ficar associando tudo ao jogo. E é um padrão que eu acho perigoso, de ficar o tempo inteiro lembrando disso. Por isso é uma coisa que eu falo com a Milena que quero parar. Eu não quero ficar associando a minha vida inteira, qualquer gasto ou ganho, ao jogo.\n\nPorque, igual você falou, tem coisas que a gente sempre fez antes. Não foi por causa do jogo que a gente começou a fazer, assim como não foi por causa do jogo que a gente deixou de fazer outras coisas. Acho que hoje a gente tá valorizando muito mais o dinheiro, tem muito mais consciência. Mas, pra mim, é um padrão do qual eu tenho um pouco de nojo, de ficar me culpando, sabe?\n\n\"Por que você não vai gastar numa viagem de R$ 10.000 na virada do ano? Você nunca fez isso na vida?\"\n\nEu fico com essa cobrança dentro de mim e sei que não posso pensar assim, porque R$ 10.000 é muito dinheiro. E é uma época do ano em que talvez eu não precise gastar isso, porque já tenho uma viagem marcada agora pra dezembro, outra em fevereiro, e eu não tô esbanjando dinheiro, nem quero. Porque eu quero juntar dinheiro, quero investir cada vez mais, tenho uma casa pra pagar, uma casa caríssima.\n\nEntão eu não quero ter esse padrão que fica me cobrando e me pressionando, como se eu tivesse que fazer as coisas.\n\nHoje mesmo eu tava vendo a rifa da tia Zani e faltavam 18 números, que davam R$ 360. E aí veio aquele pensamento: \"O que são R$ 360 pra quem jogava isso em dois cliques, em dez segundos? Nada!\"\n\nPra ela, é terminar a rifa e usar o dinheiro pra reformar a casa dela. Uma pessoa que merece, inclusive. Pode ter qualquer defeito, como eu tenho, você tem, mas é uma pessoa que ajuda o próximo, independentemente da opinião política dela, que eu nem sei qual é. Mas é uma pessoa que ajuda os outros e merece esse dinheiro.\n\nE aí eu fiquei pensando: \"Cara, é dinheiro. Eu preciso de dinheiro também, preciso pagar minhas contas, preciso juntar dinheiro, tenho uma dívida muito cara.\"\n\nMas, ao mesmo tempo, a gente fica assim: \"Cara, de novo, o que são R$ 400 pra quem tava jogando dinheiro fora no jogo?\"\n\nEntão esse padrão fica na minha cabeça o tempo inteiro. E eu não quero ter isso na minha vida. Eu não quero que toda ação, toda coisa que eu vá fazer e que envolva dinheiro, tenha que me fazer lembrar do jogo. Não de jogar, você sabe o que eu quero dizer, mas de ficar comparando.\n\nÉ um padrão de comparação: \"Ah, então você não pode? Você tem que fazer, você tem que ajudar ela, porque você jogava dinheiro fora.\"\n\nNão! Meu dinheiro vale. Meu dinheiro vale igual ao dinheiro dela. Eu posso ter mais condições hoje. Pra mim, talvez não fizesse falta, mesmo com a dívida que eu tenho. Talvez não fizesse falta. Mas eu tô aprendendo a respeitar meu dinheiro, a entender meu dinheiro, a investir meu dinheiro e a pensar também no futuro.\n\nPorque vai ter um momento em que, sei lá, eu vou ter saúde pra sempre? Eu vou ter uma dívida grande? Então a gente fica pensando em muita coisa.\n\nMas esse padrão realmente eu quero parar. Porque eu acho que ele é muito perigoso. Ele fica rondando a minha cabeça e talvez eu possa tomar uma decisão errada, uma decisão impulsiva, só por causa disso. E eu não quero.\n\nEntão eu fico me policiando. E esse limite que eu coloco, esse limite de lembrar que a minha vida não é definida pelo jogo, é também o limite de pensar que o meu dinheiro vale.\n\nE muito dinheiro que eu perdi... A única pessoa que me ajudou financeiramente foi você, porque você tava junto. Ninguém me ajudou. Nem minha família, ninguém. Eu não fiz vaquinha, não ganhei um centavo de ninguém. Ninguém falou: \"Toma aqui R$ 100, porque você perdeu dinheiro.\" Ninguém me perguntou, ninguém falou nada.\n\nEntão, assim, não tô dizendo que vou ser ruim, mas vou colocar esse limite.\n\nÉ o meu dinheiro. Esse dinheiro vai ser respeitado por mim agora. Não é porque eu tenho que vou ficar distribuindo. Não é porque eu tenho mais que vou ficar ajudando todo mundo pensando no jogo, tentando justificar as minhas decisões com base no que eu perdi.\n\nSe eu vou ajudar minha tia, vai ser porque eu quero, porque ela merece, porque eu tenho condições, porque eu senti de coração.\n\nNão porque um dia eu joguei dinheiro fora e agora preciso compensar isso de alguma forma.\n\nEntão é um padrão que eu quero muito eliminar, porque ele ainda me faz muito mal, de verdade.",
+        "reflectionWelder": "Pra mim, eu acho que esse padrão que tenta voltar pra minha vida, e que é um dos assuntos sobre os quais eu mais falo com a Milena, é essa ideia de ficar o tempo inteiro lembrando das atitudes que a gente tinha pelo fato de jogar e ter perdido dinheiro. E aí você vai lá e gasta dinheiro porque sente que tem que gastar em alguma coisa, já que antes jogava fora.\n\nEu acho que é um padrão que se criou com o jogo, porque eu nunca fui essa pessoa de pensar: \"Vou torrar dinheiro porque tenho que torrar dinheiro.\" E aí, no jogo, eu comecei a pensar: \"Já que eu torro dinheiro lá, vou torrar em outra coisa. Vou torrar em alguma coisa que eu vou usar, que é útil.\"\n\nVou comprar os materiais da Zari, por exemplo, que era pra ser uma coisa genuína, bonita. Não tô dizendo que não foi, mas o tempo todo eu ficava pensando que precisava comprar porque tinha ganhado dinheiro no jogo. A gente tinha ganhado dinheiro no jogo e, logo depois, perdeu. E aí eu fiquei usando isso como argumento com Deus: \"Como assim, Deus? Olha o que eu fiz!\" Olha que feio o pensamento que vem, né? A gente só pensa besteira.\n\n\"Como que eu ajudei uma pessoa e, logo depois, você permitiu que eu perdesse todo o dinheiro? Agora eu não tenho dinheiro. Ajudei uma pessoa e agora sou eu que preciso de ajuda, porque não tenho dinheiro.\"\n\nEntão, pra mim, isso é um padrão que a minha cabeça adquiriu, de ficar associando tudo ao jogo. E é um padrão que eu acho perigoso, de ficar o tempo inteiro lembrando disso. Por isso é uma coisa que eu falo com a Milena que quero parar. Eu não quero ficar associando a minha vida inteira, qualquer gasto ou ganho, ao jogo.\n\nPorque, igual você falou, tem coisas que a gente sempre fez antes. Não foi por causa do jogo que a gente começou a fazer, assim como não foi por causa do jogo que a gente deixou de fazer outras coisas. Acho que hoje a gente tá valorizando muito mais o dinheiro, tem muito mais consciência. Mas, pra mim, é um padrão do qual eu tenho um pouco de nojo, de ficar me culpando, sabe?\n\n\"Por que você não vai gastar numa viagem de R$ 10.000 na virada do ano? Você nunca fez isso na vida?\"\n\nEu fico com essa cobrança dentro de mim e sei que não posso pensar assim, porque R$ 10.000 é muito dinheiro. E é uma época do ano em que talvez eu não precise gastar isso, porque já tenho uma viagem marcada agora pra dezembro, outra em fevereiro, e eu não tô esbanjando dinheiro, nem quero. Porque eu quero juntar dinheiro, quero investir cada vez mais, tenho uma casa pra pagar, uma casa caríssima.\n\nEntão eu não quero ter esse padrão que fica me cobrando e me pressionando, como se eu tivesse que fazer as coisas.\n\nHoje mesmo eu tava vendo a rifa da tia Zani e faltavam 18 números, que davam R$ 360. E aí veio aquele pensamento: \"O que são R$ 360 pra quem jogava isso em dois cliques, em dez segundos? Nada!\"\n\nPra ela, é terminar a rifa e usar o dinheiro pra reformar a casa dela. Uma pessoa que merece, inclusive. Pode ter qualquer defeito, como eu tenho, você tem, mas é uma pessoa que ajuda o próximo, independentemente da opinião política dela, que eu nem sei qual é. Mas é uma pessoa que ajuda os outros e merece esse dinheiro.\n\nE aí eu fiquei pensando: \"Cara, é dinheiro. Eu preciso de dinheiro também, preciso pagar minhas contas, preciso juntar dinheiro, tenho uma dívida muito cara.\"\n\nMas, ao mesmo tempo, a gente fica assim: \"Cara, de novo, o que são R$ 400 pra quem tava jogando dinheiro fora no jogo?\"\n\nEntão esse padrão fica na minha cabeça o tempo inteiro. E eu não quero ter isso na minha vida. Eu não quero que toda ação, toda coisa que eu vá fazer e que envolva dinheiro, tenha que me fazer lembrar do jogo. Não de jogar, você sabe o que eu quero dizer, mas de ficar comparando.\n\nÉ um padrão de comparação: \"Ah, então você não pode? Você tem que fazer, você tem que ajudar ela, porque você jogava dinheiro fora.\"\n\nNão! Meu dinheiro vale. Meu dinheiro vale igual ao dinheiro dela. Eu posso ter mais condições hoje. Pra mim, talvez não fizesse falta, mesmo com a dívida que eu tenho. Talvez não fizesse falta. Mas eu tô aprendendo a respeitar meu dinheiro, a entender meu dinheiro, a investir meu dinheiro e a pensar também no futuro.\n\nPorque vai ter um momento em que, sei lá, eu vou ter saúde pra sempre? Eu vou ter uma dívida grande? Então a gente fica pensando em muita coisa.\n\nMas esse padrão realmente eu quero parar. Porque eu acho que ele é muito perigoso. Ele fica rondando a minha cabeça e talvez eu possa tomar uma decisão errada, uma decisão impulsiva, só por causa disso. E eu não quero.\n\nEntão eu fico me policiando. E esse limite que eu coloco, esse limite de lembrar que a minha vida não é definida pelo jogo, é também o limite de pensar que o meu dinheiro vale.\n\nE muito dinheiro que eu perdi... A única pessoa que me ajudou financeiramente foi você, porque você tava junto. Ninguém me ajudou. Nem minha família, ninguém. Eu não fiz vaquinha, não ganhei um centavo de ninguém. Ninguém falou: \"Toma aqui R$ 100, porque você perdeu dinheiro.\" Ninguém me perguntou, ninguém falou nada.\n\nEntão, assim, não tô dizendo que vou ser ruim, mas vou colocar esse limite.\n\nÉ o meu dinheiro. Esse dinheiro vai ser respeitado por mim agora. Não é porque eu tenho que vou ficar distribuindo. Não é porque eu tenho mais que vou ficar ajudando todo mundo pensando no jogo, tentando justificar as minhas decisões com base no que eu perdi.\n\nSe eu vou ajudar minha tia, vai ser porque eu quero, porque ela merece, porque eu tenho condições, porque eu senti de coração.\n\nNão porque um dia eu joguei dinheiro fora e agora preciso compensar isso de alguma forma.\n\nEntão é um padrão que eu quero muito eliminar, porque ele ainda me faz muito mal, de verdade.",
+        "difficulty": "facil",
+        "completedAt": "2026-11-04"
       },
       {
         "dayNumber": 311,
-        "isCompleted": false,
+        "isCompleted": true,
         "reflectionCharles": null,
         "reflectionWelder": null,
-        "difficulty": null,
-        "completedAt": null
+        "difficulty": "facil",
+        "completedAt": "2026-11-04"
       },
       {
         "dayNumber": 312,
-        "isCompleted": false,
+        "isCompleted": true,
         "reflectionCharles": null,
         "reflectionWelder": null,
-        "difficulty": null,
-        "completedAt": null
+        "difficulty": "facil",
+        "completedAt": "2026-11-04"
       },
       {
         "dayNumber": 313,
-        "isCompleted": false,
+        "isCompleted": true,
         "reflectionCharles": null,
         "reflectionWelder": null,
-        "difficulty": null,
-        "completedAt": null
+        "difficulty": "facil",
+        "completedAt": "2026-11-04"
       },
       {
         "dayNumber": 314,
-        "isCompleted": false,
+        "isCompleted": true,
         "reflectionCharles": null,
         "reflectionWelder": null,
-        "difficulty": null,
-        "completedAt": null
+        "difficulty": "facil",
+        "completedAt": "2026-11-04"
       },
       {
         "dayNumber": 315,
