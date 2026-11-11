@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 /**
- * 🗄️ BACKUP AUTOMÁTICO - 2026-11-09T03-13-13
+ * 🗄️ BACKUP AUTOMÁTICO - 2026-11-11T03-11-56
  * 
  * Este arquivo foi gerado automaticamente pelo script de backup
  * Contém todos os dados do banco no momento do backup
@@ -12,7 +12,7 @@ const prisma = new PrismaClient()
  */
 async function restoreBackup() {
   try {
-    console.log('🔄 Restaurando backup de 2026-11-09T03-13-13...')
+    console.log('🔄 Restaurando backup de 2026-11-11T03-11-56...')
     
     // Limpar dados existentes
     console.log('🗑️  Limpando dados existentes...')
@@ -2541,51 +2541,51 @@ async function restoreBackup() {
       },
       {
         "dayNumber": 315,
-        "isCompleted": false,
+        "isCompleted": true,
         "reflectionCharles": null,
         "reflectionWelder": null,
-        "difficulty": null,
-        "completedAt": null
+        "difficulty": "facil",
+        "completedAt": "2026-11-10"
       },
       {
         "dayNumber": 316,
-        "isCompleted": false,
+        "isCompleted": true,
         "reflectionCharles": null,
         "reflectionWelder": null,
-        "difficulty": null,
-        "completedAt": null
+        "difficulty": "facil",
+        "completedAt": "2026-11-10"
       },
       {
         "dayNumber": 317,
-        "isCompleted": false,
+        "isCompleted": true,
         "reflectionCharles": null,
         "reflectionWelder": null,
-        "difficulty": null,
-        "completedAt": null
+        "difficulty": "facil",
+        "completedAt": "2026-11-10"
       },
       {
         "dayNumber": 318,
-        "isCompleted": false,
+        "isCompleted": true,
         "reflectionCharles": null,
         "reflectionWelder": null,
-        "difficulty": null,
-        "completedAt": null
+        "difficulty": "facil",
+        "completedAt": "2026-11-10"
       },
       {
         "dayNumber": 319,
-        "isCompleted": false,
+        "isCompleted": true,
         "reflectionCharles": null,
         "reflectionWelder": null,
-        "difficulty": null,
-        "completedAt": null
+        "difficulty": "facil",
+        "completedAt": "2026-11-10"
       },
       {
         "dayNumber": 320,
-        "isCompleted": false,
-        "reflectionCharles": null,
-        "reflectionWelder": null,
-        "difficulty": null,
-        "completedAt": null
+        "isCompleted": true,
+        "reflectionCharles": "Essa palavra de novo, né? **Como eu honro o preço que já paguei sem viver preso à culpa?**\n\nEu acabei de falar isso com a Milena. Hoje eu ainda acho que tô preso à culpa. E, pra mim, tem uma diferença: não é que eu não tenha me perdoado, mas eu ainda tô preso a uma culpa.\n\nPor que eu tô falando isso? Porque toda vez que eu vou tomar alguma decisão financeira, por exemplo, gastar valores mais altos, eu sinto uma culpa. Vem aquele pensamento: \"Por que você jogou fora esse dinheiro? Por que você não gasta agora? Por que antes você não tinha medo, não valorizava seu dinheiro, e agora quer valorizar? Por que agora você fica pensando em não gastar, em economizar, em priorizar e tudo mais?\"\n\nE aí me vem essa culpa do que eu fiz, do dinheiro que eu gastei, das decisões erradas que tomei. E a gente tentou dar um nome pra isso hoje, na minha sessão de terapia. E, pra mim, é isso: essa culpa.\n\nEu fico culpando aquela minha versão do passado pelas coisas que ela fez, sendo que ela tava doente, né? Era o Charles doente.\n\nE foi o que a gente falou hoje. Eu tenho que tentar continuar honrando as minhas ações, as minhas atitudes, porque acho que é só assim que vou diminuindo essa culpa do que eu fiz, do que você fez também. Porque é um tipo de sentimento que eu não quero cultivar.\n\nEu não quero ficar o tempo inteiro me culpando, colocando em xeque as coisas que faço ou pensando que poderia estar em outro patamar, que poderia ter mais dinheiro, poderia ter aquilo e aquilo outro. E aí eu fico culpando aquela versão do Charles que errou, que infelizmente errou, mas que tava doente. Como a Milena falou, né? Era uma versão meio adoecida.\n\nE eu tenho medo disso, porque tenho medo de esse sentimento ruim de culpa ficar crescendo dentro de mim. Eu não acho que esteja crescendo, mas tenho medo de que cresça.\n\nE a forma que eu encontro hoje, não só de honrar o preço que paguei, essa culpa pelo que já aconteceu e pelo que eu já me perdoei, mas também de não ficar fazendo essas comparações e me martirizando, é continuar fazendo o que a gente tá fazendo todos os dias.\n\nHonrando o nosso compromisso, a nossa escolha de não jogar, de não apostar, fazendo reflexões sobre tudo que a gente vai fazer, financeiramente ou não.\n\nPorque eu acho que uma forma de honrar é respeitar o seu dinheiro. É gastar bem, é pensar onde você vai usar esse dinheiro, investir, guardar e respeitar. Coisa que a gente não fez.\n\nEntão é uma forma de honrar o que eu já perdi, honrando o que eu tenho, o que ainda tenho e o que ainda posso salvar, né?\n\nE eu acho que foi uma coisa que você também fez muito. Por mais que você tenha perdido muito dinheiro, você também protegeu muito dinheiro. Eu também te ajudei a proteger muito do seu dinheiro.\n\nE isso também é honrar o dinheiro que foi perdido. É honrar a memória daquele dinheiro, vamos dizer assim, né? Se é que a gente pode falar isso.\n\nMas é honrar. É pensar: \"Beleza, eu fiz aquilo, cometi aqueles erros e agora não cometo mais. O dinheiro que entra, eu respeito. Eu priorizo onde vou gastar esse dinheiro, porque sei que esse dinheiro é abençoado e pode me proporcionar muita coisa boa.\"\n\nE, pra mim, é a forma que tenho encontrado de fazer essas reflexões. Não com você diretamente, mas às vezes com você também. Muitas vezes sozinho, quando vou ver o saldo dos meus investimentos, quando meu salário cai.\n\nE aí eu faço essas reflexões sobre o dinheiro caindo e, finalmente, o dinheiro ficando, né? O dinheiro dos meus salários, que durante muitos anos eu não tive mais essa experiência de ver ficar.\n\nMas respeitando o dinheiro também, sabendo que ele não aceita desaforo.\n\nEntão acho que eu também honro o dinheiro que perdi dessa forma. Sabendo que hoje o que entra fica. Hoje, o que entra, eu sei onde vou colocar. Eu penso muito bem onde tô colocando esse dinheiro e raciocino sobre o que aquele dinheiro tá me trazendo de felicidade, e não de destruição, que foi o que a gente fazia, né?\n\nEntão, quando eu compro essa bola, por exemplo, às vezes é uma coisa besta, mas eu compro a bola e falo: \"Cara, eu posso comprar essa bola e esse dinheiro não vai me fazer falta.\"\n\nEu posso ajudar minha mãe todos os meses e esse dinheiro também não me faz falta. Eu posso ajudar minha tia e esse dinheiro não me faz falta.\n\nEu acho que é isso. É trazer essa energia boa pro dinheiro, coisa que eu tava fazendo, que a gente tava fazendo, totalmente ao contrário, né? Fazendo com que o dinheiro tivesse uma energia negativa, que você tivesse medo de receber, que eu tivesse medo de receber. A gente tinha medo de que ele fosse usado pra destruir a gente.\n\nE eu acho que é uma forma que vou continuar cultivando pra ficar cada vez mais livre dessa culpa pelas coisas que fiz.\n\nE hoje eu acho que é um novo capítulo, né? Eu entender que não posso culpar aquele Charles, não posso culpar aquele Welder pelas coisas que eles fizeram, porque eles estavam doentes. Estavam com outra mentalidade, com a cabeça totalmente fodida.\n\nE eu não posso cobrar daquela versão a maturidade, a consciência, o respeito pelo dinheiro e as tomadas de decisões certas que tenho hoje, porque a gente realmente não tava respondendo por nós mesmos da mesma forma.\n\nE acho que uma forma de honrar também é não ficar chicoteando essa minha versão do passado.\n\nÉ falar: \"Beleza, eu tenho uma nova versão. Eu sou uma nova versão. O dinheiro que entra é abençoado, posso fazer muita coisa com ele. E o que já foi, eu honro a memória dele dessa forma, fazendo jus ao dinheiro que tenho hoje.\"\n\nE acho que você também tem feito isso.\n\nÉ dessa forma que eu tento viver, então.",
+        "reflectionWelder": "Eu acho que a minha jornada e a sua são diferentes nesse sentido, porque, desde quando eu comecei a jogar, eu carreguei muita culpa comigo. Desde o começo, tipo, nos primeiros 15 dias, eu já identifiquei sinais de que aquilo seria um grande problema pra mim. Então eu comecei a carregar uma culpa ali.\n\nAí depois trouxe você pro jogo, então foi outra culpa que eu carreguei durante muito tempo. Depois tentei influenciar muita gente também. Não chegou a ser uma culpa, mas poderia ter sido, né?\n\nMas o fato de você viver sofrendo, de eu também estar sofrendo, de eu ver você chegando ao fundo do poço, você pegando dinheiro meu escondido... Por mais que eu soubesse que aquilo era uma consequência do jogo, de tudo que ele causa, eu sentia que a culpa era minha durante muito tempo.\n\nEntão foram dois anos e meio me sentindo muito culpado por tudo, como se o jogo tivesse uma parcela mínima de culpa e a minha parcela fosse muito maior, como se a minha responsabilidade fosse muito maior do que a do próprio jogo.\n\nEu não aceitava ver que tinha te colocado naquele lugar, que tinha me colocado naquele lugar, que tinha perdido muito dinheiro e que hoje poderia estar numa situação diferente. Então foram dois anos e meio com esses pensamentos: \"Ah, eu poderia...\", \"Ah, se eu não tivesse...\", \"Ah, se não sei o quê...\"\n\nE foi muita culpa. O fardo foi muito pesado pra eu conseguir enxergar algum potencial em mim, pra acreditar que conseguiria viver fora do jogo.\n\nE aí, quando lá no ano passado a gente fez o nosso pacto, né, nosso propósito de não jogar esse ano, de não jogar mais, eu fui trabalhando e fazendo esse processo dentro de mim, jogando pro universo e acreditando que ia conseguir.\n\nE, com esse processo, eu fui ficando forte, até que, com o tempo, fui conseguindo me perdoar por tudo isso que, na minha cabeça, eu tinha causado sozinho, como se o jogo não tivesse culpa nenhuma.\n\nEntão, dinheiro, por exemplo, é um negócio pelo qual eu senti muita culpa durante muito tempo. Tipo: \"Ah, eu poderia ter um milhão de reais hoje.\" Eu ficava imaginando esses cenários.\n\nMas hoje eu prefiro acreditar, e acredito de verdade, que eu tô vivendo a minha melhor versão financeira. Eu acredito que tudo aquilo que ficou pra trás era ilusão.\n\nSei lá, a gente até chegou a falar sobre isso. Às vezes, a gente nem estaria mais aqui. Talvez tivesse acontecido alguma coisa, enfim.\n\nE hoje eu acredito que a minha melhor versão é essa, com o dinheiro que a gente tem hoje, com as coisas que a gente tá fazendo hoje.\n\nEu não penso mais no passado, em hipóteses do que poderia ter sido, na culpa que eu carregava. Isso ficou tudo lá atrás.\n\nAquele Charles morreu mesmo.\n\nEu lembro que, às vezes, falava: \"Ah, esse Charles morreu, nunca mais vai jogar\", não sei o quê. Mas era tudo da boca pra fora. Agora não. Agora realmente é verdade, porque o que eu mais carregava de dolorido, que era culpa, vergonha, tudo de ruim, eu deixei lá atrás.\n\nEntão eu não carrego mais essas coisas comigo. Eu carrego só sentimentos bons. Eu sou feliz com o dinheiro que a gente tem hoje e com o que a gente ainda vai conquistar.\n\nE hoje, assim, ver que a gente tá dando valor ao dinheiro mesmo, sabe? A gente ainda tem muito dinheiro. Eu ganhei muito dinheiro esse ano, você também ganhou muito dinheiro. É muito bonito ver que a gente nunca dependeu de jogo, de sorte, pra ter dinheiro na nossa vida. Nunca.\n\nAquilo ali foi uma ilusão muito grande, uma lavagem cerebral muito grande que a gente teve durante esse período.\n\nEntão eu cheguei nesse momento em que fui aprendendo a deixar essa culpa de lado e não carrego mais ela comigo.\n\nPor isso que até na jornada anterior eu falei: hoje em dia eu não faço mais associações com o que eu poderia ter, com o que eu poderia comprar.\n\nÉ como se aquele Charles de antes realmente tivesse voltado, mas muito melhor. Muito melhor, com muito mais coragem, muito mais destemido, acreditando no futuro, acreditando nele mesmo, acreditando no trabalho, acreditando em você, acreditando na vida.\n\nEntão, de todo esse processo, que foi muito dolorido, a gente conseguiu fazer brotar uma flor muito bonita.\n\nA gente passou por muita coisa ruim, por momentos em que pensou em desistir da vida, desistir de tudo. E, se não fossem as jornadas, a gente falando disso aqui, a gente se ajudando, a gente segurando a mão um do outro, talvez não tivesse conseguido.\n\nTalvez a gente nem estivesse aqui hoje. Ou estaria igual a uns zumbis, sem viver a vida, vivendo por osmose mesmo.\n\nEntão hoje eu não carrego culpa de nada do que eu vou fazer. E é de verdade mesmo, eu falo de coração.\n\nQuando vou tomar alguma decisão financeira importante, às vezes eu até falo, né, que nem falei no negócio do preenchimento. Mas é porque, olha só pra você ver, o valor é muito alto, R$ 8.000.\n\nNo jogo, não causaria nenhum impacto mexer nesse dinheiro. Na vida real, causa.\n\nE aí, como foi muito tempo banalizando o dinheiro, acaba que, querendo ou não, a gente lembra dos momentos em que tomava decisões impulsivas com dinheiro.\n\nMas, pra mim, isso é muito mais uma demonstração de cuidado, de que eu não quero tomar uma decisão ruim com o dinheiro. Eu quero que ele seja bem utilizado, com alguma coisa que valha a pena, e não com um gasto supérfluo.\n\nE talvez seja até comum a gente fazer essas analogias ainda durante um tempo. Mas, na minha intenção mesmo, eu acho que é mais uma fala pra mim, né? No caso, eu tô falando porque é um resquício, um sentimento que ainda existe, mas não é algo que impacta a minha decisão, que gera algum tipo de impulso ou sentimento ruim.\n\nPorque já ficou perdoado, já ficou no passado. Então talvez, com o tempo, isso melhore ainda mais. Já tá bom, mas pode melhorar cada vez mais.\n\nEntão eu não carrego culpa hoje das minhas ações, dos meus sentimentos, das coisas que eu planejo pra nossa vida. É tudo muito racional, calculado. Lógico que a gente tem emoção também, mas até a nossa emoção hoje tá mais equilibrada com aquilo que a gente vai decidir.\n\nE isso é fruto do que a gente tá plantando durante todo esse tempo.\n\nEu digo até que a gente plantou isso durante os momentos ruins também. A gente foi plantando sementinhas, às vezes ali, com as frustrações do jogo. No dia seguinte a gente tentava, passavam uns dias, depois voltava. E algumas sementes germinaram e deram força pra gente conseguir estar aqui hoje.\n\nCom 320 dias, eu nunca imaginei isso depois do vício. Ficar praticamente um ano, já que mês que vem faz um ano, longe do jogo.\n\nEntão eu só quero que isso realmente vá ficando cada vez mais no passado. Que, se tiver alguma culpa que eu ainda não identifico, ela vá ficando cada vez mais longe da minha vida, da sua vida.\n\nE que a gente vá vivendo como tá vivendo hoje, conquistando nossas coisas, cuidando da nossa saúde, fazendo novos amigos.\n\nE é isso. Acho que tudo que ficou de ruim relacionado ao jogo ficou no passado.",
+        "difficulty": "facil",
+        "completedAt": "2026-11-10"
       },
       {
         "dayNumber": 321,
