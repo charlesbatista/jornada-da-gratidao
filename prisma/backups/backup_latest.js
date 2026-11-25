@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 /**
- * 🗄️ BACKUP AUTOMÁTICO - 2026-11-23T03-13-42
+ * 🗄️ BACKUP AUTOMÁTICO - 2026-11-25T03-12-26
  * 
  * Este arquivo foi gerado automaticamente pelo script de backup
  * Contém todos os dados do banco no momento do backup
@@ -12,7 +12,7 @@ const prisma = new PrismaClient()
  */
 async function restoreBackup() {
   try {
-    console.log('🔄 Restaurando backup de 2026-11-23T03-13-42...')
+    console.log('🔄 Restaurando backup de 2026-11-25T03-12-26...')
     
     // Limpar dados existentes
     console.log('🗑️  Limpando dados existentes...')
@@ -2637,67 +2637,67 @@ async function restoreBackup() {
       },
       {
         "dayNumber": 327,
-        "isCompleted": false,
+        "isCompleted": true,
         "reflectionCharles": null,
         "reflectionWelder": null,
-        "difficulty": null,
-        "completedAt": null
+        "difficulty": "facil",
+        "completedAt": "2026-11-24"
       },
       {
         "dayNumber": 328,
-        "isCompleted": false,
+        "isCompleted": true,
         "reflectionCharles": null,
         "reflectionWelder": null,
-        "difficulty": null,
-        "completedAt": null
+        "difficulty": "facil",
+        "completedAt": "2026-11-24"
       },
       {
         "dayNumber": 329,
-        "isCompleted": false,
+        "isCompleted": true,
         "reflectionCharles": null,
         "reflectionWelder": null,
-        "difficulty": null,
-        "completedAt": null
+        "difficulty": "facil",
+        "completedAt": "2026-11-24"
       },
       {
         "dayNumber": 330,
-        "isCompleted": false,
+        "isCompleted": true,
         "reflectionCharles": null,
-        "reflectionWelder": null,
-        "difficulty": null,
-        "completedAt": null
+        "reflectionWelder": "Com certeza, o dinheiro hoje tem outro significado pra mim. Eu acredito firmemente que o dinheiro foi feito pra trazer essa sensação de segurança, pra ser esse porto seguro quando você precisar de alguma coisa, quando tiver alguma emergência, quando quiser fazer uma viagem, comer num lugar que você quer, comprar uma roupa, um tênis ou simplesmente pagar as suas contas. É você não ter medo de não ter dinheiro pra pagar suas contas. Tem muito tempo que eu não tenho esse medo. Mesmo na época em que eu perdia dinheiro no jogo, eu não tinha esse medo especificamente.\n\nEntão, pra mim, é isso. O dinheiro me traz segurança e hoje eu tô construindo cada vez mais essa relação boa com ele, justamente no sentido de saber que, se eu precisar de dinheiro, eu vou ter. Se eu tiver alguma emergência, quiser comprar alguma coisa ou fazer uma viagem, igual a gente quer fazer, eu vou ter condições de fazer isso sem que esse dinheiro me faça falta.\n\nE essa sensação de segurança era uma coisa que eu realmente tinha perdido quando tava apostando. Eu não tinha mais segurança de nada. Tanto é que, até quando a gente ganhava, eu tinha medo de gastar o dinheiro que eu tinha ganhado, entre aspas, né? Porque eu sabia que depois ia perder dinheiro. Então era uma vida realmente muito insegura.\n\nMinha relação com o prazer também mudou muito. Hoje eu sei que não dependo de nenhum vício pra sentir prazer em viver. Não preciso buscar prazeres imediatos, prazeres rápidos, porque eu sei que as melhores experiências são bem construídas, bem planejadas. Como uma viagem ou até mesmo um investimento, que também tem sido um prazer pra mim.\n\nVer meu dinheiro lá, saber que tenho aquele dinheiro guardado, também me dá prazer. Não só pela segurança, mas por essa sensação boa de que eu tô fazendo a coisa certa, de que, se eu precisar de alguma coisa, vou poder contar com aquele dinheiro. Saber que eu posso usar esse dinheiro pra viajar, mesmo que eu não queira usar.\n\nUm exemplo é essa viagem do cruzeiro. Se eu quiser, a gente pode fazer essa viagem. Mas eu tô com uma relação tão boa com esse dinheiro, valorizando tanto esse dinheiro, que eu consigo entender que talvez não valha a pena fazer essa viagem simplesmente porque eu tenho condições de fazer.\n\nE, sobre o descanso, eu acho que é justamente saber que a gente tá fazendo as melhores escolhas hoje em dia. A gente pode literalmente deitar a cabeça no travesseiro e descansar, sabendo que tomou a principal decisão do dia, que é não apostar.\n\nFoi até uma coisa que eu falei com a Milena hoje também. Meu objetivo de 2026 era não jogar. Era só esse. O resto eu sabia que ia vir. Então eu pude descansar todos os dias desse ano, sabendo que não ia acordar arrependido no dia seguinte por ter tomado uma decisão errada no dia anterior.\n\nEu consigo descansar tranquilo, sabendo que, no dia seguinte, vou trabalhar e que esse dinheiro, fruto do meu trabalho, vai ser respeitado. Vai ser guardado ou gasto com alguma coisa que me dê prazer, que me dê segurança, que me dê um retorno. O retorno que ele sempre deveria ter dado, né?\n\nEntão, pra mim, é isso. Eu faço essas escolhas. Repeti essa frase de novo pra Milena hoje: nada impede a gente de jogar. Mesmo que seja nesses sites clandestinos, nada impede a gente de jogar. São escolhas mesmo. E eu tô escolhendo viver dessa forma.\n\nOutra coisa que eu também falei com a Milena hoje é que tudo leva tempo. Tudo que é grande leva tempo. A casa leva tempo pra ser construída. A gente ter parado de jogar e estar aí há quase um ano sem jogar também levou tempo. Não foi do dia 24 pro dia 25, foi uma construção que começou lá atrás.\n\nEsse dinheiro que eu tô investindo hoje também levou meses pra eu conseguir juntar. E que bom que foi rápido, né? Porque eu consegui esse trabalho novo. Mas a gente sabe que, normalmente, pra juntar um dinheiro desses, são anos. Você levou anos juntando o seu dinheiro.\n\nEntão, pra mim, é isso. Eu acredito hoje que as coisas levam tempo. Eu não procuro alívio rápido de nada. Não quero nada que seja passageiro, que seja perigoso. Se for pra fazer alguma escolha, que seja a melhor escolha, mesmo que leve tempo.\n\nE a paciência é uma coisa que o jogo tirou da gente, né? A gente tinha muito imediatismo, tudo tinha que ser rápido. \"Ah, tô estressado, deixa eu descontar em alguma coisa. Tô estressado, deixa eu gastar. Tô estressado, deixa eu comer. Tô estressado, deixa eu apostar e que se foda.\"\n\nA gente só escolhia os alívios rápidos pra aquela dor, pra aquela ansiedade que tava sentindo.\n\nE hoje eu sei que não precisa ser assim. Hoje eu consigo segurar esse sentimento. Eu vou pra academia e entendo que os resultados vão demorar, que é um processo. No vôlei, eu sei que a gente vai aprender com o tempo. Enfim, são tantas coisas, e eu sei que tudo isso leva tempo.\n\nEntão acho que a palavra-chave também é paciência. Saber que tudo na vida leva tempo e que a gente tem que ter muita paciência, porque o resultado vem, com certeza.",
+        "difficulty": "facil",
+        "completedAt": "2026-11-24"
       },
       {
         "dayNumber": 331,
-        "isCompleted": false,
+        "isCompleted": true,
         "reflectionCharles": null,
         "reflectionWelder": null,
-        "difficulty": null,
-        "completedAt": null
+        "difficulty": "facil",
+        "completedAt": "2026-11-24"
       },
       {
         "dayNumber": 332,
-        "isCompleted": false,
+        "isCompleted": true,
         "reflectionCharles": null,
         "reflectionWelder": null,
-        "difficulty": null,
-        "completedAt": null
+        "difficulty": "facil",
+        "completedAt": "2026-11-24"
       },
       {
         "dayNumber": 333,
-        "isCompleted": false,
+        "isCompleted": true,
         "reflectionCharles": null,
         "reflectionWelder": null,
-        "difficulty": null,
-        "completedAt": null
+        "difficulty": "facil",
+        "completedAt": "2026-11-24"
       },
       {
         "dayNumber": 334,
-        "isCompleted": false,
+        "isCompleted": true,
         "reflectionCharles": null,
         "reflectionWelder": null,
-        "difficulty": null,
-        "completedAt": null
+        "difficulty": "facil",
+        "completedAt": "2026-11-24"
       },
       {
         "dayNumber": 335,
